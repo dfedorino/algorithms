@@ -4,7 +4,7 @@ public class MachineDistributor {
     private final int ramPerMachine;
 
     public MachineDistributor(int ramPerMachine) {
-        this.ramPerMachine = ramPerMachine;
+        this.ramPerMachine = checkRam(ramPerMachine);
     }
 
     private int checkRam(int ramPerMachine) {
