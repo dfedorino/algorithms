@@ -3,7 +3,6 @@ package com.dfedorino.rtasks.first_task;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertEquals;
 
 public class MachineDistributorTest {
@@ -18,28 +17,9 @@ public class MachineDistributorTest {
             expectedExceptions = IllegalArgumentException.class,
             expectedExceptionsMessageRegExp = "Given RAM amount is negative"
     )
-    public void getFullyLoadedMachinesTest() {
+    public void getFullyLoadedMachinesNegativeValueTest() {
         MachineDistributor md = new MachineDistributor(16);
-        md.getFullyLoadedMachines(new int[] {Integer.MIN_VALUE});
-    }
-
-
-
-    @Test
-    public void constructorTest() {
-        MachineDistributor md = new MachineDistributor(16);
-        MachineDistributor md1 = new MachineDistributor(0);
-        MachineDistributor md2 = new MachineDistributor(Integer.MAX_VALUE);
-        assertSame(md, md);
-        assertSame(md1, md1);
-        assertSame(md2, md2);
-    }
-
-    @Test(dataProvider = "data-provider-getFirstUnsupportedProcessIndex")
-    public void getFirstUnsupportedProcessIndexTest(int[] sortedArray, int expectedIndex) {
-        MachineDistributor md = new MachineDistributor(16);
-        int actualIndex = md.getFirstUnsupportedProcessIndex(sortedArray);
-        assertEquals(actualIndex, expectedIndex);
+        md.getFullyLoadedMachines(new int[]{Integer.MIN_VALUE});
     }
 
     @Test(
@@ -51,51 +31,23 @@ public class MachineDistributorTest {
         MachineDistributor md1 = new MachineDistributor(Integer.MIN_VALUE);
     }
 
-    @Test(expectedExceptions = NullPointerException.class)
-    public void getFirstUnsupportedProcessIndexNullTest() {
-        MachineDistributor md = new MachineDistributor(16);
-        md.getFirstUnsupportedProcessIndex(null);
-    }
-
-    @Test(
-            expectedExceptions = IllegalArgumentException.class,
-            expectedExceptionsMessageRegExp = "Given RAM amount is negative"
-    )
-    public void checkGivenNegativeRamValuesTest() {
-        MachineDistributor md = new MachineDistributor(16);
-        md.getFirstUnsupportedProcessIndex(new int[] {Integer.MIN_VALUE});
-    }
-
-    // input, expected
-    @DataProvider(name = "data-provider-getFirstUnsupportedProcessIndex")
-    public Object[][] dataProviderGetFirstUnsupportedProcessIndex() {
-        return new Object[][] {
-                { new int[] {}, -1 },
-                { new int[] {16}, -1 },
-                { new int[] {2, 4, 6, 5, 8, 14, 16}, -1 },
-                { new int[] {Integer.MAX_VALUE}, 0 },
-                { new int[] {2, 4, 6, 5, 8, 14, 16, Integer.MAX_VALUE}, 7 },
-                { new int[] {Integer.MAX_VALUE, Integer.MAX_VALUE}, 0 }
-        };
-    }
-
     // input, expected
     @DataProvider(name = "data-provider-getFullyLoadedMachines")
     public Object[][] dataProviderGetFullyLoadedMachines() {
-        return new Object[][] {
-                { 16, new int[] {14, 5, 6, 2, 4, 16, 8}, 2 },
-                { 16, new int[] {16, 16, 16, 16}, 4 },
-                { 16, new int[] {0, 0, 0, 0}, 0 },
-                { 16, new int[] {0, 1, 2, 3, Integer.MAX_VALUE}, 0 },
-                { 16, new int[] {Integer.MAX_VALUE, 0, 1, 2, 3}, 0 },
-                { 16, new int[] {2, 14, 14, 14}, 1 },
-                { 16, new int[] {14, 14, 14, 2}, 1 },
-                { 16, new int[] {Integer.MAX_VALUE, 14, 5, 6, 2, 4, 16, 8}, 2 },
-                { 16, new int[] {Integer.MAX_VALUE, Integer.MAX_VALUE, 16}, 1 },
-                { 16, new int[] {16, Integer.MAX_VALUE, Integer.MAX_VALUE}, 1 },
-                { Integer.MAX_VALUE, new int[] {Integer.MAX_VALUE, Integer.MAX_VALUE}, 2 },
-                { Integer.MAX_VALUE, new int[] {16, Integer.MAX_VALUE, Integer.MAX_VALUE}, 2 },
-                { Integer.MAX_VALUE, new int[] {Integer.MAX_VALUE, Integer.MAX_VALUE, 16}, 2 }
+        return new Object[][]{
+                {16, new int[]{14, 5, 6, 2, 4, 16, 8}, 2},
+                {16, new int[]{16, 16, 16, 16}, 4},
+                {16, new int[]{0, 0, 0, 0}, 0},
+                {16, new int[]{0, 1, 2, 3, Integer.MAX_VALUE}, 0},
+                {16, new int[]{Integer.MAX_VALUE, 0, 1, 2, 3}, 0},
+                {16, new int[]{2, 14, 14, 14}, 1},
+                {16, new int[]{14, 14, 14, 2}, 1},
+                {16, new int[]{Integer.MAX_VALUE, 14, 5, 6, 2, 4, 16, 8}, 2},
+                {16, new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE, 16}, 1},
+                {16, new int[]{16, Integer.MAX_VALUE, Integer.MAX_VALUE}, 1},
+                {Integer.MAX_VALUE, new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE}, 2},
+                {Integer.MAX_VALUE, new int[]{16, Integer.MAX_VALUE, Integer.MAX_VALUE}, 2},
+                {Integer.MAX_VALUE, new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE, 16}, 2}
         };
     }
 }
