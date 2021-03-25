@@ -8,22 +8,19 @@ import static org.testng.Assert.assertEquals;
 public class MachineDistributorTest {
     @Test(dataProvider = "data-provider-getFullyLoadedMachines")
     public void getFullyLoadedMachinesWithMapTest(int ramPerMachine, int[] processesRam, int expectedMachineNumber) {
-        MachineDistributor md = new MachineDistributor(ramPerMachine);
-        int actualMachineNumber = md.getFullyLoadedMachinesWithMap(ramPerMachine, processesRam);
+        int actualMachineNumber = MachineDistributor.getFullyLoadedMachinesWithMap(ramPerMachine, processesRam);
         assertEquals(actualMachineNumber, expectedMachineNumber);
     }
 
     @Test(dataProvider = "data-provider-getFullyLoadedMachines")
     public void getFullyLoadedMachinesWithTwoPointersTest(int ramPerMachine, int[] processesRam, int expectedMachineNumber) {
-        MachineDistributor md = new MachineDistributor(ramPerMachine);
-        int actualMachineNumber = md.getFullyLoadedMachinesWithTwoPointers(ramPerMachine, processesRam);
+        int actualMachineNumber = MachineDistributor.getFullyLoadedMachinesWithTwoPointers(ramPerMachine, processesRam);
         assertEquals(actualMachineNumber, expectedMachineNumber);
     }
 
     @Test(dataProvider = "data-provider-getFullyLoadedMachines")
     public void getFullyLoadedMachinesTest(int ramPerMachine, int[] processesRam, int expectedMachineNumber) {
-        MachineDistributor md = new MachineDistributor(ramPerMachine);
-        int actualMachineNumber = md.getFullyLoadedMachines(processesRam);
+        int actualMachineNumber = MachineDistributor.getFullyLoadedMachines(ramPerMachine, processesRam);
         assertEquals(actualMachineNumber, expectedMachineNumber);
     }
 
@@ -32,8 +29,7 @@ public class MachineDistributorTest {
             expectedExceptionsMessageRegExp = "Given RAM amount is negative"
     )
     public void getFullyLoadedMachinesNegativeValueTest() {
-        MachineDistributor md = new MachineDistributor(16);
-        md.getFullyLoadedMachines(new int[]{Integer.MIN_VALUE});
+        MachineDistributor.getFullyLoadedMachines(16, new int[]{Integer.MIN_VALUE});
     }
 
     @Test(
@@ -41,8 +37,9 @@ public class MachineDistributorTest {
             expectedExceptionsMessageRegExp = "Given RAM amount is negative"
     )
     public void checkRamTest() {
-        MachineDistributor md = new MachineDistributor(-16);
-        MachineDistributor md1 = new MachineDistributor(Integer.MIN_VALUE);
+        MachineDistributor.getFullyLoadedMachines(Integer.MIN_VALUE, new int[] {});
+        MachineDistributor.getFullyLoadedMachinesWithTwoPointers(Integer.MIN_VALUE, new int[] {});
+        MachineDistributor.getFullyLoadedMachinesWithMap(Integer.MIN_VALUE, new int[] {});
     }
 
     @DataProvider(name = "data-provider-getFullyLoadedMachines")

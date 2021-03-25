@@ -6,12 +6,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class MachineDistributor {
-    private final int ramPerMachine;
-
-    public MachineDistributor(int ramPerMachine) {
-        this.ramPerMachine = checkRam(ramPerMachine);
-    }
-
     /**
      * Algorithm is designed to return the amount of fully loaded machines with {@code ramPerMachine} memory
      * available. The machine can run only 2 task simultaneously, so it is considered to be fully loaded
@@ -19,12 +13,14 @@ public class MachineDistributor {
      * 1. any task in the processes array consumes the {@code ramPerMachine} amount of memory;
      * 2. any two tasks consume the ramPerMachine amount of memory in total.
      *
+     * @param ramPerMachine - RAM per machine
      * @param processes - array that represents processes' RAM consumption
      * @return number of the fully loaded machines
      * @throws IllegalArgumentException if any of the processes' value is negative
      * @throws NullPointerException     if the given array is {@code null}
      */
-    public int getFullyLoadedMachines(int[] processes) {
+    public static int getFullyLoadedMachines(int ramPerMachine, int[] processes) {
+        checkRam(ramPerMachine);
         Objects.requireNonNull(processes);
         int[] processesSortedCopy = getSortedCopy(processes);
         int fullyUsedMachines = 0;
@@ -52,7 +48,8 @@ public class MachineDistributor {
      * @return number of the fully loaded machines
      * @throws NullPointerException if the given array is {@code null}
      */
-    public int getFullyLoadedMachinesWithTwoPointers(int ramPerMachine, int[] processes) {
+    public static int getFullyLoadedMachinesWithTwoPointers(int ramPerMachine, int[] processes) {
+        checkRam(ramPerMachine);
         Objects.requireNonNull(processes);
         if (processes.length == 0) return 0;
         if (processes.length == 1) return processes[0] == ramPerMachine ? 1 : 0;
@@ -108,7 +105,7 @@ public class MachineDistributor {
      * @return number of the fully loaded machines
      * @throws NullPointerException if the given array is {@code null}
      */
-    public int getFullyLoadedMachinesWithMap(int ramPerMachine, int[] processes) {
+    public static int getFullyLoadedMachinesWithMap(int ramPerMachine, int[] processes) {
         Objects.requireNonNull(processes);
         if (processes.length == 0) return 0;
         if (processes.length == 1) return processes[0] == ramPerMachine ? 1 : 0;
@@ -140,7 +137,7 @@ public class MachineDistributor {
      * @param ramRemainderIndex  - process which RAM consumption is used to fully load a machine and which
      *                           value is to be erased
      */
-    private void eraseCheckedProcesses(int[] supportedProcesses, int processIndex, int ramRemainderIndex) {
+    private static void eraseCheckedProcesses(int[] supportedProcesses, int processIndex, int ramRemainderIndex) {
         supportedProcesses[processIndex] = 0;
         if (ramRemainderIndex >= 0) {
             supportedProcesses[ramRemainderIndex] = 0;
@@ -153,7 +150,7 @@ public class MachineDistributor {
      * @param givenProcesses - given array with processes' RAM consumption
      * @return a sorted copy of the given array
      */
-    private int[] getSortedCopy(int[] givenProcesses) {
+    private static int[] getSortedCopy(int[] givenProcesses) {
         int[] sortedCopy = new int[givenProcesses.length];
         System.arraycopy(givenProcesses, 0, sortedCopy, 0, givenProcesses.length); // around O(n)
         Arrays.sort(sortedCopy); // O(n log(n))
@@ -167,7 +164,7 @@ public class MachineDistributor {
      * @return argument value
      * @throws IllegalArgumentException when the given value does not satisfy conditions of a valid RAM amount
      */
-    private int checkRam(int ramPerMachine) {
+    private static int checkRam(int ramPerMachine) {
         if (ramPerMachine < 0) {
             throw new IllegalArgumentException("Given RAM amount is negative");
         }
