@@ -38,6 +38,50 @@ public class MachineDistributor {
         return fullyUsedMachines;
     }
 
+    public int getFullyLoadedMachinesWithTwoPointers(int ramPerMachine, int[] processes) {
+        Objects.requireNonNull(processes);
+        int[] processesSortedCopy = getSortedCopy(processes);
+        if (processes.length == 0) return 0;
+        if (processes.length == 1) return processes[0] == ramPerMachine ? 1 : 0;
+        int middleIndex = processesSortedCopy.length / 2;
+        int fullyLoadedMachines = 0;
+        for (int leftIndex = 0, rightIndex = processes.length - 1; leftIndex < middleIndex & rightIndex >= middleIndex;) {
+            int rightElement = processesSortedCopy[rightIndex];
+            int leftElement = processesSortedCopy[leftIndex];
+            int sum = rightElement + leftElement;
+            if (leftElement == ramPerMachine || rightElement == ramPerMachine) {
+                if (leftElement == rightElement & leftElement == ramPerMachine) {
+                    return processes.length;
+                }
+                if (leftElement == ramPerMachine) {
+                    fullyLoadedMachines++;
+                    leftIndex++;
+                }
+                if (rightElement == ramPerMachine) {
+                    fullyLoadedMachines++;
+                    rightIndex--;
+                }
+            } else {
+                if (sum <= 0) {
+                    rightIndex--;
+                } else {
+                    if (sum == ramPerMachine) {
+                        fullyLoadedMachines++;
+                        leftIndex++;
+                        rightIndex--;
+                    }
+                    if (sum < ramPerMachine) {
+                        leftIndex++;
+                    }
+                    if (sum > ramPerMachine) {
+                        rightIndex--;
+                    }
+                }
+            }
+        }
+        return fullyLoadedMachines;
+    }
+
     /**
      * Rewrites with 0 all the values to avoid repeated use of the distributed processes.
      *
