@@ -1,6 +1,8 @@
 package com.dfedorino.rtasks.first_task;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class MachineDistributor {
@@ -88,6 +90,42 @@ public class MachineDistributor {
                     if (sum > ramPerMachine) {
                         rightIndex--;
                     }
+                }
+            }
+        }
+        return fullyLoadedMachines;
+    }
+
+    /**
+     * Algorithm is designed to return the amount of fully loaded machines with {@code ramPerMachine} memory
+     * available. The machine can run only 2 task simultaneously, so it is considered to be fully loaded
+     * in the following cases:
+     * 1. any task in the processes array consumes the {@code ramPerMachine} amount of memory;
+     * 2. any two tasks consume the ramPerMachine amount of memory in total.
+     *
+     * @param ramPerMachine - RAM per machine
+     * @param processes     - array that represents processes' RAM consumption
+     * @return number of the fully loaded machines
+     * @throws NullPointerException if the given array is {@code null}
+     */
+    public int getFullyLoadedMachinesWithMap(int ramPerMachine, int[] processes) {
+        Objects.requireNonNull(processes);
+        if (processes.length == 0) return 0;
+        if (processes.length == 1) return processes[0] == ramPerMachine ? 1 : 0;
+        Map<Integer, Integer> remainderQuantity = new HashMap<>();
+        int fullyLoadedMachines = 0;
+        for (int processRam : processes) {
+            if (processRam == ramPerMachine) {
+                fullyLoadedMachines++;
+            } else if (processRam < ramPerMachine & processRam > 0){
+                int remainder = ramPerMachine - processRam;
+                int remaindersLeft = remainderQuantity.getOrDefault(remainder, 0);
+                if (remaindersLeft != 0) {
+                    fullyLoadedMachines++;
+                    remainderQuantity.put(remainder, --remaindersLeft);
+                } else {
+                    remainderQuantity.computeIfPresent(processRam, (key, value) -> value++);
+                    remainderQuantity.putIfAbsent(processRam, 1);
                 }
             }
         }

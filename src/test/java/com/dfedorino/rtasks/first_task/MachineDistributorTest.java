@@ -7,6 +7,13 @@ import static org.testng.Assert.assertEquals;
 
 public class MachineDistributorTest {
     @Test(dataProvider = "data-provider-getFullyLoadedMachines")
+    public void getFullyLoadedMachinesWithMapTest(int ramPerMachine, int[] processesRam, int expectedMachineNumber) {
+        MachineDistributor md = new MachineDistributor(ramPerMachine);
+        int actualMachineNumber = md.getFullyLoadedMachinesWithMap(ramPerMachine, processesRam);
+        assertEquals(actualMachineNumber, expectedMachineNumber);
+    }
+
+    @Test(dataProvider = "data-provider-getFullyLoadedMachines")
     public void getFullyLoadedMachinesWithTwoPointersTest(int ramPerMachine, int[] processesRam, int expectedMachineNumber) {
         MachineDistributor md = new MachineDistributor(ramPerMachine);
         int actualMachineNumber = md.getFullyLoadedMachinesWithTwoPointers(ramPerMachine, processesRam);
