@@ -38,14 +38,26 @@ public class MachineDistributor {
         return fullyUsedMachines;
     }
 
+    /**
+     * Algorithm is designed to return the amount of fully loaded machines with {@code ramPerMachine} memory
+     * available. The machine can run only 2 task simultaneously, so it is considered to be fully loaded
+     * in the following cases:
+     * 1. any task in the processes array consumes the {@code ramPerMachine} amount of memory;
+     * 2. any two tasks consume the ramPerMachine amount of memory in total.
+     *
+     * @param ramPerMachine - RAM per machine
+     * @param processes     - array that represents processes' RAM consumption
+     * @return number of the fully loaded machines
+     * @throws NullPointerException if the given array is {@code null}
+     */
     public int getFullyLoadedMachinesWithTwoPointers(int ramPerMachine, int[] processes) {
         Objects.requireNonNull(processes);
-        int[] processesSortedCopy = getSortedCopy(processes);
         if (processes.length == 0) return 0;
         if (processes.length == 1) return processes[0] == ramPerMachine ? 1 : 0;
+        int[] processesSortedCopy = getSortedCopy(processes);
         int middleIndex = processesSortedCopy.length / 2;
         int fullyLoadedMachines = 0;
-        for (int leftIndex = 0, rightIndex = processes.length - 1; leftIndex < middleIndex & rightIndex >= middleIndex;) {
+        for (int leftIndex = 0, rightIndex = processes.length - 1; leftIndex < middleIndex & rightIndex >= middleIndex; ) {
             int rightElement = processesSortedCopy[rightIndex];
             int leftElement = processesSortedCopy[leftIndex];
             int sum = rightElement + leftElement;
