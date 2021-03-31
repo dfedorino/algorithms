@@ -5,10 +5,12 @@ import java.util.Map;
 
 public class Anagrams {
     /**
+     * Checks whether two strings are anagrams.
+     * Strings considered to be anagrams if only the order of characters is different.
      *
-     * @param first
-     * @param second
-     * @return
+     * @param first  - a string with latin characters
+     * @param second - a string with latin characters
+     * @return 1 if strings are anagrams, 0 otherwise
      */
     public int areAnagrams(String first, String second) {
         if (first.length() != second.length()) return 0;
