@@ -16,6 +16,16 @@ public class LeetCodeTasksTest {
         assertEquals(LeetCodeTasks.numJewelsInStones(jewels, stones), expectedJewels);
     }
 
+    @Test
+    public void testNumJewelsInStones_TwoJewelsTypesThreeJewelsSevenStones_Three() {
+        assertEquals(LeetCodeTasks.numJewelsInStones("aA", "aAAbbbb"), 3);
+    }
+
+    @Test
+    public void testNumJewelsInStones_OneJewelTypeZeroJewelsTwoStones_Zero() {
+        assertEquals(LeetCodeTasks.numJewelsInStones("z", "ZZ"), 3);
+    }
+
     @DataProvider(name = "identical-pairs")
     public Object[][] identicalPairsDataProvider() {
         return new Object[][] {

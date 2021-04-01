@@ -1,7 +1,9 @@
 package com.dfedorino.rtasks.leet_code_hash_table;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class LeetCodeTasks {
     /**
@@ -46,12 +48,14 @@ public class LeetCodeTasks {
      */
     public static int numJewelsInStones(String jewels, String stones) {
         int foundJewels = 0;
-        Map<Character, Integer> jewelsNumber = new HashMap<>();
+        Set<Character> jewelsSet = new HashSet<>();
         for (int jewelsIndex = 0; jewelsIndex < jewels.length(); jewelsIndex++) {
-            jewelsNumber.put(jewels.charAt(jewelsIndex), 1);
+            jewelsSet.add(jewels.charAt(jewelsIndex));
         }
-        for (int stonesIndex = 0; stonesIndex < stones.length(); stonesIndex++) {
-            foundJewels += jewelsNumber.getOrDefault(stones.charAt(stonesIndex), 0);
+        for (int stoneIndex = 0; stoneIndex < stones.length(); stoneIndex++) {
+            if (jewelsSet.contains(stones.charAt(stoneIndex))) {
+                foundJewels++;
+            }
         }
         return foundJewels;
     }
