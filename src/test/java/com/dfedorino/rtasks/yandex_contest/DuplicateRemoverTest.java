@@ -20,6 +20,7 @@ public class DuplicateRemoverTest {
                 "src/main/resources/threeUniqueTwoDuplicatesInput.txt",
                 "threeUniqueTwoDuplicatesOutput.txt");
         List<Integer> actual = Files.lines(outputFile).map(Integer::parseInt).collect(Collectors.toList());
+        System.out.println(actual);
         assertEquals(expected, actual);
     }
 
@@ -31,6 +32,7 @@ public class DuplicateRemoverTest {
                 "src/main/resources/twoUniqueThreeDuplicatesInput.txt",
                 "twoUniqueThreeDuplicatesOutput.txt");
         List<Integer> actual = Files.lines(outputFile).map(Integer::parseInt).collect(Collectors.toList());
+        System.out.println(actual);
         assertEquals(expected, actual);
     }
 
@@ -42,6 +44,7 @@ public class DuplicateRemoverTest {
                 "src/main/resources/threeUniqueZeroDuplicatesInput.txt",
                 "threeUniqueZeroDuplicatesOutput.txt");
         List<Integer> actual = Files.lines(outputFile).map(Integer::parseInt).collect(Collectors.toList());
+        System.out.println(actual);
         assertEquals(expected, actual);
     }
 }

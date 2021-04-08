@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
 
 public class DuplicateRemover {
     /**
@@ -25,17 +24,16 @@ public class DuplicateRemover {
         try (BufferedReader inputFileReader = Files.newBufferedReader(inputFile);
              BufferedWriter outputFileWriter = Files.newBufferedWriter(outputFile)) {
             int linesToCheck = Integer.parseInt(inputFileReader.readLine());
-            Set<String> uniqueIntegers = new HashSet<>(linesToCheck);
-            for (int lineIndex = 1; lineIndex <= linesToCheck; lineIndex++) {
-                String currentInteger = inputFileReader.readLine();
-                boolean isUniqueInteger = uniqueIntegers.add(currentInteger);
-                if (isUniqueInteger) {
-                    outputFileWriter.append(currentInteger);
-                    if (lineIndex != linesToCheck) {
-                        outputFileWriter.newLine();
-                    }
+            int current = 1_000_001;
+            for (int lineIndex = 0; lineIndex < linesToCheck; lineIndex++) {
+                int next = Integer.parseInt(inputFileReader.readLine());
+                boolean currentIsUniqueAndNotInitValue = current != next & current != 1_000_001;
+                if (currentIsUniqueAndNotInitValue) {
+                    outputFileWriter.append(String.valueOf(current)).append(System.lineSeparator());
                 }
+                current = next;
             }
+            outputFileWriter.append(String.valueOf(current)).append(System.lineSeparator());
         }
         return outputFile;
     }
