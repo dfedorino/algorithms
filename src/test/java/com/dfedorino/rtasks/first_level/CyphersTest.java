@@ -33,9 +33,17 @@ public class CyphersTest {
     }
 
     @Test
-    public void testDecrypt_MaxCharactersOdd_SuperSecretNo() {
-        String word = "Super---Secret---No";
-        String encrypted = app.encrypt(word);
+    public void testDecrypt_OddNumberOfCharacters_SuperSecretNo() {
+        String word = "aba";
+        String encrypted = app.encrypt(word); // aab#
+        String actual = app.decrypt(encrypted);
+        assertEquals(actual, word);
+    }
+
+    @Test
+    public void testDecrypt_EvenNumberOfCharacters_SuperSecretNo() {
+        String word = "abcd";
+        String encrypted = app.encrypt(word); // adbc#
         System.out.println(encrypted);
         String actual = app.decrypt(encrypted);
         assertEquals(actual, word);
