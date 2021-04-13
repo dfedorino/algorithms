@@ -31,4 +31,13 @@ public class CyphersTest {
         String actual = app.decrypt(encrypted);
         assertEquals(actual, word);
     }
+
+    @Test
+    public void testDecrypt_MaxCharactersOdd_SuperSecretNo() {
+        String word = "Super---Secret---No";
+        String encrypted = app.encrypt(word);
+        System.out.println(encrypted);
+        String actual = app.decrypt(encrypted);
+        assertEquals(actual, word);
+    }
 }
