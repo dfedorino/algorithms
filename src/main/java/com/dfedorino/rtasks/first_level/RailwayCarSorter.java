@@ -29,7 +29,9 @@ public class RailwayCarSorter {
         int current = railroadCars[0];
         for (int carIndex = 1; carIndex < railroadCars.length; carIndex++) {
             int next = railroadCars[carIndex];
-            if (current > next || next - current > 1) separationCounter++;
+            if (current > next || next - current > 1) {
+                separationCounter++;
+            }
             current = next;
         }
         return separationCounter;
