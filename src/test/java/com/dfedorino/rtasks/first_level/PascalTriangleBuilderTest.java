@@ -8,6 +8,7 @@ import static org.testng.Assert.assertTrue;
 
 public class PascalTriangleBuilderTest {
     PascalTriangleBuilder pascalTriangleBuilder = new PascalTriangleBuilder();
+
     @Test
     public void testBuild_WidthThreeHeightThree_TwoDimensionalArray() {
         int[][] expected = {

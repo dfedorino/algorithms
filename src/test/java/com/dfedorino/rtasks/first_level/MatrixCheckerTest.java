@@ -6,6 +6,7 @@ import static org.testng.Assert.*;
 
 public class MatrixCheckerTest {
     MatrixChecker checker = new MatrixChecker();
+
     @Test
     public void testIsSymmetric_SymmetricTwoDimensionalArray_True() {
         int[][] matrix = {
@@ -15,6 +16,7 @@ public class MatrixCheckerTest {
         };
         assertTrue(checker.isSymmetric(matrix));
     }
+
     @Test
     public void testIsSymmetric_NonSymmetricTwoDimensionalArray_False() {
         int[][] matrix = {

@@ -6,6 +6,7 @@ import static org.testng.Assert.assertEquals;
 
 public class ArrayShifterTest {
     ArrayShifter app = new ArrayShifter();
+
     @Test
     public void testRightShift_UniqueElements_ArrayShiftedInPlace() {
         int[] expected = {9, 3, 5, 7};

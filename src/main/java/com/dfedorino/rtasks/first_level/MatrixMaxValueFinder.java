@@ -22,17 +22,19 @@ public class MatrixMaxValueFinder {
      * первого массива, где оно встречается, третий элемент - первый индекс максимального значения
      */
     public int[] findMaxValueAndIndexes(int[][] matrix) {
-        int[] maxAndIndexes = {Integer.MIN_VALUE, 0, 0};
-        for (int rowIndex = 0; rowIndex < matrix.length; rowIndex++) {
-            for (int valueInRowIndex = 0; valueInRowIndex < matrix[rowIndex].length; valueInRowIndex++) {
-                int currentValue = matrix[rowIndex][valueInRowIndex];
-                if (currentValue > maxAndIndexes[0]) {
-                    maxAndIndexes[0] = currentValue;
-                    maxAndIndexes[1] = rowIndex;
-                    maxAndIndexes[2] = valueInRowIndex;
+        int longestShot = Integer.MIN_VALUE;
+        int rowIndex = 0;
+        int valueIndex = 0;
+        for (int currentRowIndex = 0; currentRowIndex < matrix.length; currentRowIndex++) {
+            for (int valueInRowIndex = 0; valueInRowIndex < matrix[currentRowIndex].length; valueInRowIndex++) {
+                int currentValue = matrix[currentRowIndex][valueInRowIndex];
+                if (currentValue > longestShot) {
+                    longestShot = currentValue;
+                    rowIndex = currentRowIndex;
+                    valueIndex = valueInRowIndex;
                 }
             }
         }
-        return maxAndIndexes;
+        return new int[]{longestShot, rowIndex, valueIndex};
     }
 }
