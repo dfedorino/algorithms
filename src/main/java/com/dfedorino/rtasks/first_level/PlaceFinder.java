@@ -21,21 +21,23 @@ public class PlaceFinder {
      * @return место Пети в шеренге (индекс начинается с 1)
      */
     public int findPlace(int[] numbers, int number) {
-        int leftBorder = 0;
-        if (number > numbers[leftBorder]) return 1;
-        int rightBorder = numbers.length - 1;
-        if (number < numbers[rightBorder]) return numbers.length + 1;
-        while (true) {
-            int middleIndex = leftBorder + (rightBorder - leftBorder) / 2;
+        int leftElementIndex = 0;
+        if (number > numbers[leftElementIndex]) {
+            return 1;
+        }
+        int rightElementIndex = numbers.length - 1;
+        if (number < numbers[rightElementIndex]) {
+            return numbers.length + 1;
+        }
+        while (rightElementIndex - leftElementIndex != 1) {
+            int middleIndex = leftElementIndex + (rightElementIndex - leftElementIndex) / 2;
             int currentNumber = numbers[middleIndex];
-            if (rightBorder - leftBorder == 1) {
-                return middleIndex + 2;
-            }
             if (currentNumber >= number) {
-                leftBorder = middleIndex;
+                leftElementIndex = middleIndex;
             } else {
-                rightBorder = middleIndex;
+                rightElementIndex = middleIndex;
             }
         }
+        return rightElementIndex + 1;
     }
 }
