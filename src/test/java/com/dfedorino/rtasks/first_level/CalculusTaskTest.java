@@ -82,6 +82,8 @@ public class CalculusTaskTest {
         assertEquals(CalculusTasks.getCurrentTime(0), "0 0");
         assertEquals(CalculusTasks.getCurrentTime(150), "2 30");
         assertEquals(CalculusTasks.getCurrentTime(720), "0 0");
+        assertEquals(CalculusTasks.getCurrentTime(721), "0 1");
+        assertEquals(CalculusTasks.getCurrentTime(750), "0 30");
     }
 
     @Test
@@ -240,13 +242,7 @@ public class CalculusTaskTest {
                         () -> CalculusTasks.getCurrentTime(Integer.MIN_VALUE)),
                 expectThrows(
                         IllegalArgumentException.class,
-                        () -> CalculusTasks.getCurrentTime(-1)),
-                expectThrows(
-                        IllegalArgumentException.class,
-                        () -> CalculusTasks.getCurrentTime(721)),
-                expectThrows(
-                        IllegalArgumentException.class,
-                        () -> CalculusTasks.getCurrentTime(Integer.MAX_VALUE))
+                        () -> CalculusTasks.getCurrentTime(-1))
         );
 
         throwables.forEach(throwable -> assertEquals(

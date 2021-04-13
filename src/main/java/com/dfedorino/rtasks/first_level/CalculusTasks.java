@@ -105,7 +105,6 @@ public class CalculusTasks {
      * @return часы и минуты, разделенные пробелом
      */
     public static String getCurrentTime(int minutesSinceMidnight) {
-        numberBoundCheck(minutesSinceMidnight, 0, 720);
         int hours = minutesSinceMidnight / 60 == 12 ? 0 : minutesSinceMidnight / 60;
         int minutes = minutesSinceMidnight % 60;
         return hours + " " + minutes;
