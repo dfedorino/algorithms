@@ -28,4 +28,29 @@ public class TwoLettersFinder {
         }
         throw new RuntimeException("No duplicates");
     }
+
+    public char findDuplicateLetterWithBooleanArray(String letters) {
+        boolean[] upperCaseLetters = new boolean[26];
+        boolean[] lowerCaseLetters = new boolean[26];
+        int upperCaseLetterCodePointDifference = 65;
+        int lowerCaseLetterCodePointDifference = 97;
+        int indexInArray;
+        for (int characterIndex = 0; characterIndex < letters.length(); characterIndex++) {
+            char currentCharacter = letters.charAt(characterIndex);
+            if (Character.isUpperCase(currentCharacter)) {
+                indexInArray = currentCharacter - upperCaseLetterCodePointDifference;
+                if (upperCaseLetters[indexInArray]) {
+                    return currentCharacter;
+                }
+                upperCaseLetters[indexInArray] = true;
+            } else if (Character.isLowerCase(currentCharacter)) {
+                indexInArray = currentCharacter - lowerCaseLetterCodePointDifference;
+                if (lowerCaseLetters[indexInArray]) {
+                    return currentCharacter;
+                }
+                lowerCaseLetters[indexInArray] = true;
+            }
+        }
+        throw new RuntimeException("No duplicates");
+    }
 }
