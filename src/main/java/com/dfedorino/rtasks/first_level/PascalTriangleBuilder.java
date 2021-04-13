@@ -16,9 +16,9 @@ public class PascalTriangleBuilder {
      * @return матрицу, представляющую треугольник Паскаля
      */
     public int[][] build(int width, int height) {
-        int[][] pascalTriangle = new int[width][height];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        int[][] pascalTriangle = new int[height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 int value;
                 boolean isInFirstRowOrFirstColumn = i == 0 || j == 0;
                 if (isInFirstRowOrFirstColumn) {
