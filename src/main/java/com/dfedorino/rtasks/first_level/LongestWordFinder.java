@@ -25,4 +25,32 @@ public class LongestWordFinder {
                 .orElse("");
         return longest + System.lineSeparator() + longest.length();
     }
+
+    public String findLongestWordZeroSpaceComplexity(String words) {
+        int maxLength = 0;
+        int currentWordLength = 0;
+        int maxWordFirstCharacterIndex = 0;
+        int currentWordFirstCharacterIndex = 0;
+        boolean isFirstCharacterAfterWhiteSpace = true;
+        for (int currentCharacterIndex = 0; currentCharacterIndex < words.length(); currentCharacterIndex++) {
+            char currentCharacter = words.charAt(currentCharacterIndex);
+            if (Character.isWhitespace(currentCharacter)) {
+                if (currentWordLength > maxLength) {
+                    maxLength = currentWordLength;
+                    maxWordFirstCharacterIndex = currentWordFirstCharacterIndex;
+                }
+                isFirstCharacterAfterWhiteSpace = true;
+                currentWordLength = 0;
+            } else {
+                if (isFirstCharacterAfterWhiteSpace) {
+                    currentWordFirstCharacterIndex = currentCharacterIndex;
+                    isFirstCharacterAfterWhiteSpace = false;
+                }
+                currentWordLength++;
+            }
+        }
+        return words.substring(maxWordFirstCharacterIndex, maxWordFirstCharacterIndex + maxLength) +
+                System.lineSeparator() +
+                maxLength;
+    }
 }
