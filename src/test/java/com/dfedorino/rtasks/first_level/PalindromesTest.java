@@ -2,6 +2,7 @@ package com.dfedorino.rtasks.first_level;
 
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class PalindromesTest {
@@ -35,5 +36,25 @@ public class PalindromesTest {
     public void testIsPalindrome_PalindromeLatinWithoutWhitespacesEvenNumberOfLetters_True() {
         String phrase = "abba";
         assertTrue(app.isPalindrome(phrase));
+    }
+
+    @Test
+    public void testBuild_OddNumberOfLetters_ABA() {
+        assertEquals(app.build("AAB"), "[A, B, A]");
+    }
+
+    @Test
+    public void testBuild_EvenNumberOfLetters_ABBA() {
+        assertEquals(app.build("AABB"), "[A, B, B, A]");
+    }
+
+    @Test
+    public void testBuild_TaskTest1_AQZZQA() {
+        assertEquals(app.build("QAZQAZ"), "[A, Q, Z, Z, Q, A]");
+    }
+
+    @Test
+    public void testBuild_TaskTest2_A() {
+        assertEquals(app.build("ABCDEF"), "[A]");
     }
 }
