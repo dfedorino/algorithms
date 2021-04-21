@@ -1,5 +1,7 @@
 package com.dfedorino.rtasks.first_level;
 
+import lombok.Value;
+
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -26,7 +28,7 @@ public class LongestWordFinder {
         return longest + System.lineSeparator() + longest.length();
     }
 
-    public String findLongestWordZeroSpaceComplexity(String words) {
+    public Result findLongestWordZeroSpaceComplexity(String words) {
         int maxLength = 0;
         int currentWordLength = 0;
         int maxWordFirstCharacterIndex = 0;
@@ -49,8 +51,13 @@ public class LongestWordFinder {
                 currentWordLength++;
             }
         }
-        return words.substring(maxWordFirstCharacterIndex, maxWordFirstCharacterIndex + maxLength) +
-                System.lineSeparator() +
-                maxLength;
+        String longestWord = words.substring(maxWordFirstCharacterIndex, maxWordFirstCharacterIndex + maxLength);
+        return new Result(longestWord, maxLength);
+    }
+
+    @Value
+    public static class Result {
+        String word;
+        int length;
     }
 }
