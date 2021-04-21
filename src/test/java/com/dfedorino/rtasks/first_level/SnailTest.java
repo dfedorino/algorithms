@@ -16,4 +16,9 @@ public class SnailTest {
     public void testGetDays_DistanceMoreThanDistancePerDay_TwoDays() {
         assertEquals(app.getDays(4, 3, 2), 2);
     }
+
+    @Test
+    public void testGetDays_DistancePerNightLessThanDistancePerDay_TwoDays() {
+        assertEquals(app.getDays(6, 3, 1), 3);
+    }
 }

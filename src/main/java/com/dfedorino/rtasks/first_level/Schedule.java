@@ -12,26 +12,24 @@ public class Schedule {
      * Выходные данные
      * Выведите два целых числа: время окончания урока в часах и минутах.
      *
-     * @param lesson - порядковый номер урока
+     * @param classes - кол-во уроков, после которых нужно знать время
      * @return строка со временем, которое прошло с начала уроков до конца данного урока
      */
-    public String getEndTime(int lesson) {
-        int hours = 9;
-        int minutes = 0;
+    public String getEndTimeAfter(int classes) {
+        int startHour = 9;
+        int startMinute = 0;
         int lessonDurationMin = 45;
-        int breakAfterOddOrdinal = 5;
-        int breakAfterEvenOrdinal = 15;
-        int minutesPassed = lessonDurationMin;
-        for (int lessonOrdinal = 1; lessonOrdinal < lesson; lessonOrdinal++) {
-            if (lessonOrdinal % 2 != 0) {
-                minutesPassed += lessonDurationMin + breakAfterOddOrdinal;
-            } else {
-                minutesPassed += lessonDurationMin + breakAfterEvenOrdinal;
-            }
-        }
+        int breakAfterOdd = 5;
+        int breakAfterEven = 15;
+        int evenClasses = classes / 2;
+        int oddClasses = classes - evenClasses;
+        int lastBreakDuration = classes % 2 == 0 ? 15 : 5;
+        int minutesInTotal = oddClasses * (lessonDurationMin + breakAfterOdd) +
+                            evenClasses * (lessonDurationMin + breakAfterEven) -
+                            lastBreakDuration;
         int minutesPerHour = 60;
-        hours += minutesPassed / minutesPerHour;
-        minutes += minutesPassed % minutesPerHour;
-        return (hours / 10 + "" + hours % 10) + " " + (minutes / 10  + "" + minutes % 10);
+        startHour += minutesInTotal / minutesPerHour;
+        startMinute += minutesInTotal % minutesPerHour;
+        return (startHour / 10 + "" + startHour % 10) + " " + (startMinute / 10  + "" + startMinute % 10);
     }
 }

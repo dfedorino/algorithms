@@ -17,6 +17,6 @@ public class AppleDivider {
      * @return - кол-во школьников, которым достанется меньше яблок
      */
     public int getLosers(int students, int apples) {
-        return apples % students == 0 ? 0 : students - apples % students;
+        return apples % students == 0 ? 0 : students - (apples % students);
     }
 }
