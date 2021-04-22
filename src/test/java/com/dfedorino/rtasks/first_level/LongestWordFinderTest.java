@@ -1,7 +1,8 @@
 package com.dfedorino.rtasks.first_level;
 
 import org.testng.annotations.Test;
-import static org.testng.Assert.assertEquals;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LongestWordFinderTest {
     private final LongestWordFinder app = new LongestWordFinder();
@@ -11,7 +12,7 @@ public class LongestWordFinderTest {
         String words = " ";
         LongestWordFinder.Result actual = app.findLongestWordZeroSpaceComplexity(words);
         LongestWordFinder.Result expected = new LongestWordFinder.Result("", 0);
-        assertEquals(actual, expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -19,7 +20,7 @@ public class LongestWordFinderTest {
         String words = " one ";
         LongestWordFinder.Result actual = app.findLongestWordZeroSpaceComplexity(words);
         LongestWordFinder.Result expected = new LongestWordFinder.Result("one", 3);
-        assertEquals(actual, expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -27,7 +28,7 @@ public class LongestWordFinderTest {
         String words = " one one ";
         LongestWordFinder.Result actual = app.findLongestWordZeroSpaceComplexity(words);
         LongestWordFinder.Result expected = new LongestWordFinder.Result("one", 3);
-        assertEquals(actual, expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -35,7 +36,7 @@ public class LongestWordFinderTest {
         String words = " one two ";
         LongestWordFinder.Result actual = app.findLongestWordZeroSpaceComplexity(words);
         LongestWordFinder.Result expected = new LongestWordFinder.Result("one", 3);
-        assertEquals(actual, expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -43,6 +44,6 @@ public class LongestWordFinderTest {
         String words = " one two three four five six ";
         LongestWordFinder.Result actual = app.findLongestWordZeroSpaceComplexity(words);
         LongestWordFinder.Result expected = new LongestWordFinder.Result("three", 5);
-        assertEquals(actual, expected);
+        assertThat(actual).isEqualTo(expected);
     }
 }
