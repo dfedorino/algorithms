@@ -1,4 +1,4 @@
-package com.dfedorino.rtasks.first_level;
+package com.dfedorino.rtasks.second_level;
 
 public class GreatestCommonDivisor {
     public int find(int a, int b) {
