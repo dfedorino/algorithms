@@ -31,4 +31,29 @@ public class ArraysTest {
     public void testFindSum_TaskCase1() {
         assertThat(arrays.findSum(new int[] {1, 2, 3, 4, 5}, 3, 5)).isEqualTo(12);
     }
+
+    @Test
+    public void testCountZeros_CountAllZeros_4() {
+        assertThat(arrays.countZeros(new int[]{0, 0, 0, 0, 2}, 1, 5)).isEqualTo(4);
+    }
+
+    @Test
+    public void testCountZeros_CountOneZero_1() {
+        assertThat(arrays.countZeros(new int[]{0, 0, 0, 0, 2}, 1, 1)).isEqualTo(1);
+    }
+
+    @Test
+    public void testCountZeros_ArrayWithoutZeros_0() {
+        assertThat(arrays.countZeros(new int[]{1, 2, 3, 4, 5}, 1, 5)).isEqualTo(0);
+    }
+
+    @Test
+    public void testCountZeros_TaskCase0() {
+        assertThat(arrays.countZeros(new int[]{0, 0, 0, 0, 2}, 2, 3)).isEqualTo(2);
+    }
+
+    @Test
+    public void testCountZeros_TaskCase1() {
+        assertThat(arrays.countZeros(new int[]{0, 0, 0, 0, 2}, 2, 5)).isEqualTo(3);
+    }
 }

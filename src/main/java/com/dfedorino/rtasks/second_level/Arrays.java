@@ -28,4 +28,36 @@ public class Arrays {
         }
         return prefSums[lastElementIndexInclusively] - prefSums[firstElementIndex - 1];
     }
+
+    /**
+     * Реализуйте структуру данных для эффективного вычисления количества нулей в отрезке массива.
+     *
+     * Входные данные
+     * В первой строке вводится одно натуральное число N (1≤100000) — количество чисел в массиве.
+     *
+     * Во второй строке вводятся N чисел от 0 до 100000 — элементы массива.
+     *
+     * В третьей строке вводится одно натуральное число K (1≤K≤30000) — количество запросов на вычисление
+     * количества нулей.
+     *
+     * В следующих K строках вводится по два числа — номера левого и правого элементов отрезка массива
+     * (считается, что элементы массива нумеруются с единицы).
+     *
+     * Выходные данные
+     * Для каждого запроса выведите количество нулей на соответствующем участке массива. Числа выводите
+     * в одну строку через пробел.
+     *
+     * @param array - массив чисел
+     * @param firstElementIndex - индекс первого элемента, начиная с 1
+     * @param lastElementIndexInclusively - индекс последнего элемента начиная с 1, включительно
+     * @return кол-во нулей на заданном отрезке
+     */
+    public int countZeros(int[] array, int firstElementIndex, int lastElementIndexInclusively) {
+        int[] zerosCount = new int[array.length + 1];
+        zerosCount[0] = 0;
+        for (int i = 1; i < zerosCount.length; i++) {
+            zerosCount[i] = array[i - 1] == 0 ? zerosCount[i - 1] + 1 : zerosCount[i - 1];
+        }
+        return zerosCount[lastElementIndexInclusively] - zerosCount[firstElementIndex - 1];
+    }
 }
