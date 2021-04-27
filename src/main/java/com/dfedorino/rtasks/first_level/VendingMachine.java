@@ -28,16 +28,20 @@ public class VendingMachine {
      * в автомат изначально, чтобы всем покупателям хватило сдачи.
      */
     public int getInitialChangeQuantity(int[] purchases) {
-        int initialChangeQuantity = 0;
+        int price = 5;
+        int requiredChange = 0;
         int changeFromBuyers = 0;
         for (Integer sum : purchases) {
-            if (sum != 5) {
-                initialChangeQuantity += (sum - 5) / 5;
+            if (sum == price) {
+                changeFromBuyers += sum;
+            }
+            int currentChange = sum - price;
+            if (changeFromBuyers > currentChange) {
+                changeFromBuyers -= currentChange;
             } else {
-                changeFromBuyers++;
+                requiredChange += currentChange - changeFromBuyers;
             }
         }
-        int finalChangeQuantity = initialChangeQuantity - changeFromBuyers;
-        return Math.max(finalChangeQuantity, 0);
+        return requiredChange / price;
     }
 }

@@ -2,7 +2,7 @@ package com.dfedorino.rtasks.first_level;
 
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 public class VendingMachineTest {
     private final VendingMachine app = new VendingMachine();
@@ -33,5 +33,12 @@ public class VendingMachineTest {
         int[] purchases = {5, 5, 5};
         int actual = app.getInitialChangeQuantity(purchases);
         assertEquals(actual, 0);
+    }
+
+    @Test
+    public void testGetInitialChangeQuantity_LotsOfCashLotsOfCoins_5() {
+        int[] purchases = {50, 5, 5, 5, 5, 5, 5, 5, 5, 5};
+        int actual = app.getInitialChangeQuantity(purchases);
+        assertEquals(actual, 9);
     }
 }
