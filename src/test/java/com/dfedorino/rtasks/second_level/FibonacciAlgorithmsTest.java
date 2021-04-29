@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FibonacciRecursiveTest {
+public class FibonacciAlgorithmsTest {
     private final Algorithms algorithmChecker = new Algorithms(10);
 
     @Test(dataProvider = "task-algorithms")
