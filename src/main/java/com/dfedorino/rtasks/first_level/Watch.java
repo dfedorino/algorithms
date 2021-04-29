@@ -1,5 +1,7 @@
 package com.dfedorino.rtasks.first_level;
 
+import lombok.Value;
+
 public class Watch {
     /**
      * Электронные часы показывают время в формате h:mm:ss, то есть сначала записывается количество часов в
@@ -14,12 +16,25 @@ public class Watch {
      * @param seconds - кол-во секунд
      * @return строка с временем в 24-часовом формате
      */
-    public String showTime(int seconds) {
-        int hours = seconds % 86400 / 24;
-        int minutes = seconds % 3600 / 60;
-        int sec = seconds % 60;
-        return hours / 10 + "" + hours % 10 + ":" +
-                minutes / 10 + "" + minutes % 10 + ":" +
-                sec / 10 + "" + sec % 10;
+    // Does not pass tests
+    public Time showTime(int seconds) {
+        int maxSeconds = 60;
+        int maxMinutes = 60 * 60;
+        int maxHours = 24 * 60 * 60;
+        int sec = seconds % maxSeconds;
+        int minutes = seconds % maxMinutes;
+        int hours = seconds % maxHours;
+
+        String hoursString = hours / 10 + "" + hours % 10;
+        String minutesString = minutes / 10 + "" + minutes % 10;
+        String secondsString = sec / 10 + "" + sec % 10;
+        return new Time(hoursString, minutesString + "", secondsString);
+    }
+
+    @Value
+    public static class Time {
+        String hours;
+        String minutes;
+        String seconds;
     }
 }

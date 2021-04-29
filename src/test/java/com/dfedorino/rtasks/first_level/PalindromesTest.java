@@ -40,21 +40,36 @@ public class PalindromesTest {
 
     @Test
     public void testBuild_OddNumberOfLetters_ABA() {
-        assertEquals(app.build("AAB"), "[A, B, A]");
+        assertEquals(app.build("AAB"), "ABA");
     }
 
     @Test
     public void testBuild_EvenNumberOfLetters_ABBA() {
-        assertEquals(app.build("AABB"), "[A, B, B, A]");
+        assertEquals(app.build("AABB"), "ABBA");
+    }
+
+    @Test
+    public void testBuild_EvenNumberOfLettersSeveralRedundant_ABCBA() {
+        assertEquals(app.build("AABBCDEFGHI"), "ABCBA");
+    }
+
+    @Test
+    public void testBuild_EvenNumberOfSameLetters_ABCBA() {
+        assertEquals(app.build("AA"), "AA");
+    }
+
+    @Test
+    public void testBuild_OddNumberOfSameLetters_AAA() {
+        assertEquals(app.build("AAA"), "AAA");
     }
 
     @Test
     public void testBuild_TaskTest1_AQZZQA() {
-        assertEquals(app.build("QAZQAZ"), "[A, Q, Z, Z, Q, A]");
+        assertEquals(app.build("QAZQAZ"), "AQZZQA");
     }
 
     @Test
     public void testBuild_TaskTest2_A() {
-        assertEquals(app.build("ABCDEF"), "[A]");
+        assertEquals(app.build("ABCDEF"), "A");
     }
 }

@@ -19,26 +19,26 @@ public class ScheduleTest {
 
     @Test
     public void testGetEndTime_After1st_9_45() {
-       assertEquals(app.getEndTime(1), "09 45");
+       assertEquals(app.getEndTimeAfter(1), "09 45");
     }
 
     @Test
     public void testGetEndTime_After2nd_10_35() {
-        assertEquals(app.getEndTime(2), "10 35");
+        assertEquals(app.getEndTimeAfter(2), "10 35");
     }
 
     @Test
     public void testGetEndTime_After3rd_11_35() {
-        assertEquals(app.getEndTime(3), "11 35");
+        assertEquals(app.getEndTimeAfter(3), "11 35");
     }
 
     @Test
     public void testGetEndTime_After9th_17_05() {
-        assertEquals(app.getEndTime(9), "17 05");
+        assertEquals(app.getEndTimeAfter(9), "17 05");
     }
 
     @Test
     public void testGetEndTime_After10th_17_55() {
-        assertEquals(app.getEndTime(10), "17 55");
+        assertEquals(app.getEndTimeAfter(10), "17 55");
     }
 }

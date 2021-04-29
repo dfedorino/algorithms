@@ -1,5 +1,7 @@
 package com.dfedorino.rtasks.first_level;
 
+import lombok.Value;
+
 import java.util.Locale;
 
 public class Match {
@@ -45,43 +47,50 @@ public class Match {
      * @param protocol - массив строк, описывающий события
      * @return - строка, содержащая счет
      */
-    public String getScoreFromProtocol(String[] protocol) {
-        Player firstPlayer = new Player();
-        Player secondPlayer = new Player();
-        Player currentPlayer = firstPlayer;
-        Player otherPlayer = secondPlayer;
-        int firstPlayerServiceCounter = 0;
+    public Score getScoreFromProtocol(String[] protocol) {
+        int lastServiceOrdinal = 5;
+        int firstPlayerScore = 0;
+        int secondPlayerScore = 0;
+        int serviceCounter = 0;
         for (String event : protocol) {
-            if (firstPlayerServiceCounter == 4) {
-                currentPlayer = secondPlayer;
-                otherPlayer = firstPlayer;
-            }
             Event currentEvent = Event.valueOf(event.toUpperCase(Locale.ROOT));
             switch (currentEvent) {
                 case SERVICE:
-                    firstPlayerServiceCounter++;
+                    if (serviceCounter % lastServiceOrdinal == 0) {
+                        System.out.println("service counter -> " + serviceCounter + ", switch");
+                        int temp = firstPlayerScore;
+                        firstPlayerScore = secondPlayerScore;
+                        secondPlayerScore = temp;
+                    }
+                    serviceCounter++;
                     break;
                 case NET:
                 case OUT:
-                    otherPlayer.score++;
+                    secondPlayerScore++;
+                    System.out.println(firstPlayerScore + " : " + secondPlayerScore);
                     break;
                 case GOAL:
-                    currentPlayer.score++;
+                    firstPlayerScore++;
+                    System.out.println(firstPlayerScore + " : " + secondPlayerScore);
                     break;
                 case RETURN:
                     break;
                 case EOM:
-                    return firstPlayer.score + " " + secondPlayer.score;
+                    return serviceCounter % lastServiceOrdinal == 0 ?
+                            new Score(firstPlayerScore, secondPlayerScore) :
+                            new Score(secondPlayerScore, firstPlayerScore);
             }
         }
         throw new RuntimeException("No EOM event");
     }
 
-    private static class Player {
-        private int score = 0;
-    }
-
     private enum Event {
         SERVICE, NET, OUT, GOAL, RETURN, EOM
+    }
+
+    @Value
+    public static class Score {
+        int firstPlayerScore;
+        int secondPlayerScore;
     }
 }

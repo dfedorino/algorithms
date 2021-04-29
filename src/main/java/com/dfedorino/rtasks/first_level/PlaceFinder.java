@@ -22,7 +22,7 @@ public class PlaceFinder {
      */
     public int findPlace(int[] numbers, int number) {
         int leftElementIndex = 0;
-        if (number > numbers[leftElementIndex]) {
+        if (number > numbers[0]) {
             return 1;
         }
         int rightElementIndex = numbers.length - 1;

@@ -1,8 +1,5 @@
 package com.dfedorino.rtasks.first_level;
 
-import java.util.Deque;
-import java.util.LinkedList;
-
 public class Palindromes {
     /**
      * Дана строка, состоящая из строчных латинских букв и пробелов. Проверьте, является ли она палиндромом
@@ -44,54 +41,62 @@ public class Palindromes {
 
     /**
      * Палиндром - это строка, которая читается одинаково как справа налево, так и слева направо.
-     *
+     * <p>
      * На вход программы поступает набор больших латинских букв (не обязательно различных). Разрешается
      * переставлять буквы, а также удалять некоторые буквы. Требуется из данных букв по указанным
      * правилам составить палиндром наибольшей длины, а если таких палиндромов несколько, то выбрать
      * первый из них в алфавитном порядке.
-     *
+     * <p>
      * Входные данные
      * В первой строке входных данных содержится число N (1 <= N <= 100_000). Во второй строке задается
      * последовательность из N больших латинских букв (буквы записаны без пробелов).
-     *
+     * <p>
      * Выходные данные
      * В единственной строке выходных данных выдайте искомый палиндром.
-     *
+     * <p>
      * Группы тестов
      * 25 баллов — (1 ≤ N ≤ 10) .
-     *
+     * <p>
      * 25 баллов — (1 ≤ N ≤ 1 000 ) .
-     *
+     * <p>
      * 50 баллов — полные ограничения.
-     * @param upperCaseLatinLetters - последовательность букв
+     *
+     * @param letters - последовательность букв
      * @return - строка, содержащая самый первый палиндром
      */
-    public String build(String upperCaseLatinLetters) {
-        Deque<Character> palindrome = new LinkedList<>();
-        int[] codePoints = new int[91];
-        int maxCharCodePoint = -1;
-        for (int charIndex = 0; charIndex < upperCaseLatinLetters.length(); charIndex++) {
-            char currentCharacter = upperCaseLatinLetters.charAt(charIndex);
-            codePoints[currentCharacter]++;
-            maxCharCodePoint = maxCharCodePoint < currentCharacter ? currentCharacter : maxCharCodePoint;
-        }
-        for (int currentCodePoint = maxCharCodePoint; currentCodePoint >= 0; currentCodePoint--) {
-            if (codePoints[currentCodePoint] != 0) {
-                int timesToAdd;
-                if (currentCodePoint == maxCharCodePoint) {
-                    timesToAdd = codePoints[currentCodePoint];
-                } else {
-                    timesToAdd = codePoints[currentCodePoint] - (codePoints[currentCodePoint] % 2);
-                }
-                for (int j = 0; j < timesToAdd; j++) {
-                    if (j % 2 == 0) {
-                        palindrome.addLast((char) currentCodePoint);
-                    } else {
-                        palindrome.addFirst((char) currentCodePoint);
-                    }
-                }
+    public String build(String letters) {
+        int[] letterCounters = countLetters(letters);
+        StringBuilder palindromeLeftHalf = new StringBuilder();
+        int palindromeMiddleCharIndex = -1;
+        for (int charCodePoint = 0; charCodePoint < letterCounters.length; charCodePoint++) {
+            int occurrences = letterCounters[charCodePoint];
+            boolean isOddNumberOfOccurrences = occurrences % 2 != 0;
+            int additionLimit = isOddNumberOfOccurrences ? occurrences : occurrences / 2;
+            for (int timesToAdd = 0; timesToAdd < additionLimit; timesToAdd++) {
+                palindromeLeftHalf.append((char) (charCodePoint + 'A'));
+            }
+            if (isOddNumberOfOccurrences) {
+                palindromeMiddleCharIndex = charCodePoint;
+                break;
             }
         }
-        return palindrome.toString();
+        palindromeMiddleCharIndex = palindromeMiddleCharIndex >= 0 ? palindromeMiddleCharIndex : palindromeLeftHalf.length();
+        return buildCompletePalindrome(palindromeMiddleCharIndex, palindromeLeftHalf);
+    }
+
+    private int[] countLetters(String letters) {
+        int[] letterCounters = new int[26];
+        for (int letterIndex = 0; letterIndex < letters.length(); letterIndex++) {
+            char currentLetter = letters.charAt(letterIndex);
+            letterCounters[currentLetter - 'A']++;
+        }
+        return letterCounters;
+    }
+
+    private String buildCompletePalindrome(int middleCharIndex, StringBuilder palindromeLeftHalf) {
+        for (int rightHalfCharIndex = middleCharIndex - 1; rightHalfCharIndex >= 0; rightHalfCharIndex--) {
+            palindromeLeftHalf.append(palindromeLeftHalf.charAt(rightHalfCharIndex));
+        }
+        return palindromeLeftHalf.toString();
     }
 }
