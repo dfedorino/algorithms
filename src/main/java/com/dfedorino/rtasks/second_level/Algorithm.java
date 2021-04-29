@@ -5,8 +5,7 @@ public abstract class Algorithm<I, O> {
         return null;
     }
 
-    @SafeVarargs
-    public final O outputFor(I... input) {
+    public O outputFor(I... input) {
         return null;
     }
 
