@@ -25,7 +25,8 @@ public class ReverseComponentGenerator {
         List<String> combinations = new ArrayList<>();
         for (int length = 1; length < (number + 1); length++) {
             int[] combinationHolder = new int[length];
-            generateComponentsOf(0, number, number, combinationHolder, combinations);
+            int seed = number - (length - 1);
+            generateComponentsOf(0, seed, number, combinationHolder, combinations);
         }
         return combinations;
     }
@@ -60,6 +61,7 @@ public class ReverseComponentGenerator {
             List<String> combinations
     ) {
         if (currentIndex == combinationHolder.length) {
+            System.out.println(Arrays.toString(combinationHolder));
             if (Arrays.stream(combinationHolder).sum() == number) {
                 String currentCombination = Arrays.stream(combinationHolder)
                         .mapToObj(String::valueOf)
@@ -69,7 +71,7 @@ public class ReverseComponentGenerator {
         } else {
             for (int candidate = previousCandidate; candidate > 0; candidate--) {
                 combinationHolder[currentIndex] = candidate;
-                generateComponentsOf(currentIndex + 1, candidate, number, combinationHolder, combinations);
+                generateComponentsOf(currentIndex + 1, Math.min(candidate, number - candidate)  , number, combinationHolder, combinations);
             }
         }
     }
