@@ -25,13 +25,12 @@ public class ReverseComponentGenerator {
         List<String> results = new ArrayList<>();
         for (int length = 1; length <= number; length++) {
             int[] components = new int[length];
-            fillResultsWithComponents(number, number, number, 0, components, results);
+            fillResultsWithComponents(number, number, 0, components, results);
         }
         return results;
     }
 
     private void fillResultsWithComponents(
-            int number,
             int remainingSum,
             int previousComponent,
             int index,
@@ -40,16 +39,13 @@ public class ReverseComponentGenerator {
     ) {
         if (index == components.length) {
             System.out.println("Current combination -> " + Arrays.toString(components));
-            int sum = Arrays.stream(components).sum();
-            if (sum == number) {
-                results.add(Arrays.stream(components).mapToObj(String::valueOf).reduce("", String::concat));
-            }
+            results.add(Arrays.stream(components).mapToObj(String::valueOf).reduce("", String::concat));
         } else {
             int maxValue = Math.min(previousComponent, remainingSum - (components.length - index - 1));
             int minValue = remainingSum / (components.length - index);
             for (int component = maxValue; component >= minValue; component--) {
                 components[index] = component;
-                fillResultsWithComponents(number, remainingSum - component, component,index + 1, components, results);
+                fillResultsWithComponents(remainingSum - component, component, index + 1, components, results);
             }
         }
     }
