@@ -47,4 +47,10 @@ public class ComponentsGeneratorTest {
                 .contains("5")
                 .hasSize(7);
     }
+
+    @Test
+    public void testGenerateComponentsOf_MaxNumber_IsNotNull() {
+        assertThat(app.generateComponentsOf(40))
+                .isNotNull();
+    }
 }
