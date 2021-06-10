@@ -41,4 +41,10 @@ public class ReverseComponentGeneratorTest {
                 .contains("5")
                 .isSortedAccordingTo(Comparator.reverseOrder());
     }
+
+    @Test
+    public void testGenerateComponentsOf_MaxNumber_ResultIsNotEmpty() {
+        assertThat(app.generateComponentsOf(40))
+                .isNotEmpty();
+    }
 }
