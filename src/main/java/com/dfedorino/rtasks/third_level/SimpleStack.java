@@ -17,7 +17,7 @@ import lombok.Value;
  * После выполнения каждой команды программа должна вывести одну строчку.
  */
 public class SimpleStack {
-    private final Node<Integer> tail = new Node<>(null, null);
+    private Node<Integer> tail = new Node<>(null, null);
 
     public int size() {
         return 0;
@@ -25,6 +25,11 @@ public class SimpleStack {
 
     public Node<Integer> getTail() {
         return tail;
+    }
+
+    public boolean push(int i) {
+        tail = new Node<>(i, tail);
+        return true;
     }
 
     @Value

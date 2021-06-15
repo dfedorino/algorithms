@@ -12,16 +12,33 @@ public class SimpleStackTest {
     }
 
     @Test
-    public void testStack_whenSizeIsCalledOnAnEmptyStack_thenTheSizeIsZero() {
+    public void testSize_whenSizeIsCalledOnAnEmptyStack_thenTheSizeIsZero() {
         SimpleStack stack = new SimpleStack();
         assertThat(stack.size()).isEqualTo(0);
     }
 
     @Test
-    public void testStack_whenGetTailIsCalledOnAnEmptyStack_thenTheTailIsDummyNode() {
+    public void testGetTail_whenEmptyStack_thenIsDummyNode() {
         SimpleStack stack = new SimpleStack();
         SimpleStack.Node<Integer> expectedDummyNode = new SimpleStack.Node<>(null, null);
         assertThat(stack.getTail()).isEqualTo(expectedDummyNode);
+    }
+
+    @Test
+    public void testPush_whenPushNonNullElementToEmptyStack_thenTheTailIsNodeWithElement() {
+        SimpleStack stack = new SimpleStack();
+        SimpleStack.Node<Integer> formerTail = stack.getTail();
+        assertThat(stack.push(1)).isTrue();
+        SimpleStack.Node<Integer> expectedNode = new SimpleStack.Node<>(1, formerTail);
+        assertThat(stack.getTail()).isEqualTo(expectedNode);
+    }
+
+    @Test
+    public void testPush_whenPushNonNullElementToEmptyStack_thenNodeBeforeTailIsDummyNode() {
+        SimpleStack stack = new SimpleStack();
+        SimpleStack.Node<Integer> formerTail = stack.getTail();
+        assertThat(stack.push(1)).isTrue();
+        assertThat(stack.getTail().getPrevious()).isEqualTo(formerTail);
     }
 
     // Node Tests
