@@ -2,7 +2,10 @@ package com.dfedorino.rtasks.third_level;
 
 import org.testng.annotations.Test;
 
+import java.util.EmptyStackException;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class SimpleStackTest {
     @Test
@@ -24,13 +27,21 @@ public class SimpleStackTest {
         assertThat(stack.size()).isEqualTo(1);
     }
 
-    @Test /* test takes around 3 sec */
+    // @Test /* test takes around 3 sec */
     public void testSize_whenPushTenMillionElementsToEmptyStack_thenSizeIsIntegerMaxElements() {
         SimpleStack stack = new SimpleStack();
         for (int element = 0; element < 10_000_000; element++) {
             stack.push(element);
         }
         assertThat(stack.size()).isEqualTo(10_000_000);
+    }
+
+    @Test
+    public void testSize_whenPopElementFromNonEmptyStack_thenSizeIsDecreasedByOne() {
+        SimpleStack stack = new SimpleStack();
+        stack.push(1);
+        stack.pop();
+        assertThat(stack.size()).isEqualTo(0);
     }
 
     @Test
@@ -55,6 +66,38 @@ public class SimpleStackTest {
         SimpleStack.Node<Integer> formerTail = stack.getTail();
         assertThat(stack.push(1)).isTrue();
         assertThat(stack.getTail().getPrevious()).isEqualTo(formerTail);
+    }
+
+    @Test
+    public void testPop_whenEmptyStack_thenThrowsEmptyStackException() {
+        SimpleStack stack = new SimpleStack();
+        assertThatThrownBy(stack::pop).isInstanceOf(EmptyStackException.class);
+    }
+
+    @Test
+    public void testPop_whenPopElementFromStackWithOneElement_thenElement() {
+        SimpleStack stack = new SimpleStack();
+        stack.push(1);
+        assertThat(stack.pop()).isEqualTo(1);
+    }
+
+    @Test
+    public void testPop_whenPopElementFromStackWithOneElement_thenPreviousIsDummyNode() {
+        SimpleStack stack = new SimpleStack();
+        SimpleStack.Node<Integer> formerTail = stack.getTail();
+        stack.push(1);
+        stack.pop();
+        assertThat(stack.getTail()).isEqualTo(formerTail);
+    }
+
+    @Test
+    public void testPop_whenPopElementFromStackWithTwoElements_thenPreviousIsFirstlyAddedElement() {
+        SimpleStack stack = new SimpleStack();
+        stack.push(1);
+        SimpleStack.Node<Integer> first = stack.getTail();
+        stack.push(2);
+        stack.pop();
+        assertThat(stack.getTail()).isEqualTo(first);
     }
 
     // Node Tests
