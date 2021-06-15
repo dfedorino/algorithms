@@ -18,9 +18,10 @@ import lombok.Value;
  */
 public class SimpleStack {
     private Node<Integer> tail = new Node<>(null, null);
+    private int size;
 
     public int size() {
-        return 0;
+        return size;
     }
 
     public Node<Integer> getTail() {
@@ -29,6 +30,7 @@ public class SimpleStack {
 
     public boolean push(int i) {
         tail = new Node<>(i, tail);
+        size++;
         return true;
     }
 

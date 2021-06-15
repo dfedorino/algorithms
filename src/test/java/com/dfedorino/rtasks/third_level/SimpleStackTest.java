@@ -6,15 +6,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SimpleStackTest {
     @Test
-    public void testStack_whenStackIsCreated_thenItIsNotNull() {
+    public void testStack_whenStackIsCreated_thenNotNull() {
         SimpleStack stack = new SimpleStack();
         assertThat(stack).isNotNull();
     }
 
     @Test
-    public void testSize_whenSizeIsCalledOnAnEmptyStack_thenTheSizeIsZero() {
+    public void testSize_whenEmptyStack_thenZero() {
         SimpleStack stack = new SimpleStack();
         assertThat(stack.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void testSize_whenPushOneElementToEmptyStack_thenOne() {
+        SimpleStack stack = new SimpleStack();
+        stack.push(1);
+        assertThat(stack.size()).isEqualTo(1);
+    }
+
+    @Test /* test takes around 3 sec */
+    public void testSize_whenPushTenMillionElementsToEmptyStack_thenSizeIsIntegerMaxElements() {
+        SimpleStack stack = new SimpleStack();
+        for (int element = 0; element < 10_000_000; element++) {
+            stack.push(element);
+        }
+        assertThat(stack.size()).isEqualTo(10_000_000);
     }
 
     @Test
