@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import java.util.EmptyStackException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class SimpleStackTest {
@@ -121,6 +122,33 @@ public class SimpleStackTest {
     public void testTop_whenEmptyStack_thenThrowsEmptyStackException() {
         SimpleStack stack = new SimpleStack();
         assertThatThrownBy(stack::top).isInstanceOf(EmptyStackException.class);
+    }
+
+    @Test
+    public void testClear_whenNonEmptyStack_thenNoExceptionIsThrown() {
+        SimpleStack stack = new SimpleStack();
+        assertThatCode(stack::clear).doesNotThrowAnyException();
+    }
+
+    @Test
+    public void testClear_whenNonEmptyStack_thenTailIsNullPreviousIsNull() {
+        SimpleStack stack = new SimpleStack();
+        SimpleStack.Node<Integer> dummyNode = stack.getTail();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.clear();
+        assertThat(stack.getTail()).isEqualTo(dummyNode);
+    }
+
+    @Test
+    public void testClear_whenNonEmptyStack_thenSizeIsZero() {
+        SimpleStack stack = new SimpleStack();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.clear();
+        assertThat(stack.size()).isEqualTo(0);
     }
 
     // Node Tests

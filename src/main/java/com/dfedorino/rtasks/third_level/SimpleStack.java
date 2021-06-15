@@ -26,7 +26,7 @@ public class SimpleStack {
         return size;
     }
 
-    public Node<Integer> getTail() {
+    protected Node<Integer> getTail() {
         return tail;
     }
 
@@ -38,7 +38,7 @@ public class SimpleStack {
 
     public Integer pop() {
         validateSize();
-        SimpleStack.Node<Integer> previous = tail.getPrevious();
+        Node<Integer> previous = tail.getPrevious();
         Integer popped = tail.getElement();
         tail = previous;
         size--;
@@ -54,6 +54,12 @@ public class SimpleStack {
         if (size == 0) {
             throw new EmptyStackException();
         }
+    }
+
+    public void clear() {
+        tail = new Node<>(null, null);
+        System.gc();
+        size = 0;
     }
 
     @Value
