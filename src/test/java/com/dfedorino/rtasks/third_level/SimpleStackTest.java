@@ -45,6 +45,15 @@ public class SimpleStackTest {
     }
 
     @Test
+    public void testSize_whenTopElementFromNonEmptyStack_thenSizeIsSame() {
+        SimpleStack stack = new SimpleStack();
+        stack.push(1);
+        int expectedSize = stack.size();
+        stack.top();
+        assertThat(stack.size()).isEqualTo(expectedSize);
+    }
+
+    @Test
     public void testGetTail_whenEmptyStack_thenIsDummyNode() {
         SimpleStack stack = new SimpleStack();
         SimpleStack.Node<Integer> expectedDummyNode = new SimpleStack.Node<>(null, null);
@@ -98,6 +107,20 @@ public class SimpleStackTest {
         stack.push(2);
         stack.pop();
         assertThat(stack.getTail()).isEqualTo(first);
+    }
+
+    @Test
+    public void testTop_whenTopElementFromStackWithOneElement_thenLastElementValue() {
+        SimpleStack stack = new SimpleStack();
+        int expectedValue = 1;
+        stack.push(expectedValue);
+        assertThat(stack.top()).isEqualTo(1);
+    }
+
+    @Test
+    public void testTop_whenEmptyStack_thenThrowsEmptyStackException() {
+        SimpleStack stack = new SimpleStack();
+        assertThatThrownBy(stack::top).isInstanceOf(EmptyStackException.class);
     }
 
     // Node Tests
