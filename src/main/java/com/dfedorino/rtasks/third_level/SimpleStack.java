@@ -1,6 +1,6 @@
 package com.dfedorino.rtasks.third_level;
 
-import java.util.Objects;
+import lombok.Value;
 
 /**
  * Реализуйте структуру данных "стек". Напишите программу:
@@ -27,38 +27,9 @@ public class SimpleStack {
         return tail;
     }
 
-    protected static final class Node<T> {
-        private final T element;
-        private final Node<T> previous;
-
-        public Node(T element, Node<T> previous) {
-            this.element = element;
-            this.previous = previous;
-        }
-
-        public T getElement() {
-            return element;
-        }
-
-        public Node<T> getPrevious() {
-            return previous;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || this.getClass() != o.getClass()) {
-                return false;
-            }
-            Node<?> other = (Node<?>) o;
-            return Objects.equals(this.element, other.element) && Objects.equals(this.previous, other.previous);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(element, previous);
-        }
+    @Value
+    protected static class Node<T> {
+        T element;
+        Node<T> previous;
     }
 }
