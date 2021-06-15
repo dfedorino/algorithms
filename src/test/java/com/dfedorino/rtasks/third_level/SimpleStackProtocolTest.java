@@ -25,7 +25,8 @@ public class SimpleStackProtocolTest {
                 "size",
                 "exit"
         );
-        List<String> protocol = new SimpleStackProtocol().generateSimpleStackProtocol(commands);
+        List<String> dynamicStackProtocol = new DynamicSimpleStackProtocol().generateProtocol(commands);
+        List<String> staticStackProtocol = new StaticSimpleStackProtocol().generateProtocol(commands);
         List<String> expectedProtocol = List.of(
                 "ok",
                 "ok",
@@ -41,6 +42,7 @@ public class SimpleStackProtocolTest {
                 "0",
                 "bye"
         );
-        assertThat(protocol).isEqualTo(expectedProtocol);
+        assertThat(dynamicStackProtocol).isEqualTo(expectedProtocol);
+        assertThat(staticStackProtocol).isEqualTo(expectedProtocol);
     }
 }

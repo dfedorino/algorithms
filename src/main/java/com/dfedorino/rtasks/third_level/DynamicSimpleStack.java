@@ -4,7 +4,7 @@ import lombok.Value;
 
 import java.util.EmptyStackException;
 
-public class SimpleStack {
+public class DynamicSimpleStack {
     private Node<Integer> tail = new Node<>(null, null);
     private int size;
 

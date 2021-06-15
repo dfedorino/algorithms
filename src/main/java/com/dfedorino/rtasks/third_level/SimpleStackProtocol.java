@@ -1,9 +1,8 @@
 package com.dfedorino.rtasks.third_level;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleStackProtocol {
+public interface SimpleStackProtocol {
     /**
      * Реализуйте структуру данных "стек". Напишите программу:
      * 1. содержащую описание стека;
@@ -21,30 +20,5 @@ public class SimpleStackProtocol {
      * @param commands - последовательность команд
      * @return последовательность строчек согласно переданным командам
      */
-    public List<String> generateSimpleStackProtocol(List<String> commands) {
-        List<String> protocol = new ArrayList<>();
-        SimpleStack stack = new SimpleStack();
-        for (String command : commands) {
-            if (command.startsWith("push")) {
-                String[] commandTokens = command.split(" ");
-                int toBePushed = Integer.parseInt(commandTokens[1]);
-                stack.push(toBePushed);
-                protocol.add("ok");
-            } else if (command.equals("pop")) {
-                protocol.add(stack.pop() + "");
-            } else if (command.equals("back")) {
-                protocol.add(stack.top() + "");
-            } else if (command.equals("size")) {
-                protocol.add(stack.size() + "");
-            } else if (command.equals("clear")) {
-                stack.clear();
-                protocol.add("ok");
-            } else if (command.equals("exit")) {
-                protocol.add("bye");
-            } else {
-                throw new UnsupportedOperationException();
-            }
-        }
-        return protocol;
-    }
+    List<String> generateProtocol(List<String> commands);
 }

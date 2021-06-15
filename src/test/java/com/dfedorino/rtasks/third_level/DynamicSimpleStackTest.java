@@ -8,29 +8,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class SimpleStackTest {
+public class DynamicSimpleStackTest {
     @Test
     public void testStack_whenStackIsCreated_thenNotNull() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         assertThat(stack).isNotNull();
     }
 
     @Test
     public void testSize_whenEmptyStack_thenZero() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         assertThat(stack.size()).isEqualTo(0);
     }
 
     @Test
     public void testSize_whenPushOneElementToEmptyStack_thenOne() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         stack.push(1);
         assertThat(stack.size()).isEqualTo(1);
     }
 
     // @Test /* test takes around 3 sec */
     public void testSize_whenPushTenMillionElementsToEmptyStack_thenSizeIsIntegerMaxElements() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         for (int element = 0; element < 10_000_000; element++) {
             stack.push(element);
         }
@@ -39,7 +39,7 @@ public class SimpleStackTest {
 
     @Test
     public void testSize_whenPopElementFromNonEmptyStack_thenSizeIsDecreasedByOne() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         stack.push(1);
         stack.pop();
         assertThat(stack.size()).isEqualTo(0);
@@ -47,7 +47,7 @@ public class SimpleStackTest {
 
     @Test
     public void testSize_whenTopElementFromNonEmptyStack_thenSizeIsSame() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         stack.push(1);
         int expectedSize = stack.size();
         stack.top();
@@ -56,45 +56,45 @@ public class SimpleStackTest {
 
     @Test
     public void testGetTail_whenEmptyStack_thenIsDummyNode() {
-        SimpleStack stack = new SimpleStack();
-        SimpleStack.Node<Integer> expectedDummyNode = new SimpleStack.Node<>(null, null);
+        DynamicSimpleStack stack = new DynamicSimpleStack();
+        DynamicSimpleStack.Node<Integer> expectedDummyNode = new DynamicSimpleStack.Node<>(null, null);
         assertThat(stack.getTail()).isEqualTo(expectedDummyNode);
     }
 
     @Test
     public void testPush_whenPushNonNullElementToEmptyStack_thenTheTailIsNodeWithElement() {
-        SimpleStack stack = new SimpleStack();
-        SimpleStack.Node<Integer> formerTail = stack.getTail();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
+        DynamicSimpleStack.Node<Integer> formerTail = stack.getTail();
         assertThat(stack.push(1)).isTrue();
-        SimpleStack.Node<Integer> expectedNode = new SimpleStack.Node<>(1, formerTail);
+        DynamicSimpleStack.Node<Integer> expectedNode = new DynamicSimpleStack.Node<>(1, formerTail);
         assertThat(stack.getTail()).isEqualTo(expectedNode);
     }
 
     @Test
     public void testPush_whenPushNonNullElementToEmptyStack_thenNodeBeforeTailIsDummyNode() {
-        SimpleStack stack = new SimpleStack();
-        SimpleStack.Node<Integer> formerTail = stack.getTail();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
+        DynamicSimpleStack.Node<Integer> formerTail = stack.getTail();
         assertThat(stack.push(1)).isTrue();
         assertThat(stack.getTail().getPrevious()).isEqualTo(formerTail);
     }
 
     @Test
     public void testPop_whenEmptyStack_thenThrowsEmptyStackException() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         assertThatThrownBy(stack::pop).isInstanceOf(EmptyStackException.class);
     }
 
     @Test
     public void testPop_whenPopElementFromStackWithOneElement_thenElement() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         stack.push(1);
         assertThat(stack.pop()).isEqualTo(1);
     }
 
     @Test
     public void testPop_whenPopElementFromStackWithOneElement_thenPreviousIsDummyNode() {
-        SimpleStack stack = new SimpleStack();
-        SimpleStack.Node<Integer> formerTail = stack.getTail();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
+        DynamicSimpleStack.Node<Integer> formerTail = stack.getTail();
         stack.push(1);
         stack.pop();
         assertThat(stack.getTail()).isEqualTo(formerTail);
@@ -102,9 +102,9 @@ public class SimpleStackTest {
 
     @Test
     public void testPop_whenPopElementFromStackWithTwoElements_thenPreviousIsFirstlyAddedElement() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         stack.push(1);
-        SimpleStack.Node<Integer> first = stack.getTail();
+        DynamicSimpleStack.Node<Integer> first = stack.getTail();
         stack.push(2);
         stack.pop();
         assertThat(stack.getTail()).isEqualTo(first);
@@ -112,7 +112,7 @@ public class SimpleStackTest {
 
     @Test
     public void testTop_whenTopElementFromStackWithOneElement_thenLastElementValue() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         int expectedValue = 1;
         stack.push(expectedValue);
         assertThat(stack.top()).isEqualTo(1);
@@ -120,20 +120,20 @@ public class SimpleStackTest {
 
     @Test
     public void testTop_whenEmptyStack_thenThrowsEmptyStackException() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         assertThatThrownBy(stack::top).isInstanceOf(EmptyStackException.class);
     }
 
     @Test
     public void testClear_whenNonEmptyStack_thenNoExceptionIsThrown() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         assertThatCode(stack::clear).doesNotThrowAnyException();
     }
 
     @Test
     public void testClear_whenNonEmptyStack_thenTailIsNullPreviousIsNull() {
-        SimpleStack stack = new SimpleStack();
-        SimpleStack.Node<Integer> dummyNode = stack.getTail();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
+        DynamicSimpleStack.Node<Integer> dummyNode = stack.getTail();
         stack.push(1);
         stack.push(2);
         stack.push(3);
@@ -143,7 +143,7 @@ public class SimpleStackTest {
 
     @Test
     public void testClear_whenNonEmptyStack_thenSizeIsZero() {
-        SimpleStack stack = new SimpleStack();
+        DynamicSimpleStack stack = new DynamicSimpleStack();
         stack.push(1);
         stack.push(2);
         stack.push(3);
@@ -155,41 +155,41 @@ public class SimpleStackTest {
 
     @Test
     public void testNode_whenConstructNodeWithNullContentAndNullPrevious_thenElementIsNull() {
-        SimpleStack.Node<Integer> node = new SimpleStack.Node<>(null, null);
+        DynamicSimpleStack.Node<Integer> node = new DynamicSimpleStack.Node<>(null, null);
         assertThat(node.getElement()).isNull();
     }
 
     @Test
     public void testNode_whenConstructNodeWithNullContentAndNullPrevious_thenPreviousIsNull() {
-        SimpleStack.Node<Integer> node = new SimpleStack.Node<>(null, null);
+        DynamicSimpleStack.Node<Integer> node = new DynamicSimpleStack.Node<>(null, null);
         assertThat(node.getPrevious()).isNull();
     }
 
     @Test
     public void testNode_whenConstructNodeWithNonNullContentAndNullPrevious_thenElementIsEqualToExpected() {
-        SimpleStack.Node<Integer> node = new SimpleStack.Node<>(1, null);
+        DynamicSimpleStack.Node<Integer> node = new DynamicSimpleStack.Node<>(1, null);
         assertThat(node.getElement()).isEqualTo(1);
         assertThat(node.getPrevious()).isNull();
     }
 
     @Test
     public void testNode_whenConstructNodeWithNullContentAndNonNullPrevious_thenPreviousPointsAtTheSameObject() {
-        SimpleStack.Node<Integer> previous = new SimpleStack.Node<>(1, null);
-        SimpleStack.Node<Integer> node = new SimpleStack.Node<>(2, previous);
+        DynamicSimpleStack.Node<Integer> previous = new DynamicSimpleStack.Node<>(1, null);
+        DynamicSimpleStack.Node<Integer> node = new DynamicSimpleStack.Node<>(2, previous);
         assertThat(node.getPrevious() == previous).isTrue();
     }
 
     @Test
     public void testNode_whenConstructTwoEmptyNodes_thenTheyAreEqual() {
-        SimpleStack.Node<Integer> first = new SimpleStack.Node<>(null, null);
-        SimpleStack.Node<Integer> second = new SimpleStack.Node<>(null, null);
+        DynamicSimpleStack.Node<Integer> first = new DynamicSimpleStack.Node<>(null, null);
+        DynamicSimpleStack.Node<Integer> second = new DynamicSimpleStack.Node<>(null, null);
         assertThat(first).isEqualTo(second);
     }
 
     @Test
     public void testNode_whenConstructTwoEqualNodes_thenEqualsReturnTrueAndHashCodesAreSameAndViceVersa() {
-        SimpleStack.Node<Integer> first = new SimpleStack.Node<>(1, null);
-        SimpleStack.Node<Integer> second = new SimpleStack.Node<>(1, null);
+        DynamicSimpleStack.Node<Integer> first = new DynamicSimpleStack.Node<>(1, null);
+        DynamicSimpleStack.Node<Integer> second = new DynamicSimpleStack.Node<>(1, null);
         assertThat(first.equals(second)).isTrue();
         assertThat(first.hashCode()).isEqualTo(second.hashCode());
         assertThat(second.equals(first)).isTrue();
@@ -198,8 +198,8 @@ public class SimpleStackTest {
 
     @Test
     public void testNode_whenConstructTwoNonEqualNodes_thenEqualsReturnFalseAndViceVersa() {
-        SimpleStack.Node<Integer> first = new SimpleStack.Node<>(1, null);
-        SimpleStack.Node<Integer> second = new SimpleStack.Node<>(2, null);
+        DynamicSimpleStack.Node<Integer> first = new DynamicSimpleStack.Node<>(1, null);
+        DynamicSimpleStack.Node<Integer> second = new DynamicSimpleStack.Node<>(2, null);
         assertThat(first.equals(second)).isFalse();
         assertThat(second.equals(first)).isFalse();
     }
