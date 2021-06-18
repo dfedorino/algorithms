@@ -1,4 +1,4 @@
-package com.dfedorino.rtasks.third_level;
+package com.dfedorino.rtasks.third_level.structures.implementations;
 
 import org.testng.annotations.Test;
 
@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DynamicSimpleStackTest {
+
     @Test
     public void testStack_whenStackIsCreated_thenNotNull() {
         DynamicSimpleStack stack = new DynamicSimpleStack();

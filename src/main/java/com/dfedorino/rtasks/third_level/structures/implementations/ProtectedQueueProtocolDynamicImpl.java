@@ -1,4 +1,6 @@
-package com.dfedorino.rtasks.third_level;
+package com.dfedorino.rtasks.third_level.structures.implementations;
+
+import com.dfedorino.rtasks.third_level.structures.ProtectedQueueProtocol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,7 @@ public class ProtectedQueueProtocolDynamicImpl implements ProtectedQueueProtocol
 
     public List<String> generateProtocol(List<String> commands) {
         List<String> protocol = new ArrayList<>();
-        ProtectedQueue<Integer> queue = new ProtectedDequeProtocolDynamicImpl.ProtectedDequeImpl<>();
+        ProtectedQueue<Integer> queue = new DynamicProtectedDeque<>();
         for (String command : commands) {
             if (command.startsWith("push ")) {
                 int toBeAdded = Integer.parseInt(command.split(" ")[1]);

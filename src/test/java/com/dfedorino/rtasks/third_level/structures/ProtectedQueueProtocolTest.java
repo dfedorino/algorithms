@@ -1,5 +1,7 @@
-package com.dfedorino.rtasks.third_level;
+package com.dfedorino.rtasks.third_level.structures;
 
+import com.dfedorino.rtasks.third_level.structures.implementations.ProtectedQueueProtocolDynamicImpl;
+import com.dfedorino.rtasks.third_level.structures.implementations.ProtectedQueueProtocolStaticImpl;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

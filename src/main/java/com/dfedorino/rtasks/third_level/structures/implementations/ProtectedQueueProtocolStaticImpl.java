@@ -1,4 +1,6 @@
-package com.dfedorino.rtasks.third_level;
+package com.dfedorino.rtasks.third_level.structures.implementations;
+
+import com.dfedorino.rtasks.third_level.structures.ProtectedQueueProtocol;
 
 import java.util.ArrayList;
 import java.util.List;
