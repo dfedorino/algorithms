@@ -60,10 +60,10 @@ public class SimpleStackProtocolTest {
 
     @Test(dataProvider = "implementations")
     public void testGenerateProtocol_whenPushMaxNumberOfElementsToEmptyStack_thenSizeIsMax(String name, SimpleStackProtocol protocol) {
-        List<String> commands = IntStream.rangeClosed(1, 100).mapToObj(i -> "push " + i).collect(Collectors.toList());
+        List<String> commands = IntStream.rangeClosed(1, SimpleStackProtocol.MAX_SIZE).mapToObj(i -> "push " + i).collect(Collectors.toList());
         commands.add("size");
-        List<String> expectedProtocol = IntStream.rangeClosed(1, 100).mapToObj(i -> "ok").collect(Collectors.toList());
-        expectedProtocol.add("100");
+        List<String> expectedProtocol = IntStream.rangeClosed(1, SimpleStackProtocol.MAX_SIZE).mapToObj(i -> "ok").collect(Collectors.toList());
+        expectedProtocol.add(SimpleStackProtocol.MAX_SIZE + "");
         assertThat(protocol.generateProtocol(commands)).isEqualTo(expectedProtocol);
     }
 
@@ -81,12 +81,12 @@ public class SimpleStackProtocolTest {
 
     @Test(dataProvider = "implementations")
     public void testGenerateProtocol_whenPushMaxNumberOfElementsAndClear_thenSizeIsZero(String name, SimpleStackProtocol protocol) {
-        List<String> commands = IntStream.rangeClosed(1, 100).mapToObj(i -> "push " + i).collect(Collectors.toList());
+        List<String> commands = IntStream.rangeClosed(1, SimpleStackProtocol.MAX_SIZE).mapToObj(i -> "push " + i).collect(Collectors.toList());
         commands.add("size");
         commands.add("clear");
         commands.add("size");
-        List<String> expectedProtocol = IntStream.rangeClosed(1, 100).mapToObj(i -> "ok").collect(Collectors.toList());
-        expectedProtocol.add("100");
+        List<String> expectedProtocol = IntStream.rangeClosed(1, SimpleStackProtocol.MAX_SIZE).mapToObj(i -> "ok").collect(Collectors.toList());
+        expectedProtocol.add(SimpleStackProtocol.MAX_SIZE + "");
         expectedProtocol.add("ok");
         expectedProtocol.add("0");
         assertThat(protocol.generateProtocol(commands)).isEqualTo(expectedProtocol);

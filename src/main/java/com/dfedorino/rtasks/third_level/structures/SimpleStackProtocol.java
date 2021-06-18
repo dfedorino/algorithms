@@ -31,5 +31,6 @@ public interface SimpleStackProtocol {
      * @param commands - последовательность команд
      * @return последовательность строчек согласно переданным командам
      */
+    int MAX_SIZE = 100;
     List<String> generateProtocol(List<String> commands);
 }
