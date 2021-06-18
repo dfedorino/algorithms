@@ -6,6 +6,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -48,6 +50,46 @@ public class SimpleStackProtocolTest {
     public void testGenerateProtocol_whenExit_thenBye(String name, SimpleStackProtocol protocol) {
         List<String> commands = List.of("exit");
         assertThat(protocol.generateProtocol(commands)).isEqualTo(List.of("bye"));
+    }
+
+    @Test(dataProvider = "implementations")
+    public void testGenerateProtocol_whenPushToEmptyStack_thenSizeIncrements(String name, SimpleStackProtocol protocol) {
+        List<String> commands = List.of("size", "push 1", "size");
+        assertThat(protocol.generateProtocol(commands)).isEqualTo(List.of("0", "ok", "1"));
+    }
+
+    @Test(dataProvider = "implementations")
+    public void testGenerateProtocol_whenPushMaxNumberOfElementsToEmptyStack_thenSizeIsMax(String name, SimpleStackProtocol protocol) {
+        List<String> commands = IntStream.rangeClosed(1, 100).mapToObj(i -> "push " + i).collect(Collectors.toList());
+        commands.add("size");
+        List<String> expectedProtocol = IntStream.rangeClosed(1, 100).mapToObj(i -> "ok").collect(Collectors.toList());
+        expectedProtocol.add("100");
+        assertThat(protocol.generateProtocol(commands)).isEqualTo(expectedProtocol);
+    }
+
+    @Test(dataProvider = "implementations")
+    public void testGenerateProtocol_whenPopAfterPush_thenSizeDecrements(String name, SimpleStackProtocol protocol) {
+        List<String> commands = List.of("size", "push 1", "pop", "size");
+        assertThat(protocol.generateProtocol(commands)).isEqualTo(List.of("0", "ok", "1", "0"));
+    }
+
+    @Test(dataProvider = "implementations")
+    public void testGenerateProtocol_whenBackAfterPush_thenSizeIsSame(String name, SimpleStackProtocol protocol) {
+        List<String> commands = List.of("size", "push 1", "back", "size");
+        assertThat(protocol.generateProtocol(commands)).isEqualTo(List.of("0", "ok", "1", "1"));
+    }
+
+    @Test(dataProvider = "implementations")
+    public void testGenerateProtocol_whenPushMaxNumberOfElementsAndClear_thenSizeIsZero(String name, SimpleStackProtocol protocol) {
+        List<String> commands = IntStream.rangeClosed(1, 100).mapToObj(i -> "push " + i).collect(Collectors.toList());
+        commands.add("size");
+        commands.add("clear");
+        commands.add("size");
+        List<String> expectedProtocol = IntStream.rangeClosed(1, 100).mapToObj(i -> "ok").collect(Collectors.toList());
+        expectedProtocol.add("100");
+        expectedProtocol.add("ok");
+        expectedProtocol.add("0");
+        assertThat(protocol.generateProtocol(commands)).isEqualTo(expectedProtocol);
     }
 
     @Test(dataProvider = "implementations")

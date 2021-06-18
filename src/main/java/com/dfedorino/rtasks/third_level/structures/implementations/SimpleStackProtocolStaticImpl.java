@@ -4,6 +4,7 @@ package com.dfedorino.rtasks.third_level.structures.implementations;
 import com.dfedorino.rtasks.third_level.structures.SimpleStackProtocol;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SimpleStackProtocolStaticImpl implements SimpleStackProtocol {
@@ -25,10 +26,8 @@ public class SimpleStackProtocolStaticImpl implements SimpleStackProtocol {
             } else if (command.equals("size")) {
                 protocol.add(size + "");
             } else if (command.equals("clear")) {
-                while (size != 0) {
-                    stack[size--] = 0;
-                }
-                stack[0] = 0;
+                Arrays.fill(stack, 0);
+                size = 0;
                 protocol.add("ok");
             } else if (command.equals("exit")) {
                 protocol.add("bye");
