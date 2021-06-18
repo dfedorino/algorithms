@@ -3,7 +3,7 @@ package com.dfedorino.rtasks.third_level;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProtectedQueue {
+public class ProtectedQueueProtocolDynamicImpl implements ProtectedQueueProtocol {
 
     /**
      * Реализуйте структуру данных "очередь". Напишите программу, содержащую описание очереди и
@@ -41,44 +41,29 @@ public class ProtectedQueue {
 
     public List<String> generateProtocol(List<String> commands) {
         List<String> protocol = new ArrayList<>();
-        int[] queue = new int[200];
-        int first = 0;
-        int last = -1;
-        int size = 0;
+        ProtectedQueue<Integer> queue = new ProtectedDequeProtocolDynamicImpl.ProtectedDequeImpl<>();
         for (String command : commands) {
             if (command.startsWith("push ")) {
                 int toBeAdded = Integer.parseInt(command.split(" ")[1]);
-                if (last == queue.length - 1) {
-                    last = -1;
-                }
-                queue[++last] = toBeAdded;
-                size++;
+                queue.pushBack(toBeAdded);
                 protocol.add("ok");
             } else if (command.equals("pop")) {
-                if (size == 0) {
-                    protocol.add("error");
-                } else {
-                    int popped = queue[first];
-                    if (first == queue.length - 1) {
-                        first = 0;
-                    } else {
-                        first++;
-                    }
-                    size--;
+                try {
+                    Integer popped = queue.popFront();
                     protocol.add(popped + "");
+                } catch (EmptyQueueException e) {
+                    protocol.add("error");
                 }
             } else if (command.equals("front")) {
-                if (size == 0) {
+                try {
+                    protocol.add(queue.front() + "");
+                } catch (EmptyQueueException e) {
                     protocol.add("error");
-                } else {
-                    protocol.add(queue[first] + "");
                 }
             } else if (command.equals("size")) {
-                protocol.add(size + "");
+                protocol.add(queue.size() + "");
             } else if (command.equals("clear")) {
-                first = 0;
-                last = -1;
-                size = 0;
+                queue.clear();
                 protocol.add("ok");
             } else if (command.equals("exit")) {
                 protocol.add("bye");
@@ -89,4 +74,19 @@ public class ProtectedQueue {
         }
         return protocol;
     }
+
+    public interface ProtectedQueue<T> {
+
+        int size();
+
+        boolean pushBack(T element);
+
+        T popFront();
+
+        T front();
+
+        void clear();
+    }
+
+    static class EmptyQueueException extends RuntimeException {}
 }

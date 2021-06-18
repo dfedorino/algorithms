@@ -1,5 +1,6 @@
 package com.dfedorino.rtasks.third_level;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -8,8 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SimpleStackProtocolTest {
 
-    @Test
-    public void testGetSimpleStackProtocol() {
+    @Test(dataProvider = "protocolImplementations")
+    public void testGetSimpleStackProtocol(SimpleStackProtocol protocol) {
         List<String> commands = List.of(
                 "push 3",
                 "push 14",
@@ -25,8 +26,7 @@ public class SimpleStackProtocolTest {
                 "size",
                 "exit"
         );
-        List<String> dynamicStackProtocol = new DynamicSimpleStackProtocol().generateProtocol(commands);
-        List<String> staticStackProtocol = new StaticSimpleStackProtocol().generateProtocol(commands);
+        List<String> actualProtocol = protocol.generateProtocol(commands);
         List<String> expectedProtocol = List.of(
                 "ok",
                 "ok",
@@ -42,7 +42,14 @@ public class SimpleStackProtocolTest {
                 "0",
                 "bye"
         );
-        assertThat(dynamicStackProtocol).isEqualTo(expectedProtocol);
-        assertThat(staticStackProtocol).isEqualTo(expectedProtocol);
+        assertThat(actualProtocol).isEqualTo(expectedProtocol);
+    }
+
+    @DataProvider(name = "protocolImplementations")
+    public Object[][] protocolImplementations() {
+        return new Object[][] {
+                {new SimpleStackProtocolStaticImpl()},
+                {new SimpleStackProtocolDynamicImpl()}
+        };
     }
 }
