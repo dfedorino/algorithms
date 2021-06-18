@@ -32,5 +32,6 @@ public interface ProtectedQueueProtocol {
      * @param commands - последовательность команд
      * @return последовательность строчек согласно переданным командам
      */
+    int MAX_SIZE = 200;
     List<String> generateProtocol(List<String> commands);
 }
