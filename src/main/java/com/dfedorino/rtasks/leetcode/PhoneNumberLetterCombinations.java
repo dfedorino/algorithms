@@ -1,6 +1,7 @@
 package com.dfedorino.rtasks.leetcode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,21 +41,21 @@ public class PhoneNumberLetterCombinations {
 
     private List<String> letterCombinations(int index, String digits) {
         if (index == digits.length()) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         } else {
             List<String> previousCombinations = letterCombinations(index + 1, digits);
             List<String> currentDigitLetters = digitAndLettersMap.get(digits.charAt(index));
-            List<String> currentCombinations = new ArrayList<>();
             if (previousCombinations.isEmpty()) {
-                currentCombinations.addAll(currentDigitLetters);
+                return Collections.unmodifiableList(currentDigitLetters);
             } else {
+                List<String> currentCombinations = new ArrayList<>();
                 for (String letter : currentDigitLetters) {
                     for (String combination : previousCombinations) {
                         currentCombinations.add(letter + combination);
                     }
                 }
+                return currentCombinations;
             }
-            return currentCombinations;
         }
     }
 }
