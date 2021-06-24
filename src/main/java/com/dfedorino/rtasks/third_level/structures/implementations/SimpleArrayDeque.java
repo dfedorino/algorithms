@@ -1,0 +1,62 @@
+package com.dfedorino.rtasks.third_level.structures.implementations;
+
+import java.util.Arrays;
+
+public class SimpleArrayDeque<T> {
+    protected Object[] array;
+    protected int capacity;
+    private int size = 0;
+    protected int indexOfFirst = -1;
+    protected int indexOfLast = -1;
+
+    public SimpleArrayDeque() {
+        array = new Object[16];
+        capacity = 16;
+    }
+
+    public SimpleArrayDeque(int customCapacity) {
+        array = new Object[customCapacity];
+        capacity = customCapacity;
+    }
+
+    public String addLast(T element) {
+        if (size + 1 > capacity) {
+            resize();
+        }
+        if (indexOfFirst == -1 & indexOfLast == -1) {
+            indexOfFirst = indexOfLast = 0;
+        } else if (indexOfLast == capacity - 1) {
+            indexOfLast = 0;
+        } else {
+            indexOfLast++;
+        }
+        array[indexOfLast] = element;
+        size++;
+        return "ok";
+    }
+
+    public String popFirst() {
+        if (size == 0) {
+            return "error";
+        }
+        String deleted = array[indexOfFirst++].toString();
+        size--;
+        if (indexOfLast < indexOfFirst) {
+            indexOfFirst = -1;
+            indexOfLast = -1;
+        }
+        return deleted;
+    }
+
+    public String getSize() {
+        return size + "";
+    }
+
+    protected void resize() {
+        Object[] newArray = new Object[capacity * 2];
+        System.arraycopy(array, 0, newArray, 0, size);
+        Arrays.fill(array, null);
+        array = newArray;
+        capacity = array.length;
+    }
+}
