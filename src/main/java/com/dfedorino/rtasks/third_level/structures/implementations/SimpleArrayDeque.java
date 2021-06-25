@@ -108,4 +108,11 @@ public class SimpleArrayDeque<T> {
         array = newArray;
         capacity = array.length;
     }
+
+    public String front() {
+        if (size == 0) {
+            return "error";
+        }
+        return array[indexOfFirst].toString();
+    }
 }
