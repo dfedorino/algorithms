@@ -2,8 +2,6 @@ package com.dfedorino.rtasks.third_level.structures.implementations;
 
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SimpleArrayDequeTest {
@@ -501,6 +499,70 @@ public class SimpleArrayDequeTest {
         deque.popFirst();
         assertThat(deque.indexOfFirst).isEqualTo(-1);
         assertThat(deque.indexOfLast).isEqualTo(-1);
-        System.out.println(">> deque array state -> " + Arrays.toString(deque.array));
+    }
+
+    // Pop Last Tests
+    @Test
+    public void testPopLast_whenEmptyDeque_thenErrorString() {
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
+        assertThat(deque.popLast()).isEqualTo("error");
+    }
+
+    @Test
+    public void testPopLast_whenOneElementAdded_thenRemovedValue() {
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
+        deque.addLast(1);
+        assertThat(deque.popLast()).isEqualTo("1");
+    }
+
+    @Test
+    public void testPopLast_whenOneElementAdded_thenSizeIsZero() {
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
+        deque.addLast(1);
+        deque.popLast();
+        assertThat(deque.getSize()).isEqualTo("0");
+    }
+
+    @Test
+    public void testPopLast_whenOneElementAdded_thenResetIndexOfFirstAndIndexOfLast() {
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
+        deque.addLast(1);
+        deque.popLast();
+        assertThat(deque.indexOfFirst).isEqualTo(-1);
+        assertThat(deque.indexOfLast).isEqualTo(-1);
+    }
+
+    @Test
+    public void testPopLast_whenTwoElementsAdded_thenUpdateIndexOfLast() {
+        int initialCapacity = 2;
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
+
+        deque.addLast(1);
+        deque.addLast(2);
+        assertThat(deque.indexOfLast).isEqualTo(1);
+        deque.popLast();
+        assertThat(deque.indexOfLast).isEqualTo(0);
+    }
+
+    @Test
+    public void testPopLast_whenIndexOfFirstAndIndexOfLastAreEqual_thenResetIndexOfFirstAndIndexOfLast() {
+        int initialCapacity = 3;
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
+        deque.addLast(0);
+        deque.addLast(1);
+        deque.addLast(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 1, 2});
+        assertThat(deque.indexOfFirst).isEqualTo(0);
+        assertThat(deque.indexOfLast).isEqualTo(2);
+
+        deque.popLast();
+        assertThat(deque.indexOfLast).isEqualTo(1);
+
+        deque.popLast();
+        assertThat(deque.indexOfLast).isEqualTo(0);
+
+        deque.popLast();
+        assertThat(deque.indexOfFirst).isEqualTo(-1);
+        assertThat(deque.indexOfLast).isEqualTo(-1);
     }
 }

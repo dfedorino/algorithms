@@ -70,6 +70,23 @@ public class SimpleArrayDeque<T> {
         return deleted;
     }
 
+    public String popLast() {
+        if (size == 0) {
+            return "error";
+        }
+        String deleted = array[indexOfLast].toString();
+        if (indexOfLast == indexOfFirst) {
+            indexOfFirst = -1;
+            indexOfLast = -1;
+        } else if (indexOfLast == 0) {
+            indexOfLast = capacity - 1;
+        } else {
+            indexOfLast--;
+        }
+        size--;
+        return deleted;
+    }
+
     public String getSize() {
         return size + "";
     }
