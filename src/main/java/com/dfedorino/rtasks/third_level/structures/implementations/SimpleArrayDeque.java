@@ -19,27 +19,8 @@ public class SimpleArrayDeque<T> {
         capacity = customCapacity;
     }
 
-    public String addLast(T element) {
-        if (size + 1 > capacity) {
-            resize();
-        }
-        if (indexOfFirst == -1 & indexOfLast == -1) {
-            indexOfFirst = indexOfLast = 0;
-        } else if (indexOfLast == capacity - 1) {
-            indexOfLast = 0;
-        } else {
-            indexOfLast++;
-        }
-        array[indexOfLast] = element;
-        size++;
-        return "ok";
-    }
-
-
-    public String addFirst(T element) {
-        if (size + 1 > capacity) {
-            resize();
-        }
+    public String pushFront(T element) {
+        checkIfNeedToResize();
         if (indexOfFirst == -1 & indexOfLast == -1) {
             indexOfFirst = indexOfLast = 0;
         } else if (indexOfFirst == 0) {
@@ -52,7 +33,21 @@ public class SimpleArrayDeque<T> {
         return "ok";
     }
 
-    public String popFirst() {
+    public String pushBack(T element) {
+        checkIfNeedToResize();
+        if (indexOfFirst == -1 & indexOfLast == -1) {
+            indexOfFirst = indexOfLast = 0;
+        } else if (indexOfLast == capacity - 1) {
+            indexOfLast = 0;
+        } else {
+            indexOfLast++;
+        }
+        array[indexOfLast] = element;
+        size++;
+        return "ok";
+    }
+
+    public String popFront() {
         if (size == 0) {
             return "error";
         }
@@ -69,7 +64,7 @@ public class SimpleArrayDeque<T> {
         return deleted;
     }
 
-    public String popLast() {
+    public String popBack() {
         if (size == 0) {
             return "error";
         }
@@ -86,8 +81,36 @@ public class SimpleArrayDeque<T> {
         return deleted;
     }
 
+    public String front() {
+        if (size == 0) {
+            return "error";
+        }
+        return getElementAtIndex(indexOfFirst);
+    }
+
+    public String back() {
+        if (size == 0) {
+            return "error";
+        }
+        return getElementAtIndex(indexOfLast);
+    }
+
     public String getSize() {
         return size + "";
+    }
+
+    public String clear() {
+        if (size == 0) {
+            return "error";
+        }
+        indexOfFirst = -1;
+        indexOfLast = -1;
+        size = 0;
+        return "ok";
+    }
+
+    public String exit() {
+        return "bye";
     }
 
     protected void resize() {
@@ -108,35 +131,13 @@ public class SimpleArrayDeque<T> {
         capacity = array.length;
     }
 
-    public String front() {
-        if (size == 0) {
-            return "error";
+    private void checkIfNeedToResize() {
+        if (size + 1 > capacity) {
+            resize();
         }
-        return getElementAtIndex(indexOfFirst);
-    }
-
-    public String back() {
-        if (size == 0) {
-            return "error";
-        }
-        return getElementAtIndex(indexOfLast);
     }
 
     private String getElementAtIndex(int index) {
         return array[index].toString();
-    }
-
-    public String clear() {
-        if (size == 0) {
-            return "error";
-        }
-        indexOfFirst = -1;
-        indexOfLast = -1;
-        size = 0;
-        return "ok";
-    }
-
-    public String exit() {
-        return "bye";
     }
 }

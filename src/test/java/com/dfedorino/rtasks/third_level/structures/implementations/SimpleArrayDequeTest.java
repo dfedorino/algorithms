@@ -39,13 +39,13 @@ public class SimpleArrayDequeTest {
     @Test
     public void testAddLast_whenFirstElement_thenOk() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        assertThat(deque.addLast(1)).isEqualTo("ok");
+        assertThat(deque.pushBack(1)).isEqualTo("ok");
     }
 
     @Test
     public void testAddLast_whenFirstElement_thenSizeIs1() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        deque.addLast(1);
+        deque.pushBack(1);
         assertThat(deque.getSize()).isEqualTo("1");
     }
 
@@ -53,8 +53,8 @@ public class SimpleArrayDequeTest {
     public void testAddLast_whenFirstElement_thenIndexOfFirstAndIndexOfLastAreSame() {
         int initialCapacity = 2;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
-        deque.addLast(1);
-        assertThat(deque.array).isEqualTo(new Object[] {1, null});
+        deque.pushBack(1);
+        assertThat(deque.array).isEqualTo(new Object[]{1, null});
 
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(0);
@@ -65,11 +65,11 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 2;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(1);
-        assertThat(deque.array).isEqualTo(new Object[] {1, null});
+        deque.pushBack(1);
+        assertThat(deque.array).isEqualTo(new Object[]{1, null});
 
-        deque.addLast(2);
-        assertThat(deque.array).isEqualTo(new Object[] {1, 2});
+        deque.pushBack(2);
+        assertThat(deque.array).isEqualTo(new Object[]{1, 2});
 
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(1);
@@ -80,9 +80,9 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
+        deque.pushBack(0);
+        deque.pushBack(1);
+        deque.pushBack(2);
 
         assertThat(deque.capacity).isEqualTo(initialCapacity);
         assertThat(deque.getSize()).isEqualTo(initialCapacity + "");
@@ -93,9 +93,9 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
+        deque.pushBack(0);
+        deque.pushBack(1);
+        deque.pushBack(2);
 
         int expectedIndexOfLast = initialCapacity - 1; // 2
         assertThat(deque.indexOfFirst).isEqualTo(0);
@@ -107,14 +107,14 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(0);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, null});
+        deque.pushBack(0);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, null});
 
-        deque.addLast(1);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 1, null});
+        deque.pushBack(1);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 1, null});
 
-        deque.addLast(2);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 1, 2});
+        deque.pushBack(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 1, 2});
     }
 
     @Test
@@ -122,12 +122,12 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
+        deque.pushBack(0);
+        deque.pushBack(1);
+        deque.pushBack(2);
         assertThat(deque.capacity).isEqualTo(initialCapacity);
 
-        deque.addLast(3);
+        deque.pushBack(3);
         assertThat(deque.capacity).isEqualTo(initialCapacity * 2);
     }
 
@@ -136,20 +136,20 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 1, 2});
+        deque.pushBack(0);
+        deque.pushBack(1);
+        deque.pushBack(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(2);
 
-        deque.popFirst();
-        assertThat(deque.array).isEqualTo(new Object[] {0, 1, 2});
+        deque.popFront();
+        assertThat(deque.array).isEqualTo(new Object[]{0, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(2);
 
-        deque.addLast(3);
-        assertThat(deque.array).isEqualTo(new Object[] {3, 1, 2});
+        deque.pushBack(3);
+        assertThat(deque.array).isEqualTo(new Object[]{3, 1, 2});
         assertThat(deque.indexOfLast).isEqualTo(0);
         assertThat(deque.array[0]).isEqualTo(3);
 
@@ -163,45 +163,45 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 1, 2});
+        deque.pushBack(0);
+        deque.pushBack(1);
+        deque.pushBack(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 1, 2});
 
-        deque.popFirst();
-        assertThat(deque.array).isEqualTo(new Object[] {0, 1, 2});
+        deque.popFront();
+        assertThat(deque.array).isEqualTo(new Object[]{0, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(2);
 
-        deque.addLast(3);
-        assertThat(deque.array).isEqualTo(new Object[] {3, 1, 2});
+        deque.pushBack(3);
+        assertThat(deque.array).isEqualTo(new Object[]{3, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.popFirst();
-        assertThat(deque.array).isEqualTo(new Object[] {3, 1, 2});
+        deque.popFront();
+        assertThat(deque.array).isEqualTo(new Object[]{3, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(2);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.popFirst();
-        assertThat(deque.array).isEqualTo(new Object[] {3, 1, 2});
+        deque.popFront();
+        assertThat(deque.array).isEqualTo(new Object[]{3, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.popFirst();
-        assertThat(deque.array).isEqualTo(new Object[] {3, 1, 2});
+        deque.popFront();
+        assertThat(deque.array).isEqualTo(new Object[]{3, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(-1);
         assertThat(deque.indexOfLast).isEqualTo(-1);
         assertThat(deque.getSize()).isEqualTo("0");
 
-        deque.addLast(4);
-        assertThat(deque.array).isEqualTo(new Object[] {4, 1, 2});
+        deque.pushBack(4);
+        assertThat(deque.array).isEqualTo(new Object[]{4, 1, 2});
 
-        deque.addLast(5);
-        assertThat(deque.array).isEqualTo(new Object[] {4, 5, 2});
+        deque.pushBack(5);
+        assertThat(deque.array).isEqualTo(new Object[]{4, 5, 2});
 
-        deque.addLast(6);
-        assertThat(deque.array).isEqualTo(new Object[] {4, 5, 6});
+        deque.pushBack(6);
+        assertThat(deque.array).isEqualTo(new Object[]{4, 5, 6});
 
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(2);
@@ -214,30 +214,30 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 1, 2});
+        deque.pushBack(0);
+        deque.pushBack(1);
+        deque.pushBack(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 1, 2});
 
         deque.clear();
 
-        deque.addLast(3);
-        deque.addLast(4);
-        deque.addLast(5);
-        assertThat(deque.array).isEqualTo(new Object[] {3, 4, 5});
+        deque.pushBack(3);
+        deque.pushBack(4);
+        deque.pushBack(5);
+        assertThat(deque.array).isEqualTo(new Object[]{3, 4, 5});
     }
 
     // Add First tests
     @Test
     public void testAddFirst_whenFirstElement_thenOk() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        assertThat(deque.addFirst(1)).isEqualTo("ok");
+        assertThat(deque.pushFront(1)).isEqualTo("ok");
     }
 
     @Test
     public void testAddFirst_whenFirstElement_thenSizeIsOne() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        deque.addFirst(1);
+        deque.pushFront(1);
         assertThat(deque.getSize()).isEqualTo("1");
     }
 
@@ -245,8 +245,8 @@ public class SimpleArrayDequeTest {
     public void testAddFirst_whenFirstElement_thenIndexOfFirstAndIndexOfLastAreSame() {
         int initialCapacity = 2;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
-        deque.addFirst(1);
-        assertThat(deque.array).isEqualTo(new Object[] {1, null});
+        deque.pushFront(1);
+        assertThat(deque.array).isEqualTo(new Object[]{1, null});
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(0);
     }
@@ -255,14 +255,14 @@ public class SimpleArrayDequeTest {
     public void testAddFirst_whenTwoElements_thenIndexOfFirstIs1AndIndexOfLastIs0SizeAndInitialCapacityAreEqual() {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
-        assertThat(deque.array).isEqualTo(new Object[] {null, null, null});
+        assertThat(deque.array).isEqualTo(new Object[]{null, null, null});
 
-        deque.addFirst(0);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, null});
-        deque.addFirst(1);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, 1});
-        deque.addFirst(2);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 2, 1});
+        deque.pushFront(0);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, null});
+        deque.pushFront(1);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, 1});
+        deque.pushFront(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 2, 1});
 
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
@@ -276,18 +276,18 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addFirst(0);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, null});
+        deque.pushFront(0);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, null});
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.addFirst(1);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, 1});
+        deque.pushFront(1);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, 1});
         assertThat(deque.indexOfFirst).isEqualTo(2);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.addFirst(2);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 2, 1});
+        deque.pushFront(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 2, 1});
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
     }
@@ -296,20 +296,20 @@ public class SimpleArrayDequeTest {
     public void testAddFirst_whenAddMaxElements_thenOrderIsReversed() {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
-        assertThat(deque.array).isEqualTo(new Object[] {null, null, null});
+        assertThat(deque.array).isEqualTo(new Object[]{null, null, null});
 
-        deque.addFirst(0);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, null});
+        deque.pushFront(0);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, null});
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.addFirst(1);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, 1});
+        deque.pushFront(1);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, 1});
         assertThat(deque.indexOfFirst).isEqualTo(2);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.addFirst(2);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 2, 1});
+        deque.pushFront(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 2, 1});
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
     }
@@ -319,16 +319,16 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addFirst(0);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, null});
-        deque.addFirst(1);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, 1});
-        deque.addFirst(2);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 2, 1});
+        deque.pushFront(0);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, null});
+        deque.pushFront(1);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, 1});
+        deque.pushFront(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 2, 1});
         assertThat(deque.capacity).isEqualTo(initialCapacity);
 
-        deque.addFirst(3);
-        assertThat(deque.array).isEqualTo(new Object[] {2, 1, 0, null, null, 3});
+        deque.pushFront(3);
+        assertThat(deque.array).isEqualTo(new Object[]{2, 1, 0, null, null, 3});
         assertThat(deque.capacity).isEqualTo(initialCapacity * 2);
     }
 
@@ -336,24 +336,24 @@ public class SimpleArrayDequeTest {
     public void testAddFirst_whenAddMaxElementsThenPopFirstThenAddFirst_thenCapacityIsSameSizeIsMaxIndexOfFirstIs1() {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
-        assertThat(deque.array).isEqualTo(new Object[] {null, null, null});
+        assertThat(deque.array).isEqualTo(new Object[]{null, null, null});
 
-        deque.addFirst(0);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, null});
+        deque.pushFront(0);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, null});
 
-        deque.addFirst(1);
-        assertThat(deque.array).isEqualTo(new Object[] {0, null, 1});
+        deque.pushFront(1);
+        assertThat(deque.array).isEqualTo(new Object[]{0, null, 1});
 
-        deque.addFirst(2);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 2, 1});
+        deque.pushFront(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 2, 1});
         assertThat(deque.indexOfFirst).isEqualTo(1);
 
-        deque.popFirst();
-        assertThat(deque.array).isEqualTo(new Object[] {0, 2, 1});
+        deque.popFront();
+        assertThat(deque.array).isEqualTo(new Object[]{0, 2, 1});
         assertThat(deque.indexOfFirst).isEqualTo(2);
 
-        deque.addFirst(3);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 3, 1});
+        deque.pushFront(3);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 3, 1});
         assertThat(deque.indexOfFirst).isEqualTo(1);
 
         assertThat(deque.capacity).isEqualTo(initialCapacity);
@@ -364,35 +364,35 @@ public class SimpleArrayDequeTest {
     public void testAddFirst_whenAfterReset_thenElementsAreAddedFromTheBeginning() {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
-        deque.addFirst(0);
-        deque.addFirst(1);
-        deque.addFirst(2);
-        assertThat(deque.array).isEqualTo(new Object[] {0, 2, 1});
+        deque.pushFront(0);
+        deque.pushFront(1);
+        deque.pushFront(2);
+        assertThat(deque.array).isEqualTo(new Object[]{0, 2, 1});
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.popFirst();
+        deque.popFront();
         assertThat(deque.indexOfFirst).isEqualTo(2);
 
-        deque.popFirst();
+        deque.popFront();
         assertThat(deque.indexOfFirst).isEqualTo(0);
 
-        deque.popFirst();
+        deque.popFront();
         assertThat(deque.indexOfFirst).isEqualTo(-1);
         assertThat(deque.indexOfLast).isEqualTo(-1);
 
-        deque.addFirst(4);
-        assertThat(deque.array).isEqualTo(new Object[] {4, 2, 1});
+        deque.pushFront(4);
+        assertThat(deque.array).isEqualTo(new Object[]{4, 2, 1});
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.addFirst(5);
-        assertThat(deque.array).isEqualTo(new Object[] {4, 2, 5});
+        deque.pushFront(5);
+        assertThat(deque.array).isEqualTo(new Object[]{4, 2, 5});
         assertThat(deque.indexOfFirst).isEqualTo(2);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.addFirst(6);
-        assertThat(deque.array).isEqualTo(new Object[] {4, 6, 5});
+        deque.pushFront(6);
+        assertThat(deque.array).isEqualTo(new Object[]{4, 6, 5});
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
     }
@@ -403,7 +403,7 @@ public class SimpleArrayDequeTest {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
         int initialCapacity = deque.capacity;
         for (int i = 0; i < initialCapacity + 1; i++) {
-            deque.addLast(i);
+            deque.pushBack(i);
         }
         assertThat(deque.capacity).isEqualTo(initialCapacity * 2);
     }
@@ -413,10 +413,10 @@ public class SimpleArrayDequeTest {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(5);
         int initialCapacity = deque.capacity;
         for (int i = 0; i < initialCapacity; i++) {
-            deque.addLast(i);
+            deque.pushBack(i);
         }
 
-        deque.addLast(5);
+        deque.pushBack(5);
 
         assertThat(deque.capacity).isEqualTo(initialCapacity * 2);
         assertThat(deque.indexOfFirst).isEqualTo(0);
@@ -429,19 +429,19 @@ public class SimpleArrayDequeTest {
         int initialCapacity = deque.capacity;
 
         for (int i = 0; i < initialCapacity; i++) {
-            deque.addLast(i);
+            deque.pushBack(i);
         }
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(4);
 
-        deque.popFirst();
+        deque.popFront();
 
-        deque.addLast(5);
+        deque.pushBack(5);
 
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.addLast(6);
+        deque.pushBack(6);
 
         assertThat(deque.capacity).isEqualTo(initialCapacity * 2);
         assertThat(deque.indexOfFirst).isEqualTo(0);
@@ -452,29 +452,29 @@ public class SimpleArrayDequeTest {
     @Test
     public void testPopFirst_whenEmptyDeque_thenErrorString() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        assertThat(deque.popFirst()).isEqualTo("error");
+        assertThat(deque.popFront()).isEqualTo("error");
     }
 
     @Test
     public void testPopFirst_whenOneElementAdded_thenRemovedValue() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        deque.addLast(1);
-        assertThat(deque.popFirst()).isEqualTo("1");
+        deque.pushBack(1);
+        assertThat(deque.popFront()).isEqualTo("1");
     }
 
     @Test
     public void testPopFirst_whenOneElementAdded_thenSizeIsZero() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        deque.addLast(1);
-        deque.popFirst();
+        deque.pushBack(1);
+        deque.popFront();
         assertThat(deque.getSize()).isEqualTo("0");
     }
 
     @Test
     public void testPopFirst_whenOneElementAdded_thenResetIndexOfFirstAndIndexOfLast() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        deque.addLast(1);
-        deque.popFirst();
+        deque.pushBack(1);
+        deque.popFront();
         assertThat(deque.indexOfFirst).isEqualTo(-1);
         assertThat(deque.indexOfLast).isEqualTo(-1);
     }
@@ -482,39 +482,39 @@ public class SimpleArrayDequeTest {
     @Test
     public void testPopFirst_whenTwoElementsAdded_thenIncrementIndexOfFirst() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        deque.addLast(1);
-        deque.addLast(2);
+        deque.pushBack(1);
+        deque.pushBack(2);
         assertThat(deque.indexOfFirst).isEqualTo(0);
-        deque.popFirst();
+        deque.popFront();
         assertThat(deque.indexOfFirst).isEqualTo(1);
     }
 
     @Test
     public void testPopFirst_whenIndexOfFirstAndIndexOfLastAreEqual_thenResetIndexOfFirstAndIndexOfLast() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(3);
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
+        deque.pushBack(0);
+        deque.pushBack(1);
+        deque.pushBack(2);
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(2);
 
-        deque.popFirst();
+        deque.popFront();
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(2);
 
-        deque.addLast(3);
+        deque.pushBack(3);
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.popFirst();
+        deque.popFront();
         assertThat(deque.indexOfFirst).isEqualTo(2);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.popFirst();
+        deque.popFront();
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.popFirst();
+        deque.popFront();
         assertThat(deque.indexOfFirst).isEqualTo(-1);
         assertThat(deque.indexOfLast).isEqualTo(-1);
     }
@@ -523,29 +523,29 @@ public class SimpleArrayDequeTest {
     @Test
     public void testPopLast_whenEmptyDeque_thenErrorString() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        assertThat(deque.popLast()).isEqualTo("error");
+        assertThat(deque.popBack()).isEqualTo("error");
     }
 
     @Test
     public void testPopLast_whenOneElementAdded_thenRemovedValue() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        deque.addLast(1);
-        assertThat(deque.popLast()).isEqualTo("1");
+        deque.pushBack(1);
+        assertThat(deque.popBack()).isEqualTo("1");
     }
 
     @Test
     public void testPopLast_whenOneElementAdded_thenSizeIsZero() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        deque.addLast(1);
-        deque.popLast();
+        deque.pushBack(1);
+        deque.popBack();
         assertThat(deque.getSize()).isEqualTo("0");
     }
 
     @Test
     public void testPopLast_whenOneElementAdded_thenResetIndexOfFirstAndIndexOfLast() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        deque.addLast(1);
-        deque.popLast();
+        deque.pushBack(1);
+        deque.popBack();
         assertThat(deque.indexOfFirst).isEqualTo(-1);
         assertThat(deque.indexOfLast).isEqualTo(-1);
     }
@@ -555,10 +555,10 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 2;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(1);
-        deque.addLast(2);
+        deque.pushBack(1);
+        deque.pushBack(2);
         assertThat(deque.indexOfLast).isEqualTo(1);
-        deque.popLast();
+        deque.popBack();
         assertThat(deque.indexOfLast).isEqualTo(0);
     }
 
@@ -566,20 +566,20 @@ public class SimpleArrayDequeTest {
     public void testPopLast_whenIndexOfFirstAndIndexOfLastAreEqual_thenResetIndexOfFirstAndIndexOfLast() {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
+        deque.pushBack(0);
+        deque.pushBack(1);
+        deque.pushBack(2);
         assertThat(deque.array).isEqualTo(new Object[]{0, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(2);
 
-        deque.popLast();
+        deque.popBack();
         assertThat(deque.indexOfLast).isEqualTo(1);
 
-        deque.popLast();
+        deque.popBack();
         assertThat(deque.indexOfLast).isEqualTo(0);
 
-        deque.popLast();
+        deque.popBack();
         assertThat(deque.indexOfFirst).isEqualTo(-1);
         assertThat(deque.indexOfLast).isEqualTo(-1);
     }
@@ -596,9 +596,9 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
+        deque.pushBack(0);
+        deque.pushBack(1);
+        deque.pushBack(2);
         assertThat(deque.array).isEqualTo(new Object[]{0, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(2);
@@ -614,9 +614,9 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addFirst(0);
-        deque.addFirst(1);
-        deque.addFirst(2);
+        deque.pushFront(0);
+        deque.pushFront(1);
+        deque.pushFront(2);
         assertThat(deque.array).isEqualTo(new Object[]{0, 2, 1});
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
@@ -639,9 +639,9 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
+        deque.pushBack(0);
+        deque.pushBack(1);
+        deque.pushBack(2);
         assertThat(deque.array).isEqualTo(new Object[]{0, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(2);
@@ -657,9 +657,9 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addFirst(0);
-        deque.addFirst(1);
-        deque.addFirst(2);
+        deque.pushFront(0);
+        deque.pushFront(1);
+        deque.pushFront(2);
         assertThat(deque.array).isEqualTo(new Object[]{0, 2, 1});
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
@@ -682,9 +682,9 @@ public class SimpleArrayDequeTest {
         int initialCapacity = 3;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
 
-        deque.addFirst(0);
-        deque.addFirst(1);
-        deque.addFirst(2);
+        deque.pushFront(0);
+        deque.pushFront(1);
+        deque.pushFront(2);
         assertThat(deque.capacity).isEqualTo(initialCapacity);
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
