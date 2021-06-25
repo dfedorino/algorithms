@@ -135,4 +135,8 @@ public class SimpleArrayDeque<T> {
         size = 0;
         return "ok";
     }
+
+    public String exit() {
+        return "bye";
+    }
 }
