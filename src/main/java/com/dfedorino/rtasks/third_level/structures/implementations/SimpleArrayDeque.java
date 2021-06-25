@@ -36,6 +36,23 @@ public class SimpleArrayDeque<T> {
         return "ok";
     }
 
+
+    public String addFirst(T element) {
+        if (size + 1 > capacity) {
+            resize();
+        }
+        if (indexOfFirst == -1 & indexOfLast == -1) {
+            indexOfFirst = indexOfLast = 0;
+        } else if (indexOfFirst == 0) {
+            indexOfFirst = capacity - 1;
+        } else {
+            indexOfFirst--;
+        }
+        array[indexOfFirst] = element;
+        size++;
+        return "ok";
+    }
+
     public String popFirst() {
         if (size == 0) {
             return "error";
