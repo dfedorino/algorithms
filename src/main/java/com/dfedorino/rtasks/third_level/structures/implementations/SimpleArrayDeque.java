@@ -54,7 +54,17 @@ public class SimpleArrayDeque<T> {
 
     protected void resize() {
         Object[] newArray = new Object[capacity * 2];
-        System.arraycopy(array, 0, newArray, 0, size);
+        if (indexOfLast >= indexOfFirst) {
+            int elementsToCopy = indexOfLast - indexOfFirst + 1;
+            System.arraycopy(array, indexOfFirst, newArray, 0, elementsToCopy);
+        } else {
+            int elementsToCopyFromIndexOfFirstToEnd = capacity - indexOfFirst;
+            int elementsToCopyFromZeroToIndexOfLast = indexOfLast + 1;
+            System.arraycopy(array, indexOfFirst, newArray, 0, elementsToCopyFromIndexOfFirstToEnd);
+            System.arraycopy(array, 0, newArray, elementsToCopyFromIndexOfFirstToEnd, elementsToCopyFromZeroToIndexOfLast);
+            indexOfFirst = 0;
+            indexOfLast = size - 1;
+        }
         Arrays.fill(array, null);
         array = newArray;
         capacity = array.length;

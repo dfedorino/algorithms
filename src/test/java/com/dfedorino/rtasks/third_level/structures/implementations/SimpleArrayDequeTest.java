@@ -138,6 +138,46 @@ public class SimpleArrayDequeTest {
         assertThat(deque.capacity).isEqualTo(initialCapacity * 2);
     }
 
+    @Test
+    public void testResize_whenIndexOfLastIsMoreThanIndexOfFirst_thenCapacityIsDoubledAndIndexOfLastIsMoreThanIndexOfFirst() {
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(5);
+        int initialCapacity = deque.capacity;
+
+        for (int i = 0; i < initialCapacity; i++) {
+            deque.addLast(i);
+        }
+
+        deque.addLast(initialCapacity);
+
+        assertThat(deque.capacity).isEqualTo(initialCapacity * 2);
+        assertThat(deque.indexOfFirst).isEqualTo(0);
+        assertThat(deque.indexOfLast).isEqualTo(initialCapacity);
+    }
+
+    @Test
+    public void testResize_whenIndexOfLastIsLessThanIndexOfFirst_thenCapacityIsDoubledAndIndexOfLastIsMoreThanIndexOfFirst() {
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(5);
+        int initialCapacity = deque.capacity;
+        for (int i = 0; i < initialCapacity; i++) {
+            deque.addLast(i);
+        }
+        assertThat(deque.indexOfFirst).isEqualTo(0);
+        assertThat(deque.indexOfLast).isEqualTo(4);
+
+        deque.popFirst();
+
+        deque.addLast(5);
+
+        assertThat(deque.indexOfFirst).isEqualTo(1);
+        assertThat(deque.indexOfLast).isEqualTo(0);
+
+        deque.addLast(6);
+
+        assertThat(deque.capacity).isEqualTo(initialCapacity * 2);
+        assertThat(deque.indexOfFirst).isEqualTo(0);
+        assertThat(deque.indexOfLast).isEqualTo(5);
+    }
+
     // Pop First Tests
     @Test
     public void testPopFirst_whenEmptyDeque_thenErrorString() {
