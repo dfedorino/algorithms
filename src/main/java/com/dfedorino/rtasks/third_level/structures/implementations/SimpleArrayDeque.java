@@ -1,5 +1,6 @@
 package com.dfedorino.rtasks.third_level.structures.implementations;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
 
 public class SimpleArrayDeque<T> {
@@ -39,12 +40,16 @@ public class SimpleArrayDeque<T> {
         if (size == 0) {
             return "error";
         }
-        String deleted = array[indexOfFirst++].toString();
-        size--;
-        if (indexOfLast < indexOfFirst) {
+        String deleted = array[indexOfFirst].toString();
+        if (indexOfLast == indexOfFirst) {
             indexOfFirst = -1;
             indexOfLast = -1;
+        } else if (indexOfFirst == capacity - 1) {
+            indexOfFirst = 0;
+        } else {
+            indexOfFirst++;
         }
+        size--;
         return deleted;
     }
 
