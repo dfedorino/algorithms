@@ -209,6 +209,24 @@ public class SimpleArrayDequeTest {
         assertThat(deque.getSize()).isEqualTo("3");
     }
 
+    @Test
+    public void testAddLast_whenAfterClear_thenElementsAreAddedFromTheBeginning() {
+        int initialCapacity = 3;
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
+
+        deque.addLast(0);
+        deque.addLast(1);
+        deque.addLast(2);
+        assertThat(deque.array).isEqualTo(new Object[] {0, 1, 2});
+
+        deque.clear();
+
+        deque.addLast(3);
+        deque.addLast(4);
+        deque.addLast(5);
+        assertThat(deque.array).isEqualTo(new Object[] {3, 4, 5});
+    }
+
     // Add First tests
     @Test
     public void testAddFirst_whenFirstElement_thenOk() {
@@ -650,5 +668,33 @@ public class SimpleArrayDequeTest {
         assertThat(deque.array).isEqualTo(new Object[]{0, 2, 1});
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
+    }
+
+    // Clear Tests
+    @Test
+    public void testClear_whenDequeIsEmpty_thenError() {
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
+        assertThat(deque.clear()).isEqualTo("error");
+    }
+
+    @Test
+    public void testClear_whenDequeWithElements_thenOkSizeIs0IndexOfFirstAndIndexOfLastAreUpdatedNewCapacityIsSame() {
+        int initialCapacity = 3;
+        SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(initialCapacity);
+
+        deque.addFirst(0);
+        deque.addFirst(1);
+        deque.addFirst(2);
+        assertThat(deque.capacity).isEqualTo(initialCapacity);
+        assertThat(deque.indexOfFirst).isEqualTo(1);
+        assertThat(deque.indexOfLast).isEqualTo(0);
+        assertThat(deque.getSize()).isEqualTo("3");
+
+        assertThat(deque.clear()).isEqualTo("ok");
+
+        assertThat(deque.capacity).isEqualTo(initialCapacity);
+        assertThat(deque.indexOfFirst).isEqualTo(-1);
+        assertThat(deque.indexOfLast).isEqualTo(-1);
+        assertThat(deque.getSize()).isEqualTo("0");
     }
 }

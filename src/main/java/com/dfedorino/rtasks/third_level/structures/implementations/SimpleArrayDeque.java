@@ -125,4 +125,14 @@ public class SimpleArrayDeque<T> {
     private String getElementAtIndex(int index) {
         return array[index].toString();
     }
+
+    public String clear() {
+        if (size == 0) {
+            return "error";
+        }
+        indexOfFirst = -1;
+        indexOfLast = -1;
+        size = 0;
+        return "ok";
+    }
 }
