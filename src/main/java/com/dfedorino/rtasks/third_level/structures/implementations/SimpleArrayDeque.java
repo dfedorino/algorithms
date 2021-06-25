@@ -1,6 +1,5 @@
 package com.dfedorino.rtasks.third_level.structures.implementations;
 
-import java.util.ArrayDeque;
 import java.util.Arrays;
 
 public class SimpleArrayDeque<T> {
@@ -113,6 +112,17 @@ public class SimpleArrayDeque<T> {
         if (size == 0) {
             return "error";
         }
-        return array[indexOfFirst].toString();
+        return getElementAtIndex(indexOfFirst);
+    }
+
+    public String back() {
+        if (size == 0) {
+            return "error";
+        }
+        return getElementAtIndex(indexOfLast);
+    }
+
+    private String getElementAtIndex(int index) {
+        return array[index].toString();
     }
 }
