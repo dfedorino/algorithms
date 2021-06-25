@@ -25,14 +25,14 @@ public class SimpleArrayDequeTest {
     @Test
     public void testSize_whenNoArgsConstructor_thenSizeIs0() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
-        assertThat(deque.getSize()).isEqualTo("0");
+        assertThat(deque.size()).isEqualTo("0");
     }
 
     @Test
     public void testSize_whenConstructorWithCapacity_thenSizeIs0() {
         int customCapacity = 32;
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>(customCapacity);
-        assertThat(deque.getSize()).isEqualTo("0");
+        assertThat(deque.size()).isEqualTo("0");
     }
 
     // Add Last tests
@@ -46,7 +46,7 @@ public class SimpleArrayDequeTest {
     public void testAddLast_whenFirstElement_thenSizeIs1() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
         deque.pushBack(1);
-        assertThat(deque.getSize()).isEqualTo("1");
+        assertThat(deque.size()).isEqualTo("1");
     }
 
     @Test
@@ -85,7 +85,7 @@ public class SimpleArrayDequeTest {
         deque.pushBack(2);
 
         assertThat(deque.capacity).isEqualTo(initialCapacity);
-        assertThat(deque.getSize()).isEqualTo(initialCapacity + "");
+        assertThat(deque.size()).isEqualTo(initialCapacity + "");
     }
 
     @Test
@@ -155,7 +155,7 @@ public class SimpleArrayDequeTest {
 
         assertThat(deque.capacity).isEqualTo(initialCapacity);
         String expectedSize = initialCapacity + ""; // 3
-        assertThat(deque.getSize()).isEqualTo(expectedSize);
+        assertThat(deque.size()).isEqualTo(expectedSize);
     }
 
     @Test
@@ -192,7 +192,7 @@ public class SimpleArrayDequeTest {
         assertThat(deque.array).isEqualTo(new Object[]{3, 1, 2});
         assertThat(deque.indexOfFirst).isEqualTo(-1);
         assertThat(deque.indexOfLast).isEqualTo(-1);
-        assertThat(deque.getSize()).isEqualTo("0");
+        assertThat(deque.size()).isEqualTo("0");
 
         deque.pushBack(4);
         assertThat(deque.array).isEqualTo(new Object[]{4, 1, 2});
@@ -206,7 +206,7 @@ public class SimpleArrayDequeTest {
         assertThat(deque.indexOfFirst).isEqualTo(0);
         assertThat(deque.indexOfLast).isEqualTo(2);
 
-        assertThat(deque.getSize()).isEqualTo("3");
+        assertThat(deque.size()).isEqualTo("3");
     }
 
     @Test
@@ -238,7 +238,7 @@ public class SimpleArrayDequeTest {
     public void testAddFirst_whenFirstElement_thenSizeIsOne() {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
         deque.pushFront(1);
-        assertThat(deque.getSize()).isEqualTo("1");
+        assertThat(deque.size()).isEqualTo("1");
     }
 
     @Test
@@ -268,7 +268,7 @@ public class SimpleArrayDequeTest {
         assertThat(deque.indexOfLast).isEqualTo(0);
 
         assertThat(deque.capacity).isEqualTo(initialCapacity);
-        assertThat(deque.getSize()).isEqualTo(initialCapacity + "");
+        assertThat(deque.size()).isEqualTo(initialCapacity + "");
     }
 
     @Test
@@ -357,7 +357,7 @@ public class SimpleArrayDequeTest {
         assertThat(deque.indexOfFirst).isEqualTo(1);
 
         assertThat(deque.capacity).isEqualTo(initialCapacity);
-        assertThat(deque.getSize()).isEqualTo("3");
+        assertThat(deque.size()).isEqualTo("3");
     }
 
     @Test
@@ -467,7 +467,7 @@ public class SimpleArrayDequeTest {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
         deque.pushBack(1);
         deque.popFront();
-        assertThat(deque.getSize()).isEqualTo("0");
+        assertThat(deque.size()).isEqualTo("0");
     }
 
     @Test
@@ -538,7 +538,7 @@ public class SimpleArrayDequeTest {
         SimpleArrayDeque<Integer> deque = new SimpleArrayDeque<>();
         deque.pushBack(1);
         deque.popBack();
-        assertThat(deque.getSize()).isEqualTo("0");
+        assertThat(deque.size()).isEqualTo("0");
     }
 
     @Test
@@ -688,13 +688,13 @@ public class SimpleArrayDequeTest {
         assertThat(deque.capacity).isEqualTo(initialCapacity);
         assertThat(deque.indexOfFirst).isEqualTo(1);
         assertThat(deque.indexOfLast).isEqualTo(0);
-        assertThat(deque.getSize()).isEqualTo("3");
+        assertThat(deque.size()).isEqualTo("3");
 
         assertThat(deque.clear()).isEqualTo("ok");
 
         assertThat(deque.capacity).isEqualTo(initialCapacity);
         assertThat(deque.indexOfFirst).isEqualTo(-1);
         assertThat(deque.indexOfLast).isEqualTo(-1);
-        assertThat(deque.getSize()).isEqualTo("0");
+        assertThat(deque.size()).isEqualTo("0");
     }
 }

@@ -1,8 +1,10 @@
 package com.dfedorino.rtasks.third_level.structures.implementations;
 
+import com.dfedorino.rtasks.third_level.structures.Protocol;
+
 import java.util.Arrays;
 
-public class SimpleArrayDeque<T> {
+public class SimpleArrayDeque<T> implements Protocol.ProtectedDeque<T> {
     protected Object[] array;
     protected int capacity;
     private int size = 0;
@@ -95,7 +97,7 @@ public class SimpleArrayDeque<T> {
         return getElementAtIndex(indexOfLast);
     }
 
-    public String getSize() {
+    public String size() {
         return size + "";
     }
 
