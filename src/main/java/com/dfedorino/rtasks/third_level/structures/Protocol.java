@@ -3,7 +3,11 @@ package com.dfedorino.rtasks.third_level.structures;
 import java.util.List;
 
 public interface Protocol {
-    List<String> generateProtocol(List<String> commands);
+    List<String> generateProtocolForStack(List<String> commands);
+
+    List<String> generateProtocolForQueue(List<String> commands);
+
+    List<String> generateProtocolForDeque(List<String> commands);
 
     interface SimpleStack<T> {
         int MAX_SIZE = 100;
@@ -28,7 +32,7 @@ public interface Protocol {
 
         String popFront();
 
-        String back();
+        String front();
 
         String size();
 
