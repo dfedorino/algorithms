@@ -14,24 +14,27 @@ public class MergeIntervals {
      * @return an array of the non-overlapping intervals that cover all the intervals in the input
      */
     public int[][] merge(int[][] intervals) {
-        if (intervals.length == 1) {
-            return intervals;
-        }
         Arrays.sort(intervals, Comparator.comparingInt((int[] subArray) -> subArray[0]));
         List<int[]> result = new ArrayList<>();
+        int leftBorder = intervals[0][0];
+        int rightBorder = intervals[0][1];
         for (int i = 1; i <= intervals.length; i++) {
             if (i == intervals.length) {
-                result.add(intervals[i - 1]);
+                result.add(new int[] {leftBorder, rightBorder});
                 break;
             }
-            int[] right = intervals[i];
-            int[] left = intervals[i - 1];
-            boolean isMergeable = right[0] <= left[1];
-            if (isMergeable) {
-                intervals[i] = new int[] {left[0], Math.max(left[1], right[1])};
+            int[] current = intervals[i];
+            int leftBorderOfCurrent = current[0];
+            int rightBorderOfPrevious = rightBorder;
+            boolean canBeMerged = rightBorderOfPrevious >= leftBorderOfCurrent;
+            if (canBeMerged) {
+                rightBorder = Math.max(rightBorder, current[1]);
             } else {
-                result.add(left);
+                result.add(new int[] {leftBorder, rightBorder});
+                leftBorder = current[0];
+                rightBorder = current[1];
             }
+            result.forEach(interval -> System.out.println(Arrays.toString(interval)));
         }
         return result.toArray(new int[0][]);
     }
