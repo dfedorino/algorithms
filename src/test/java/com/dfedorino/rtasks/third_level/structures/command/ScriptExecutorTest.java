@@ -1,18 +1,22 @@
-package com.dfedorino.rtasks.third_level.structures.implementations;
+package com.dfedorino.rtasks.third_level.structures.command;
 
 import org.testng.annotations.Test;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.*;
 
-public class ProtocolImplTest {
-    private final ProtocolImpl protocolGenerator = new ProtocolImpl();
+public class ScriptExecutorTest {
+    private final ScriptExecutor executor = new ScriptExecutor();
 
     @Test
-    public void testGenerateProtocolForStack() {
-        List<String> commands = List.of(
+    public void testGenerateProtocol_whenStackScript_thenExpectedProtocol() {
+        Stack<Integer> stack = new Stack<>();
+        List<String> script = List.of(
                 "push 3",
                 "push 14",
                 "size",
@@ -27,7 +31,6 @@ public class ProtocolImplTest {
                 "size",
                 "exit"
         );
-        List<String> actualProtocol = protocolGenerator.generateProtocolForStack(commands);
         List<String> expectedProtocol = List.of(
                 "ok",
                 "ok",
@@ -42,38 +45,33 @@ public class ProtocolImplTest {
                 "1",
                 "0",
                 "bye"
+
         );
+        List<String> actualProtocol = executor.generateProtocol(stack, script);
         assertThat(actualProtocol).isEqualTo(expectedProtocol);
     }
 
     @Test
-    public void testGenerateProtocolForQueue() {
-        List<String> commands = List.of(
-                "size",
+    public void testGenerateProtocol_whenQueueScript_thenExpectedProtocol() {
+        Queue<Integer> queue = new ArrayDeque<>();
+        List<String> script = List.of(
                 "push 1",
-                "size",
-                "push 2",
-                "size",
-                "push 3",
-                "size",
+                "front",
                 "exit"
         );
         List<String> expectedProtocol = List.of(
-                "0",
                 "ok",
                 "1",
-                "ok",
-                "2",
-                "ok",
-                "3",
                 "bye"
         );
-        assertThat(protocolGenerator.generateProtocolForQueue(commands)).isEqualTo(expectedProtocol);
+        List<String> actualProtocol = executor.generateProtocol(queue, script);
+        assertThat(actualProtocol).isEqualTo(expectedProtocol);
     }
 
     @Test
-    public void testGenerateProtocolForDeque() {
-        List<String> commands = List.of(
+    public void testGenerateProtocol_whenDequeScript_thenExpectedProtocol() {
+        Deque<Integer> deque = new ArrayDeque<>();
+        List<String> script = List.of(
                 "size",
                 "push_back 1",
                 "size",
@@ -82,7 +80,6 @@ public class ProtocolImplTest {
                 "push_front 3",
                 "size",
                 "exit"
-
         );
         List<String> expectedProtocol = List.of(
                 "0",
@@ -94,6 +91,7 @@ public class ProtocolImplTest {
                 "3",
                 "bye"
         );
-        assertThat(protocolGenerator.generateProtocolForDeque(commands)).isEqualTo(expectedProtocol);
+        List<String> actualProtocol = executor.generateProtocol(deque, script);
+        assertThat(actualProtocol).isEqualTo(expectedProtocol);
     }
 }

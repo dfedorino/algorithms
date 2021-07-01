@@ -1,4 +1,4 @@
-package com.dfedorino.rtasks.third_level.structures;
+package com.dfedorino.rtasks.third_level.structures.implementations;
 
 import java.util.List;
 
@@ -27,10 +27,7 @@ public interface SimpleStackProtocol {
      *
      * Выходные данные
      * Требуется вывести протокол работы со стеком, по 1 сообщению в строке
-     *
-     * @param commands - последовательность команд
-     * @return последовательность строчек согласно переданным командам
      */
     int MAX_SIZE = 100;
-    List<String> generateProtocol(List<String> commands);
+    List<String> generateProtocol(List<String> script);
 }

@@ -1,7 +1,5 @@
-package com.dfedorino.rtasks.third_level.structures;
+package com.dfedorino.rtasks.third_level.structures.implementations;
 
-import com.dfedorino.rtasks.third_level.structures.implementations.SimpleStackProtocolDynamicImpl;
-import com.dfedorino.rtasks.third_level.structures.implementations.SimpleStackProtocolStaticImpl;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -131,8 +129,7 @@ public class SimpleStackProtocolTest {
     @DataProvider(name = "implementations")
     public Object[][] implementations() {
         return new Object[][] {
-                {"Static implementation", new SimpleStackProtocolStaticImpl()},
-                {"Dynamic implementation", new SimpleStackProtocolDynamicImpl()}
+                {"Static implementation", new SimpleStackProtocolStaticImpl()}
         };
     }
 }
