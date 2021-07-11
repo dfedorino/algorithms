@@ -29,7 +29,7 @@ public class ScriptExecutorTest {
                 "size",
                 "exit"
         );
-        CommandBuilder<Stack<Integer>> commandBuilder = new StackCommandBuilder(script, stack);
+        CommandBuilder<Stack<Integer>> commandBuilder = new StackCommandBuilder(script);
         List<Command<Stack<Integer>>> stackCommands = commandBuilder.buildCommands(); // commands
         ScriptExecutor<Stack<Integer>> stackScriptExecutor = new ScriptExecutor<>(stackCommands); // sender
         List<String> actualProtocol = stackScriptExecutor.generateProtocol(stack);
@@ -60,7 +60,7 @@ public class ScriptExecutorTest {
                 "front",
                 "exit"
         );
-        CommandBuilder<Queue<Integer>> commandBuilder = new QueueCommandBuilder(script, queue);
+        CommandBuilder<Queue<Integer>> commandBuilder = new QueueCommandBuilder(script);
         List<Command<Queue<Integer>>> commands = commandBuilder.buildCommands(); // commands
         ScriptExecutor<Queue<Integer>> queueScriptExecutor = new ScriptExecutor<>(commands); // sender
         List<String> actualProtocol = queueScriptExecutor.generateProtocol(queue);
@@ -85,7 +85,7 @@ public class ScriptExecutorTest {
                 "size",
                 "exit"
         );
-        CommandBuilder<Deque<Integer>> commandBuilder = new DequeCommandBuilder(script, deque);
+        CommandBuilder<Deque<Integer>> commandBuilder = new DequeCommandBuilder(script);
         List<Command<Deque<Integer>>> commands = commandBuilder.buildCommands(); // commands
         ScriptExecutor<Deque<Integer>> dequeScriptExecutor = new ScriptExecutor<>(commands); // sender
         List<String> actualProtocol = dequeScriptExecutor.generateProtocol(deque);

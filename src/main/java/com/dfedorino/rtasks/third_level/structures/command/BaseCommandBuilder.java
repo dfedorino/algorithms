@@ -2,8 +2,8 @@ package com.dfedorino.rtasks.third_level.structures.command;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public abstract class BaseCommandBuilder<T extends Collection<?>> implements CommandBuilder<T>{
@@ -22,15 +22,15 @@ public abstract class BaseCommandBuilder<T extends Collection<?>> implements Com
 
     public abstract Command<T> buildCommand(String commandString);
 
-    protected static <T extends Collection<?>> Command<T> pushCommand(String commandString, Consumer<Integer> collectionMethod) {
-        return (T collection) -> {
+    protected static <T extends Collection<?>> Command<T> pushCommand(String commandString, BiConsumer<T, Integer> collectionMethod) {
+        return (collection) -> {
             Integer data = Integer.parseInt(commandString.split(" ")[1]);
-            collectionMethod.accept(data);
+            collectionMethod.accept(collection, data);
             return new CommandResult("ok");
         };
     }
 
-    protected static <T extends Collection<?>> Command<T> command(Supplier<Integer> collectionPopMethod) {
-        return (T collection) -> new CommandResult(String.valueOf(collectionPopMethod.get()));
+    protected static <T extends Collection<?>> Command<T> command(Function<T, Integer> collectionPopMethod) {
+        return (T collection) -> new CommandResult(String.valueOf(collectionPopMethod.apply(collection)));
     }
 }

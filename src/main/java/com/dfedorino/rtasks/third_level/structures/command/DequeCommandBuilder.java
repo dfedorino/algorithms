@@ -4,29 +4,27 @@ import java.util.Deque;
 import java.util.List;
 
 public class DequeCommandBuilder extends BaseCommandBuilder<Deque<Integer>> {
-    private final Deque<Integer> deque;
 
-    public DequeCommandBuilder(List<String> commands, Deque<Integer> deque) {
+    public DequeCommandBuilder(List<String> commands) {
         super(commands);
-        this.deque = deque;
     }
 
     @Override
     public Command<Deque<Integer>> buildCommand(String commandString) {
         if (commandString.startsWith("push_front")) {
-            return pushCommand(commandString, deque::addFirst);
+            return pushCommand(commandString, Deque::addFirst);
         } else if (commandString.startsWith("push_back")) {
-            return pushCommand(commandString, deque::addLast);
+            return pushCommand(commandString, Deque::addLast);
         } else if (commandString.equals("pop_front")) {
-            return command(deque::pollFirst);
+            return command(Deque::pollFirst);
         } else if (commandString.equals("pop_back")) {
-            return command(deque::pollLast);
+            return command(Deque::pollLast);
         } else if (commandString.equals("front")) {
-            return command(deque::peekFirst);
+            return command(Deque::peekFirst);
         } else if (commandString.equals("back")) {
-            return command(deque::peekLast);
+            return command(Deque::peekLast);
         } else if (commandString.equals("size")) {
-            return command(deque::size);
+            return command(Deque::size);
         } else if (commandString.equals("clear")) {
             return (deque) -> {
                 deque.clear();

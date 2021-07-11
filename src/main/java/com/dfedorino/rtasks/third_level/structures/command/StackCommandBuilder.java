@@ -4,23 +4,21 @@ import java.util.List;
 import java.util.Stack;
 
 public class StackCommandBuilder extends BaseCommandBuilder<Stack<Integer>> {
-    private final Stack<Integer> stack;
 
-    public StackCommandBuilder(List<String> commands, Stack<Integer> stack) {
+    public StackCommandBuilder(List<String> commands) {
         super(commands);
-        this.stack = stack;
     }
 
     @Override
     public Command<Stack<Integer>> buildCommand(String commandString) {
         if (commandString.startsWith("push")) {
-            return pushCommand(commandString, stack::push);
+            return pushCommand(commandString, Stack::push);
         } else if (commandString.equals("pop")) {
-            return command(stack::pop);
+            return command(Stack::pop);
         } else if (commandString.equals("back")) {
-            return command(stack::peek);
+            return command(Stack::peek);
         } else if (commandString.equals("size")) {
-            return command(stack::size);
+            return command(Stack::size);
         } else if (commandString.equals("clear")) {
             return (stack) -> {
                 stack.clear();

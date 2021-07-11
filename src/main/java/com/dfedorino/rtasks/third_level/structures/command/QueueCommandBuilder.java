@@ -4,23 +4,21 @@ import java.util.List;
 import java.util.Queue;
 
 public class QueueCommandBuilder extends BaseCommandBuilder<Queue<Integer>> {
-    private final Queue<Integer> queue;
 
-    public QueueCommandBuilder(List<String> commands, Queue<Integer> queue) {
+    public QueueCommandBuilder(List<String> commands) {
         super(commands);
-        this.queue = queue;
     }
 
     @Override
     public Command<Queue<Integer>> buildCommand(String commandString) {
         if (commandString.startsWith("push")) {
-            return pushCommand(commandString, queue::offer);
+            return pushCommand(commandString, Queue::offer);
         } else if (commandString.equals("pop")) {
             return (queue) -> queue.isEmpty() ? new CommandResult("error") : new CommandResult(String.valueOf(queue.poll()));
         } else if (commandString.equals("front")) {
             return (queue) -> queue.isEmpty() ? new CommandResult("error") : new CommandResult(String.valueOf(queue.peek()));
         } else if (commandString.equals("size")) {
-            return command(queue::size);
+            return command(Queue::size);
         } else if (commandString.equals("clear")) {
             return (queue) -> {
                 queue.clear();
