@@ -12,7 +12,7 @@ public class DequeCommandBuilder extends BaseCommandBuilder {
     }
 
     @Override
-    public Command buildCommand(String commandString) {
+    public Command<Deque<Integer>> buildCommand(String commandString) {
         if (commandString.startsWith("push_front")) {
             return pushCommand(commandString, deque::addFirst);
         } else if (commandString.startsWith("push_back")) {

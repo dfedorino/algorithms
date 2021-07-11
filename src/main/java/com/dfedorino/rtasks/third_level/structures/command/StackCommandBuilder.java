@@ -12,7 +12,7 @@ public class StackCommandBuilder extends BaseCommandBuilder {
     }
 
     @Override
-    public Command buildCommand(String commandString) {
+    public Command<Stack<Integer>> buildCommand(String commandString) {
         if (commandString.startsWith("push")) {
             return pushCommand(commandString, stack::push);
         } else if (commandString.equals("pop")) {

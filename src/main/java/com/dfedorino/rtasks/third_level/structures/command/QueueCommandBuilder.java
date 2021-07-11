@@ -12,7 +12,7 @@ public class QueueCommandBuilder extends BaseCommandBuilder {
     }
 
     @Override
-    public Command buildCommand(String commandString) {
+    public Command<Queue<Integer>> buildCommand(String commandString) {
         if (commandString.startsWith("push")) {
             return pushCommand(commandString, queue::offer);
         } else if (commandString.equals("pop")) {
