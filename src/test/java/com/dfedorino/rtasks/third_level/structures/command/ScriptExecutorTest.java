@@ -29,10 +29,10 @@ public class ScriptExecutorTest {
                 "size",
                 "exit"
         );
-        CommandBuilder commandBuilder = new StackCommandBuilder(script, stack);
-        List<Command> stackCommands = commandBuilder.buildCommands(); // commands
-        ScriptExecutor stackScriptExecutor = new ScriptExecutor(stackCommands); // sender
-        List<String> actualProtocol = stackScriptExecutor.generateProtocol();
+        CommandBuilder<Stack<Integer>> commandBuilder = new StackCommandBuilder(script, stack);
+        List<Command<Stack<Integer>>> stackCommands = commandBuilder.buildCommands(); // commands
+        ScriptExecutor<Stack<Integer>> stackScriptExecutor = new ScriptExecutor<>(stackCommands); // sender
+        List<String> actualProtocol = stackScriptExecutor.generateProtocol(stack);
         List<String> expectedProtocol = List.of(
                 "ok",
                 "ok",
@@ -60,10 +60,10 @@ public class ScriptExecutorTest {
                 "front",
                 "exit"
         );
-        CommandBuilder commandBuilder = new QueueCommandBuilder(script, queue);
-        List<Command> commands = commandBuilder.buildCommands(); // commands
-        ScriptExecutor queueScriptExecutor = new ScriptExecutor(commands); // sender
-        List<String> actualProtocol = queueScriptExecutor.generateProtocol();
+        CommandBuilder<Queue<Integer>> commandBuilder = new QueueCommandBuilder(script, queue);
+        List<Command<Queue<Integer>>> commands = commandBuilder.buildCommands(); // commands
+        ScriptExecutor<Queue<Integer>> queueScriptExecutor = new ScriptExecutor<>(commands); // sender
+        List<String> actualProtocol = queueScriptExecutor.generateProtocol(queue);
         List<String> expectedProtocol = List.of(
                 "ok",
                 "1",
@@ -85,10 +85,10 @@ public class ScriptExecutorTest {
                 "size",
                 "exit"
         );
-        CommandBuilder commandBuilder = new DequeCommandBuilder(script, deque);
-        List<Command> commands = commandBuilder.buildCommands(); // commands
-        ScriptExecutor dequeScriptExecutor = new ScriptExecutor(commands); // sender
-        List<String> actualProtocol = dequeScriptExecutor.generateProtocol();
+        CommandBuilder<Deque<Integer>> commandBuilder = new DequeCommandBuilder(script, deque);
+        List<Command<Deque<Integer>>> commands = commandBuilder.buildCommands(); // commands
+        ScriptExecutor<Deque<Integer>> dequeScriptExecutor = new ScriptExecutor<>(commands); // sender
+        List<String> actualProtocol = dequeScriptExecutor.generateProtocol(deque);
         List<String> expectedProtocol = List.of(
                 "0",
                 "ok",

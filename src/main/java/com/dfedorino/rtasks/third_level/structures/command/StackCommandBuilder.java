@@ -22,12 +22,12 @@ public class StackCommandBuilder extends BaseCommandBuilder<Stack<Integer>> {
         } else if (commandString.equals("size")) {
             return command(stack::size);
         } else if (commandString.equals("clear")) {
-            return () -> {
+            return (stack) -> {
                 stack.clear();
                 return new CommandResult("ok");
             };
         } else if (commandString.equals("exit")) {
-            return () -> new CommandResult("bye");
+            return (stack) -> new CommandResult("bye");
         } else {
             throw new UnsupportedOperationException();
         }

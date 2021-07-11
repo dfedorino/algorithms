@@ -28,12 +28,12 @@ public class DequeCommandBuilder extends BaseCommandBuilder<Deque<Integer>> {
         } else if (commandString.equals("size")) {
             return command(deque::size);
         } else if (commandString.equals("clear")) {
-            return () -> {
+            return (deque) -> {
                 deque.clear();
                 return new CommandResult("ok");
             };
         } else if (commandString.equals("exit")) {
-            return () -> new CommandResult("bye");
+            return (deque) -> new CommandResult("bye");
         } else {
             throw new UnsupportedOperationException();
         }

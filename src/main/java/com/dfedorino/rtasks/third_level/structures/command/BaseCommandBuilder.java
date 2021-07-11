@@ -23,7 +23,7 @@ public abstract class BaseCommandBuilder<T extends Collection<?>> implements Com
     public abstract Command<T> buildCommand(String commandString);
 
     protected static <T extends Collection<?>> Command<T> pushCommand(String commandString, Consumer<Integer> collectionMethod) {
-        return () -> {
+        return (T collection) -> {
             Integer data = Integer.parseInt(commandString.split(" ")[1]);
             collectionMethod.accept(data);
             return new CommandResult("ok");
@@ -31,6 +31,6 @@ public abstract class BaseCommandBuilder<T extends Collection<?>> implements Com
     }
 
     protected static <T extends Collection<?>> Command<T> command(Supplier<Integer> collectionPopMethod) {
-        return () -> new CommandResult(String.valueOf(collectionPopMethod.get()));
+        return (T collection) -> new CommandResult(String.valueOf(collectionPopMethod.get()));
     }
 }

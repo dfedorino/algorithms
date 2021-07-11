@@ -16,18 +16,18 @@ public class QueueCommandBuilder extends BaseCommandBuilder<Queue<Integer>> {
         if (commandString.startsWith("push")) {
             return pushCommand(commandString, queue::offer);
         } else if (commandString.equals("pop")) {
-            return () -> queue.isEmpty() ? new CommandResult("error") : new CommandResult(String.valueOf(queue.poll()));
+            return (queue) -> queue.isEmpty() ? new CommandResult("error") : new CommandResult(String.valueOf(queue.poll()));
         } else if (commandString.equals("front")) {
-            return () -> queue.isEmpty() ? new CommandResult("error") : new CommandResult(String.valueOf(queue.peek()));
+            return (queue) -> queue.isEmpty() ? new CommandResult("error") : new CommandResult(String.valueOf(queue.peek()));
         } else if (commandString.equals("size")) {
             return command(queue::size);
         } else if (commandString.equals("clear")) {
-            return () -> {
+            return (queue) -> {
                 queue.clear();
                 return new CommandResult("ok");
             };
         } else if (commandString.equals("exit")) {
-            return () -> new CommandResult("bye");
+            return (queue) -> new CommandResult("bye");
         } else {
             throw new UnsupportedOperationException();
         }
