@@ -3,7 +3,7 @@ package com.dfedorino.rtasks.third_level.structures.command;
 import java.util.List;
 import java.util.Stack;
 
-public class StackCommandBuilder extends BaseCommandBuilder {
+public class StackCommandBuilder extends BaseCommandBuilder<Stack<Integer>> {
     private final Stack<Integer> stack;
 
     public StackCommandBuilder(List<String> commands, Stack<Integer> stack) {

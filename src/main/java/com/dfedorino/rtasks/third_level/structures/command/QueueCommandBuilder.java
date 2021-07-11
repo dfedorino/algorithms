@@ -3,7 +3,7 @@ package com.dfedorino.rtasks.third_level.structures.command;
 import java.util.List;
 import java.util.Queue;
 
-public class QueueCommandBuilder extends BaseCommandBuilder {
+public class QueueCommandBuilder extends BaseCommandBuilder<Queue<Integer>> {
     private final Queue<Integer> queue;
 
     public QueueCommandBuilder(List<String> commands, Queue<Integer> queue) {

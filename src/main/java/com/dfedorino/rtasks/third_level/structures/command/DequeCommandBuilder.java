@@ -3,7 +3,7 @@ package com.dfedorino.rtasks.third_level.structures.command;
 import java.util.Deque;
 import java.util.List;
 
-public class DequeCommandBuilder extends BaseCommandBuilder {
+public class DequeCommandBuilder extends BaseCommandBuilder<Deque<Integer>> {
     private final Deque<Integer> deque;
 
     public DequeCommandBuilder(List<String> commands, Deque<Integer> deque) {
