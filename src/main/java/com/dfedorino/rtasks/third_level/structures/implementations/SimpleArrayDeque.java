@@ -1,10 +1,8 @@
 package com.dfedorino.rtasks.third_level.structures.implementations;
 
-import com.dfedorino.rtasks.third_level.structures.Protocol;
-
 import java.util.Arrays;
 
-public class SimpleArrayDeque<T> implements Protocol.ProtectedDeque<T> {
+public class SimpleArrayDeque<T> {
     protected Object[] array;
     protected int capacity;
     private int size = 0;

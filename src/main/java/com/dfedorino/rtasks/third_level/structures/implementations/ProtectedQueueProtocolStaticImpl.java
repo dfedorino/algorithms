@@ -1,11 +1,9 @@
 package com.dfedorino.rtasks.third_level.structures.implementations;
 
-import com.dfedorino.rtasks.third_level.structures.ProtectedQueueProtocol;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProtectedQueueProtocolStaticImpl implements ProtectedQueueProtocol {
+public class ProtectedQueueProtocolStaticImpl {
 
     /**
      * Реализуйте структуру данных "очередь". Напишите программу, содержащую описание очереди и

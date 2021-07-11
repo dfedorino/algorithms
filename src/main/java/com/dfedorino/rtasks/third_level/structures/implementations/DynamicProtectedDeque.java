@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.util.Objects;
 
-public class DynamicProtectedDeque<T> implements ProtectedDequeProtocolDynamicImpl.ProtectedDeque<T> {
+public class DynamicProtectedDeque<T> {
     private final Node<T> head;
     private final Node<T> tail;
     private int size = 0;
@@ -16,8 +16,7 @@ public class DynamicProtectedDeque<T> implements ProtectedDequeProtocolDynamicIm
         tail.setPrevious(head);
     }
 
-    @Override
-    public boolean pushFront(T element) {
+    public void pushFront(T element) {
         Node<T> newNode = new Node<>();
         newNode.setElement(element);
         Node<T> currentAfterHead = head.getNext();
@@ -26,11 +25,9 @@ public class DynamicProtectedDeque<T> implements ProtectedDequeProtocolDynamicIm
         newNode.setNext(currentAfterHead);
         currentAfterHead.setPrevious(newNode);
         size++;
-        return true;
     }
 
-    @Override
-    public boolean pushBack(T element) {
+    public void pushBack(T element) {
         Node<T> newNode = new Node<>();
         newNode.setElement(element);
         Node<T> currentBeforeTail = tail.getPrevious();
@@ -39,13 +36,11 @@ public class DynamicProtectedDeque<T> implements ProtectedDequeProtocolDynamicIm
         newNode.setPrevious(currentBeforeTail);
         currentBeforeTail.setNext(newNode);
         size++;
-        return true;
     }
 
-    @Override
     public T popFront() {
         if (size == 0) {
-            throw new ProtectedDequeProtocolDynamicImpl.EmptyDequeException();
+            throw new EmptyDequeException();
         }
         Node<T> currentAfterHead = head.getNext();
         Node<T> newAfterHead = currentAfterHead.getNext();
@@ -59,10 +54,9 @@ public class DynamicProtectedDeque<T> implements ProtectedDequeProtocolDynamicIm
         return deleted;
     }
 
-    @Override
     public T popBack() {
         if (size == 0) {
-            throw new ProtectedDequeProtocolDynamicImpl.EmptyDequeException();
+            throw new EmptyDequeException();
         }
         Node<T> currentBeforeTail = tail.getPrevious();
         Node<T> newBeforeTail = currentBeforeTail.getPrevious();
@@ -76,28 +70,24 @@ public class DynamicProtectedDeque<T> implements ProtectedDequeProtocolDynamicIm
         return deleted;
     }
 
-    @Override
     public T front() {
         if (size == 0) {
-            throw new ProtectedDequeProtocolDynamicImpl.EmptyDequeException();
+            throw new EmptyDequeException();
         }
         return head.getNext().getElement();
     }
 
-    @Override
     public T back() {
         if (size == 0) {
-            throw new ProtectedDequeProtocolDynamicImpl.EmptyDequeException();
+            throw new EmptyDequeException();
         }
         return tail.getPrevious().getElement();
     }
 
-    @Override
     public int size() {
         return size;
     }
 
-    @Override
     public void clear() {
         Node<T> currentNode = head.getNext();
         while (!(currentNode.getNext() == null)) {
@@ -111,6 +101,8 @@ public class DynamicProtectedDeque<T> implements ProtectedDequeProtocolDynamicIm
         currentNode.setPrevious(head);
         size = 0;
     }
+
+    private static class EmptyDequeException extends RuntimeException {}
 
     @Data
     static class Node<T> {
