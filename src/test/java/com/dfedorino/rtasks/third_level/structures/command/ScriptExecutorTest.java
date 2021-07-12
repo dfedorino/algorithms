@@ -14,7 +14,7 @@ public class ScriptExecutorTest {
     @Test
     public void testGenerateProtocol_whenStackScript_thenExpectedProtocol() {
         Stack<Integer> stack = new Stack<>(); // receiver
-        List<String> script = List.of(
+        List<String> commandStrings = List.of(
                 "push 3",
                 "push 14",
                 "size",
@@ -29,11 +29,11 @@ public class ScriptExecutorTest {
                 "size",
                 "exit"
         );
-        CommandBuilder<Stack<Integer>> commandBuilder = new StackCommandBuilder(script);
-        List<Command<Stack<Integer>>> stackCommands = commandBuilder.buildCommands(); // commands
-        ScriptExecutor<Stack<Integer>> stackScriptExecutor = new ScriptExecutor<>(stackCommands); // sender
-        List<String> actualProtocol = stackScriptExecutor.generateProtocol(stack);
-        List<String> expectedProtocol = List.of(
+        CommandBuilder<Stack<Integer>> commandBuilder = new StackCommandBuilder();
+        Script<Stack<Integer>> stackScript = commandBuilder.buildScript(commandStrings); // commands
+        ScriptExecutor<Stack<Integer>> scriptExecutor = new ScriptExecutor<>(); // sender
+        Protocol<String> actualProtocol = scriptExecutor.generateProtocol(stackScript, stack);
+        Protocol<String> expectedProtocol = new Protocol<>(List.of(
                 "ok",
                 "ok",
                 "2",
@@ -48,34 +48,34 @@ public class ScriptExecutorTest {
                 "0",
                 "bye"
 
-        );
+        ));
         assertThat(actualProtocol).isEqualTo(expectedProtocol);
     }
 
     @Test
     public void testGenerateProtocol_whenQueueScript_thenExpectedProtocol() {
         Queue<Integer> queue = new ArrayDeque<>(); // receiver
-        List<String> script = List.of(
+        List<String> commandStrings = List.of(
                 "push 1",
                 "front",
                 "exit"
         );
-        CommandBuilder<Queue<Integer>> commandBuilder = new QueueCommandBuilder(script);
-        List<Command<Queue<Integer>>> commands = commandBuilder.buildCommands(); // commands
-        ScriptExecutor<Queue<Integer>> queueScriptExecutor = new ScriptExecutor<>(commands); // sender
-        List<String> actualProtocol = queueScriptExecutor.generateProtocol(queue);
-        List<String> expectedProtocol = List.of(
+        CommandBuilder<Queue<Integer>> commandBuilder = new QueueCommandBuilder();
+        Script<Queue<Integer>> queueScript = commandBuilder.buildScript(commandStrings); // commands
+        ScriptExecutor<Queue<Integer>> scriptExecutor = new ScriptExecutor<>(); // sender
+        Protocol<String> actualProtocol = scriptExecutor.generateProtocol(queueScript, queue);
+        Protocol<String> expectedProtocol = new Protocol<>(List.of(
                 "ok",
                 "1",
                 "bye"
-        );
+        ));
         assertThat(actualProtocol).isEqualTo(expectedProtocol);
     }
 
     @Test
     public void testGenerateProtocol_whenDequeScript_thenExpectedProtocol() {
         Deque<Integer> deque = new ArrayDeque<>();
-        List<String> script = List.of(
+        List<String> commandStrings = List.of(
                 "size",
                 "push_back 1",
                 "size",
@@ -85,11 +85,11 @@ public class ScriptExecutorTest {
                 "size",
                 "exit"
         );
-        CommandBuilder<Deque<Integer>> commandBuilder = new DequeCommandBuilder(script);
-        List<Command<Deque<Integer>>> commands = commandBuilder.buildCommands(); // commands
-        ScriptExecutor<Deque<Integer>> dequeScriptExecutor = new ScriptExecutor<>(commands); // sender
-        List<String> actualProtocol = dequeScriptExecutor.generateProtocol(deque);
-        List<String> expectedProtocol = List.of(
+        CommandBuilder<Deque<Integer>> commandBuilder = new DequeCommandBuilder();
+        Script<Deque<Integer>> dequeScript = commandBuilder.buildScript(commandStrings); // commands
+        ScriptExecutor<Deque<Integer>> scriptExecutor = new ScriptExecutor<>(); // sender
+        Protocol<String> actualProtocol = scriptExecutor.generateProtocol(dequeScript, deque);
+        Protocol<String> expectedProtocol = new Protocol<>(List.of(
                 "0",
                 "ok",
                 "1",
@@ -98,7 +98,7 @@ public class ScriptExecutorTest {
                 "ok",
                 "3",
                 "bye"
-        );
+        ));
         assertThat(actualProtocol).isEqualTo(expectedProtocol);
     }
 }
