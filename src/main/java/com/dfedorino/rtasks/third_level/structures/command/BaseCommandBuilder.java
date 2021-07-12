@@ -3,7 +3,6 @@ package com.dfedorino.rtasks.third_level.structures.command;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public abstract class BaseCommandBuilder<T extends Collection<?>> implements CommandBuilder<T>{
@@ -36,9 +35,5 @@ public abstract class BaseCommandBuilder<T extends Collection<?>> implements Com
             collectionMethod.accept(collection, data);
             return new CommandResult("ok");
         };
-    }
-
-    protected static <T extends Collection<?>> Command<T> command(Function<T, Integer> collectionPopMethod) {
-        return (T collection) -> new CommandResult(String.valueOf(collectionPopMethod.apply(collection)));
     }
 }

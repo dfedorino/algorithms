@@ -11,20 +11,21 @@ public class DequeCommandBuilder extends BaseCommandBuilder<Deque<Integer>> {
 
     @Override
     public Command<Deque<Integer>> buildCommand(String commandString) {
+        Commands<Deque<Integer>> commands = new Commands<>();
         if (commandString.startsWith("push_front")) {
             return pushCommand(commandString, Deque::addFirst);
         } else if (commandString.startsWith("push_back")) {
             return pushCommand(commandString, Deque::addLast);
         } else if (commandString.equals("pop_front")) {
-            return command(Deque::pollFirst);
+            return commands.command(Deque::pollFirst);
         } else if (commandString.equals("pop_back")) {
-            return command(Deque::pollLast);
+            return commands.command(Deque::pollLast);
         } else if (commandString.equals("front")) {
-            return command(Deque::peekFirst);
+            return commands.command(Deque::peekFirst);
         } else if (commandString.equals("back")) {
-            return command(Deque::peekLast);
+            return commands.command(Deque::peekLast);
         } else if (commandString.equals("size")) {
-            return command(Deque::size);
+            return commands.command(Deque::size);
         } else if (commandString.equals("clear")) {
             return (deque) -> {
                 deque.clear();

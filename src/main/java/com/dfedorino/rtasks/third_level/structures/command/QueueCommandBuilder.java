@@ -11,6 +11,7 @@ public class QueueCommandBuilder extends BaseCommandBuilder<Queue<Integer>> {
 
     @Override
     public Command<Queue<Integer>> buildCommand(String commandString) {
+        Commands<Queue<Integer>> commands = new Commands<>();
         if (commandString.startsWith("push")) {
             return pushCommand(commandString, Queue::offer);
         } else if (commandString.equals("pop")) {
@@ -18,7 +19,7 @@ public class QueueCommandBuilder extends BaseCommandBuilder<Queue<Integer>> {
         } else if (commandString.equals("front")) {
             return (queue) -> queue.isEmpty() ? new CommandResult("error") : new CommandResult(String.valueOf(queue.peek()));
         } else if (commandString.equals("size")) {
-            return command(Queue::size);
+            return commands.command(Queue::size);
         } else if (commandString.equals("clear")) {
             return (queue) -> {
                 queue.clear();

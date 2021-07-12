@@ -11,14 +11,15 @@ public class StackCommandBuilder extends BaseCommandBuilder<Stack<Integer>> {
 
     @Override
     public Command<Stack<Integer>> buildCommand(String commandString) {
+        Commands<Stack<Integer>> commands = new Commands<>();
         if (commandString.startsWith("push")) {
             return pushCommand(commandString, Stack::push);
         } else if (commandString.equals("pop")) {
-            return command(Stack::pop);
+            return commands.command(Stack::pop);
         } else if (commandString.equals("back")) {
-            return command(Stack::peek);
+            return commands.command(Stack::peek);
         } else if (commandString.equals("size")) {
-            return command(Stack::size);
+            return commands.command(Stack::size);
         } else if (commandString.equals("clear")) {
             return (stack) -> {
                 stack.clear();
