@@ -11,7 +11,7 @@ public class CommandsTest {
     public void testCommand_whenFunction_thenCommandReturned() {
         Commands<Stack<Integer>> commands = new Commands<>();
         Stack<Integer> stack = new Stack<>();
-        CommandResult actualResult = commands.command(Stack::size).execute(stack);
+        CommandResult actualResult = commands.createCommandUsing(Stack::size).execute(stack);
         CommandResult expectedResult = new CommandResult("0");
         assertThat(actualResult).isEqualTo(expectedResult);
     }
@@ -21,7 +21,7 @@ public class CommandsTest {
         Commands<Stack<Integer>> commands = new Commands<>();
         Stack<Integer> stack = new Stack<>();
         String commandString = "push 5";
-        CommandResult actualResult = commands.pushCommand(commandString, Stack::push).execute(stack);
+        CommandResult actualResult = commands.createPushCommandUsing(commandString, Stack::push).execute(stack);
         CommandResult expectedResult = new CommandResult("ok");
         assertThat(actualResult).isEqualTo(expectedResult);
         assertThat(stack)
