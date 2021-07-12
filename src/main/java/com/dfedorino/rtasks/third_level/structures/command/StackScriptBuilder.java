@@ -2,18 +2,18 @@ package com.dfedorino.rtasks.third_level.structures.command;
 
 import java.util.Stack;
 
-public class StackCommandBuilder extends BaseCommandBuilder<Stack<Integer>> {
+public class StackScriptBuilder extends BaseScriptBuilder<Stack<Integer>> {
     @Override
-    public Command<Stack<Integer>> buildCommand(String commandString) {
+    public Command<Stack<Integer>> createCommand(String commandString) {
         Commands<Stack<Integer>> commands = new Commands<>();
         if (commandString.startsWith("push")) {
-            return commands.pushCommand(commandString, Stack::push);
+            return commands.createPushCommandUsing(commandString, Stack::push);
         } else if (commandString.equals("pop")) {
-            return commands.command(Stack::pop);
+            return commands.createCommandUsing(Stack::pop);
         } else if (commandString.equals("back")) {
-            return commands.command(Stack::peek);
+            return commands.createCommandUsing(Stack::peek);
         } else if (commandString.equals("size")) {
-            return commands.command(Stack::size);
+            return commands.createCommandUsing(Stack::size);
         } else if (commandString.equals("clear")) {
             return (stack) -> {
                 stack.clear();

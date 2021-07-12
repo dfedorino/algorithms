@@ -2,24 +2,24 @@ package com.dfedorino.rtasks.third_level.structures.command;
 
 import java.util.Deque;
 
-public class DequeCommandBuilder extends BaseCommandBuilder<Deque<Integer>> {
+public class DequeScriptBuilder extends BaseScriptBuilder<Deque<Integer>> {
     @Override
-    public Command<Deque<Integer>> buildCommand(String commandString) {
+    public Command<Deque<Integer>> createCommand(String commandString) {
         Commands<Deque<Integer>> commands = new Commands<>();
         if (commandString.startsWith("push_front")) {
-            return commands.pushCommand(commandString, Deque::addFirst);
+            return commands.createPushCommandUsing(commandString, Deque::addFirst);
         } else if (commandString.startsWith("push_back")) {
-            return commands.pushCommand(commandString, Deque::addLast);
+            return commands.createPushCommandUsing(commandString, Deque::addLast);
         } else if (commandString.equals("pop_front")) {
-            return commands.command(Deque::pollFirst);
+            return commands.createCommandUsing(Deque::pollFirst);
         } else if (commandString.equals("pop_back")) {
-            return commands.command(Deque::pollLast);
+            return commands.createCommandUsing(Deque::pollLast);
         } else if (commandString.equals("front")) {
-            return commands.command(Deque::peekFirst);
+            return commands.createCommandUsing(Deque::peekFirst);
         } else if (commandString.equals("back")) {
-            return commands.command(Deque::peekLast);
+            return commands.createCommandUsing(Deque::peekLast);
         } else if (commandString.equals("size")) {
-            return commands.command(Deque::size);
+            return commands.createCommandUsing(Deque::size);
         } else if (commandString.equals("clear")) {
             return (deque) -> {
                 deque.clear();

@@ -7,12 +7,12 @@ import java.util.Stack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CommandBuilderTest {
-    private final CommandBuilder<Stack<Integer>> commandBuilder = new StackCommandBuilder();
+public class ScriptBuilderTest {
+    private final ScriptBuilder<Stack<Integer>> scriptBuilder = new StackScriptBuilder();
 
     @Test
     public void testBuildScript_whenEmptyListWithCommands_thenEmptyScript() {
         Script<Stack<Integer>> expectedScript = new Script<>(Collections.emptyList());
-        assertThat(commandBuilder.buildScript(Collections.emptyList())).isEqualTo(expectedScript);
+        assertThat(scriptBuilder.buildScript(Collections.emptyList())).isEqualTo(expectedScript);
     }
 }

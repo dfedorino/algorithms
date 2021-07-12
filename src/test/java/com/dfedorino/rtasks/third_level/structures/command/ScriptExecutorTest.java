@@ -29,8 +29,8 @@ public class ScriptExecutorTest {
                 "size",
                 "exit"
         );
-        CommandBuilder<Stack<Integer>> commandBuilder = new StackCommandBuilder();
-        Script<Stack<Integer>> stackScript = commandBuilder.buildScript(commandStrings); // commands
+        ScriptBuilder<Stack<Integer>> scriptBuilder = new StackScriptBuilder();
+        Script<Stack<Integer>> stackScript = scriptBuilder.buildScript(commandStrings); // commands
         ScriptExecutor<Stack<Integer>> scriptExecutor = new ScriptExecutor<>(); // sender
         Protocol<String> actualProtocol = scriptExecutor.generateProtocol(stackScript, stack);
         Protocol<String> expectedProtocol = new Protocol<>(List.of(
@@ -60,8 +60,8 @@ public class ScriptExecutorTest {
                 "front",
                 "exit"
         );
-        CommandBuilder<Queue<Integer>> commandBuilder = new QueueCommandBuilder();
-        Script<Queue<Integer>> queueScript = commandBuilder.buildScript(commandStrings); // commands
+        ScriptBuilder<Queue<Integer>> scriptBuilder = new QueueScriptBuilder();
+        Script<Queue<Integer>> queueScript = scriptBuilder.buildScript(commandStrings); // commands
         ScriptExecutor<Queue<Integer>> scriptExecutor = new ScriptExecutor<>(); // sender
         Protocol<String> actualProtocol = scriptExecutor.generateProtocol(queueScript, queue);
         Protocol<String> expectedProtocol = new Protocol<>(List.of(
@@ -85,8 +85,8 @@ public class ScriptExecutorTest {
                 "size",
                 "exit"
         );
-        CommandBuilder<Deque<Integer>> commandBuilder = new DequeCommandBuilder();
-        Script<Deque<Integer>> dequeScript = commandBuilder.buildScript(commandStrings); // commands
+        ScriptBuilder<Deque<Integer>> scriptBuilder = new DequeScriptBuilder();
+        Script<Deque<Integer>> dequeScript = scriptBuilder.buildScript(commandStrings); // commands
         ScriptExecutor<Deque<Integer>> scriptExecutor = new ScriptExecutor<>(); // sender
         Protocol<String> actualProtocol = scriptExecutor.generateProtocol(dequeScript, deque);
         Protocol<String> expectedProtocol = new Protocol<>(List.of(
