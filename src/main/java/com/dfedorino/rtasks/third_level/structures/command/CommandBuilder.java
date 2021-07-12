@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface CommandBuilder<T extends Collection<?>> {
     List<Command<T>> buildCommands();
+
+    Script<T> buildScript(List<String> commandStrings);
 }

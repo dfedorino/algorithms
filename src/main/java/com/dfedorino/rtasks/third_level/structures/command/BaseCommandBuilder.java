@@ -20,6 +20,14 @@ public abstract class BaseCommandBuilder<T extends Collection<?>> implements Com
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Script<T> buildScript(List<String> commandStrings) {
+        List<Command<T>> commands = commandStrings.stream()
+                .map(this::buildCommand)
+                .collect(Collectors.toList());
+        return new Script<>(commands);
+    }
+
     public abstract Command<T> buildCommand(String commandString);
 
     protected static <T extends Collection<?>> Command<T> pushCommand(String commandString, BiConsumer<T, Integer> collectionMethod) {
