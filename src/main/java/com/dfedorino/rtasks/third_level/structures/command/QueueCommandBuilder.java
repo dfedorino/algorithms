@@ -1,14 +1,8 @@
 package com.dfedorino.rtasks.third_level.structures.command;
 
-import java.util.List;
 import java.util.Queue;
 
 public class QueueCommandBuilder extends BaseCommandBuilder<Queue<Integer>> {
-
-    public QueueCommandBuilder(List<String> commands) {
-        super(commands);
-    }
-
     @Override
     public Command<Queue<Integer>> buildCommand(String commandString) {
         Commands<Queue<Integer>> commands = new Commands<>();

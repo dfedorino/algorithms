@@ -1,14 +1,8 @@
 package com.dfedorino.rtasks.third_level.structures.command;
 
-import java.util.List;
 import java.util.Stack;
 
 public class StackCommandBuilder extends BaseCommandBuilder<Stack<Integer>> {
-
-    public StackCommandBuilder(List<String> commands) {
-        super(commands);
-    }
-
     @Override
     public Command<Stack<Integer>> buildCommand(String commandString) {
         Commands<Stack<Integer>> commands = new Commands<>();

@@ -1,14 +1,8 @@
 package com.dfedorino.rtasks.third_level.structures.command;
 
 import java.util.Deque;
-import java.util.List;
 
 public class DequeCommandBuilder extends BaseCommandBuilder<Deque<Integer>> {
-
-    public DequeCommandBuilder(List<String> commands) {
-        super(commands);
-    }
-
     @Override
     public Command<Deque<Integer>> buildCommand(String commandString) {
         Commands<Deque<Integer>> commands = new Commands<>();
