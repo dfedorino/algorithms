@@ -13,7 +13,7 @@ public class StackCommandBuilder extends BaseCommandBuilder<Stack<Integer>> {
     public Command<Stack<Integer>> buildCommand(String commandString) {
         Commands<Stack<Integer>> commands = new Commands<>();
         if (commandString.startsWith("push")) {
-            return pushCommand(commandString, Stack::push);
+            return commands.pushCommand(commandString, Stack::push);
         } else if (commandString.equals("pop")) {
             return commands.command(Stack::pop);
         } else if (commandString.equals("back")) {

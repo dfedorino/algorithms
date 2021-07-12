@@ -15,4 +15,17 @@ public class CommandsTest {
         CommandResult expectedResult = new CommandResult("0");
         assertThat(actualResult).isEqualTo(expectedResult);
     }
+
+    @Test
+    public void testPushCommand_whenBiConsumer_thenCommandReturned() {
+        Commands<Stack<Integer>> commands = new Commands<>();
+        Stack<Integer> stack = new Stack<>();
+        String commandString = "push 5";
+        CommandResult actualResult = commands.pushCommand(commandString, Stack::push).execute(stack);
+        CommandResult expectedResult = new CommandResult("ok");
+        assertThat(actualResult).isEqualTo(expectedResult);
+        assertThat(stack)
+                .hasSize(1)
+                .contains(5);
+    }
 }

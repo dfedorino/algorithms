@@ -13,7 +13,7 @@ public class QueueCommandBuilder extends BaseCommandBuilder<Queue<Integer>> {
     public Command<Queue<Integer>> buildCommand(String commandString) {
         Commands<Queue<Integer>> commands = new Commands<>();
         if (commandString.startsWith("push")) {
-            return pushCommand(commandString, Queue::offer);
+            return commands.pushCommand(commandString, Queue::offer);
         } else if (commandString.equals("pop")) {
             return (queue) -> queue.isEmpty() ? new CommandResult("error") : new CommandResult(String.valueOf(queue.poll()));
         } else if (commandString.equals("front")) {

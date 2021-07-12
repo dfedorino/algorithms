@@ -2,7 +2,6 @@ package com.dfedorino.rtasks.third_level.structures.command;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public abstract class BaseCommandBuilder<T extends Collection<?>> implements CommandBuilder<T>{
@@ -28,12 +27,4 @@ public abstract class BaseCommandBuilder<T extends Collection<?>> implements Com
     }
 
     public abstract Command<T> buildCommand(String commandString);
-
-    protected static <T extends Collection<?>> Command<T> pushCommand(String commandString, BiConsumer<T, Integer> collectionMethod) {
-        return (collection) -> {
-            Integer data = Integer.parseInt(commandString.split(" ")[1]);
-            collectionMethod.accept(collection, data);
-            return new CommandResult("ok");
-        };
-    }
 }
