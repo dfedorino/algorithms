@@ -10,8 +10,7 @@ public class SimpleArrayDeque<T> {
     protected int indexOfLast = -1;
 
     public SimpleArrayDeque() {
-        array = new Object[16];
-        capacity = 16;
+        this(16);
     }
 
     public SimpleArrayDeque(int customCapacity) {
@@ -21,7 +20,7 @@ public class SimpleArrayDeque<T> {
 
     public String pushFront(T element) {
         checkIfNeedToResize();
-        if (indexOfFirst == -1 & indexOfLast == -1) {
+        if (indexOfFirst == -1 && indexOfLast == -1) {
             indexOfFirst = indexOfLast = 0;
         } else if (indexOfFirst == 0) {
             indexOfFirst = capacity - 1;
@@ -35,7 +34,7 @@ public class SimpleArrayDeque<T> {
 
     public String pushBack(T element) {
         checkIfNeedToResize();
-        if (indexOfFirst == -1 & indexOfLast == -1) {
+        if (indexOfFirst == -1 && indexOfLast == -1) {
             indexOfFirst = indexOfLast = 0;
         } else if (indexOfLast == capacity - 1) {
             indexOfLast = 0;
