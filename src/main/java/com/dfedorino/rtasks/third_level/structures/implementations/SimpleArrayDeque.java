@@ -1,13 +1,18 @@
 package com.dfedorino.rtasks.third_level.structures.implementations;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 
 public class SimpleArrayDeque<T> {
-    protected Object[] array;
-    protected int capacity;
+    private Object[] array;
+    @Getter
+    private int capacity;
     private int size = 0;
-    protected int indexOfFirst = -1;
-    protected int indexOfLast = -1;
+    @Getter
+    private int indexOfFirst = -1;
+    @Getter
+    private int indexOfLast = -1;
 
     public SimpleArrayDeque() {
         this(16);
@@ -106,10 +111,6 @@ public class SimpleArrayDeque<T> {
         indexOfLast = -1;
         size = 0;
         return "ok";
-    }
-
-    public String exit() {
-        return "bye";
     }
 
     protected void resize() {
