@@ -1,4 +1,4 @@
-package com.dfedorino.rtasks.third_level;
+package com.dfedorino.rtasks.third_level.graphs;
 
 import org.testng.annotations.Test;
 
