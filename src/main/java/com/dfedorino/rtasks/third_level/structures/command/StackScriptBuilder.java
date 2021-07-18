@@ -1,28 +1,32 @@
 package com.dfedorino.rtasks.third_level.structures.command;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class StackScriptBuilder extends BaseScriptBuilder<Stack<Integer>> {
+    private final Map<String, Command<Stack<Integer>>> map;
+    private final Commands<Stack<Integer>> commands;
+
+    public StackScriptBuilder() {
+        commands = new Commands<>();
+        map = new HashMap<>();
+        map.put("pop", commands.createCommandUsing(Stack::pop));
+        map.put("back", commands.createCommandUsing(Stack::peek));
+        map.put("size", commands.createCommandUsing(Stack::size));
+        map.put("clear", (stack) -> {
+            stack.clear();
+            return new CommandResult("ok");
+        });
+        map.put("exit", (stack) -> new CommandResult("bye"));
+    }
+
     @Override
-    public Command<Stack<Integer>> createCommand(String commandString) {
-        Commands<Stack<Integer>> commands = new Commands<>();
-        if (commandString.startsWith("push")) {
-            return commands.createPushCommandUsing(commandString, Stack::push);
-        } else if (commandString.equals("pop")) {
-            return commands.createCommandUsing(Stack::pop);
-        } else if (commandString.equals("back")) {
-            return commands.createCommandUsing(Stack::peek);
-        } else if (commandString.equals("size")) {
-            return commands.createCommandUsing(Stack::size);
-        } else if (commandString.equals("clear")) {
-            return (stack) -> {
-                stack.clear();
-                return new CommandResult("ok");
-            };
-        } else if (commandString.equals("exit")) {
-            return (stack) -> new CommandResult("bye");
-        } else {
-            throw new UnsupportedOperationException();
-        }
+    public Command<Stack<Integer>> getCommand(String commandString) {
+        return map.getOrDefault(commandString, this.getPushCommand(commandString));
+    }
+
+    private Command<Stack<Integer>> getPushCommand(String commandString) {
+        return commands.createPushCommandUsing(commandString, Stack::push);
     }
 }
