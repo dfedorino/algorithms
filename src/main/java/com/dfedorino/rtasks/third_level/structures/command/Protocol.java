@@ -1,7 +1,10 @@
 package com.dfedorino.rtasks.third_level.structures.command;
 
+import lombok.Value;
+
 import java.util.List;
 
-public interface CommandBuilder {
-    List<Command> buildCommands();
+@Value
+public class Protocol<T> {
+    private List<T> records;
 }

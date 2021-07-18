@@ -1,17 +1,21 @@
 package com.dfedorino.rtasks.third_level.structures.implementations;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 
 public class SimpleArrayDeque<T> {
-    protected Object[] array;
-    protected int capacity;
+    private Object[] array;
+    @Getter
+    private int capacity;
     private int size = 0;
-    protected int indexOfFirst = -1;
-    protected int indexOfLast = -1;
+    @Getter
+    private int indexOfFirst = -1;
+    @Getter
+    private int indexOfLast = -1;
 
     public SimpleArrayDeque() {
-        array = new Object[16];
-        capacity = 16;
+        this(16);
     }
 
     public SimpleArrayDeque(int customCapacity) {
@@ -21,7 +25,7 @@ public class SimpleArrayDeque<T> {
 
     public String pushFront(T element) {
         checkIfNeedToResize();
-        if (indexOfFirst == -1 & indexOfLast == -1) {
+        if (indexOfFirst == -1 && indexOfLast == -1) {
             indexOfFirst = indexOfLast = 0;
         } else if (indexOfFirst == 0) {
             indexOfFirst = capacity - 1;
@@ -35,7 +39,7 @@ public class SimpleArrayDeque<T> {
 
     public String pushBack(T element) {
         checkIfNeedToResize();
-        if (indexOfFirst == -1 & indexOfLast == -1) {
+        if (indexOfFirst == -1 && indexOfLast == -1) {
             indexOfFirst = indexOfLast = 0;
         } else if (indexOfLast == capacity - 1) {
             indexOfLast = 0;
@@ -107,10 +111,6 @@ public class SimpleArrayDeque<T> {
         indexOfLast = -1;
         size = 0;
         return "ok";
-    }
-
-    public String exit() {
-        return "bye";
     }
 
     protected void resize() {
