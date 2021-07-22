@@ -2,51 +2,53 @@ package com.dfedorino.rtasks.third_level.graphs;
 
 import lombok.Value;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 public class Teasing {
 
+    public Path computeOptimalPath(int[][] matrix) {
+        // initialize array that will map length of the path to the vertices
+        Integer[][] lengths = new Integer[3000][3];
 
-    public OptimalRoute computeOptimalRoute(int[][] matrix) {
-        // представить матрицу смежности в виде списка смежностей
-        // так как граф ориентированный, можно идти только по второй половине матрицы
-        List<Vertex> vertexes = new ArrayList<>();
-        for (int i = 0; i < matrix.length; i++) {
-            vertexes.add(new Vertex(i + 1, new TreeMap<>()));
-        }
+        // initialize upper bound for permutations
+        int bound = matrix.length;
 
-        for (int i = 0; i < matrix.length; i++) {
-            Vertex currentVertex = vertexes.get(i);
-            for (int j = i + 1; j < matrix.length; j++) {
-                Vertex adjacentVertex = vertexes.get(j);
-                int priceToAdjacentVertex = matrix[i][j];
-                currentVertex.addEdge(adjacentVertex, priceToAdjacentVertex);
-                adjacentVertex.addEdge(currentVertex, priceToAdjacentVertex);
+        // initialize array that will store current vertices
+        int[] curr = new int[3];
+
+        // recursive permutation that will store every sum and vertices array into the lengths 2D array
+        computeOptimalPath(0, 0, bound, curr, matrix, lengths);
+
+        // find the first (which will be the cheapest) array of vertices
+        return findShortestPath(lengths);
+    }
+
+    private Path findShortestPath(Integer[][] sums) {
+        for (Integer[] vertices : sums) {
+            if (vertices[0] != null) {
+                return new Path(vertices[0] + 1, vertices[1] + 1, vertices[2] + 1);
             }
         }
-        vertexes.forEach(System.out::println);
-        // для каждой вершины найти оптимальный маршрут из 3х вершин
-
-        // сохранить оптимальный
-        return new OptimalRoute(1, 2, 5);
+        throw new IllegalArgumentException("Paths are not initialized");
     }
 
-    @Value
-    public static class Vertex {
-        private int id;
-        private Map<Integer, List<Integer>> priceAndEdges;
-
-        private void addEdge(Vertex adjacentVertex, int priceToAdjacentVertex) {
-            priceAndEdges.putIfAbsent(priceToAdjacentVertex, new ArrayList<>());
-            priceAndEdges.get(priceToAdjacentVertex).add(adjacentVertex.getId());
+    private void computeOptimalPath(int index, int seed, int bound, int[] curr, int[][] m, Integer[][] sums) {
+        if (index == curr.length) {
+            // compute sum of edges between vertices
+            int a = curr[0];
+            int b = curr[1];
+            int c = curr[2];
+            int currRouteSum = m[a][b] + m[a][c] + m[b][c];
+            // put result into the sums array
+            sums[currRouteSum] = new Integer[]{a, b, c};
+        } else {
+            for (int i = seed; i < (i == 0 ? bound - 2 : bound); i++) {
+                curr[index] = i;
+                computeOptimalPath(index + 1, i + 1, bound, curr, m, sums);
+            }
         }
     }
 
     @Value
-    public static class OptimalRoute {
+    public static class Path {
         private int firstVertex;
         private int secondVertex;
         private int thirdVertex;
