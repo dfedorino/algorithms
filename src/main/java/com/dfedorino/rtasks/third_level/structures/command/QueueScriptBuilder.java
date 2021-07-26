@@ -4,7 +4,7 @@ import java.util.Queue;
 
 public class QueueScriptBuilder extends BaseScriptBuilder<Queue<Integer>> {
     @Override
-    public Command<Queue<Integer>> createCommand(String commandString) {
+    public Command<Queue<Integer>> getCommand(String commandString) {
         Commands<Queue<Integer>> commands = new Commands<>();
         if (commandString.startsWith("push")) {
             return commands.createPushCommandUsing(commandString, Queue::offer);

@@ -8,10 +8,10 @@ public abstract class BaseScriptBuilder<T extends Collection<?>> implements Scri
     @Override
     public Script<T> buildScript(List<String> commandStrings) {
         List<Command<T>> commands = commandStrings.stream()
-                .map(this::createCommand)
+                .map(this::getCommand)
                 .collect(Collectors.toList());
         return new Script<>(commands);
     }
 
-    public abstract Command<T> createCommand(String commandString);
+    public abstract Command<T> getCommand(String commandString);
 }

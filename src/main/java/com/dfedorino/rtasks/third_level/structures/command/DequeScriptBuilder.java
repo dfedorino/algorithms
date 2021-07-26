@@ -4,7 +4,7 @@ import java.util.Deque;
 
 public class DequeScriptBuilder extends BaseScriptBuilder<Deque<Integer>> {
     @Override
-    public Command<Deque<Integer>> createCommand(String commandString) {
+    public Command<Deque<Integer>> getCommand(String commandString) {
         Commands<Deque<Integer>> commands = new Commands<>();
         if (commandString.startsWith("push_front")) {
             return commands.createPushCommandUsing(commandString, Deque::addFirst);
