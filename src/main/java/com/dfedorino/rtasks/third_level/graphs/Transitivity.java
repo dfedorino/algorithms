@@ -2,7 +2,6 @@ package com.dfedorino.rtasks.third_level.graphs;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +30,10 @@ public class Transitivity {
      */
     public boolean isTransitive(int vertexes, int[][] pairs) {
         AdjacencyList adjacencyList = new AdjacencyList(vertexes, pairs);
-        Map<Integer, List<Integer>> componentsOfGraph = adjacencyList.getComponentsOfGraph();
-        System.out.println(">> components -> " + componentsOfGraph);
-        for (int vertex : componentsOfGraph.keySet()) {
+        Map<Integer, ComponentVertexesCounter> vertexToConnectedVertexMap = adjacencyList.getVertexesInComponentsOfGraph();
+        for (int vertex : vertexToConnectedVertexMap.keySet()) {
             int edges = adjacencyList.getAdjacentTo(vertex).size();
-            int expectedEdges = componentsOfGraph.get(vertex).size() - 1;
+            int expectedEdges = vertexToConnectedVertexMap.get(vertex).getNumberOfConnectedVertexes() - 1;
             if (edges != expectedEdges) {
                 return false;
             }
@@ -44,11 +42,9 @@ public class Transitivity {
     }
 
     private static class AdjacencyList {
-        private final int vertexes;
         private final List<List<Integer>> adjList;
 
         public AdjacencyList(int vertexes, int[][] pairs) {
-            this.vertexes = vertexes;
             adjList = new ArrayList<>(vertexes);
             for (int i = 0; i < vertexes; i++) {
                 adjList.add(i, new ArrayList<>());
@@ -63,34 +59,67 @@ public class Transitivity {
             return adjList.get(vertex - 1);
         }
 
-        public Map<Integer, List<Integer>> getComponentsOfGraph() {
-            Map<Integer, List<Integer>> idToComponent = new HashMap<>();
+        public Map<Integer, ComponentVertexesCounter> getVertexesInComponentsOfGraph() {
+            // create map that maps every vertex to number of vertexes in its component
+            Map<Integer, ComponentVertexesCounter> vertexToVertexesInComponent = new HashMap<>();
+
+            // queue for bfs
             Queue<Integer> notVisited = new ArrayDeque<>(adjList.size());
+
+            // boolean array for bfs
             boolean[] was = new boolean[adjList.size()];
+
+            // boolean array for bfs that stores vertexes that were already added to queue but were not processed yet
             boolean[] alreadyAddedToNotVisited = new boolean[adjList.size()];
-            for (int vertex = 1; vertex < vertexes; vertex++) {
-                int firstNotVisitedVertex = getFirstNotVisited(was);
-                if (firstNotVisitedVertex == -1) {
-                    break;
-                }
-                List<Integer> component = new ArrayList<>();
-                notVisited.offer(firstNotVisitedVertex);
+
+            // for every not visited vertex in was array
+            for (int notVisitedVertex = 1; notVisitedVertex > 0; notVisitedVertex = getFirstNotVisited(was)) {
+
+                // create new counter that counts vertexes in component of the current vertex
+                ComponentVertexesCounter vertexesInComponentCounter = new ComponentVertexesCounter(0);
+
+                // add first not visited vertex to queue
+                notVisited.offer(notVisitedVertex);
+
+                // while there are not visited vertexes in the queue
                 while (!notVisited.isEmpty()) {
+
+                    // poll vertex that is visited
                     int currentVertex = notVisited.poll();
+
+                    // increment counter as at the moment there is at least 1 vertex
+                    vertexesInComponentCounter.increment();
+
+                    // update array so it can be reused for further iterations
                     alreadyAddedToNotVisited[currentVertex - 1] = false;
+
+                    // get adjacent to current
                     List<Integer> adjacentVertexes = adjList.get(currentVertex - 1);
+
+                    // process adjacent to current
                     adjacentVertexes.stream()
+                            // leave only those that were not visited
                             .filter(adjacentVertex -> !was[adjacentVertex - 1])
+                            // leave only those that were not added to the queue
                             .filter(adjacentVertex -> !alreadyAddedToNotVisited[adjacentVertex - 1])
+                            // as remaining vertex are going to be added to queue, mark them as added beforehand
                             .peek(adjacentVertex -> alreadyAddedToNotVisited[adjacentVertex - 1] = true)
-                            .peek(adjacentVertex -> idToComponent.put(adjacentVertex, component))
+
+                            // put in the map counter that is common for every vertex in the component
+                            // custom wrapper is needed here because Integer does not dynamically increase
+                            .peek(adjacentVertex -> vertexToVertexesInComponent.put(adjacentVertex, vertexesInComponentCounter))
+
+                            // add remaining adjacent vertexes to the queue
                             .forEach(notVisited::offer);
-                    component.add(currentVertex);
+
+                    // mark current vertex as visited
                     was[currentVertex - 1] = true;
                 }
-                idToComponent.put(vertex, component);
+
+                // put current not visited vertex in the map with the number of vertexes in its component
+                vertexToVertexesInComponent.put(notVisitedVertex, vertexesInComponentCounter);
             }
-            return idToComponent;
+            return vertexToVertexesInComponent;
         }
 
         private int getFirstNotVisited(boolean[] was) {
@@ -100,6 +129,27 @@ public class Transitivity {
                 }
             }
             return -1;
+        }
+    }
+
+    private static class ComponentVertexesCounter {
+        private int counter;
+
+        public ComponentVertexesCounter(int value) {
+            this.counter = value;
+        }
+
+        public void increment() {
+            counter++;
+        }
+
+        public int getNumberOfConnectedVertexes() {
+            return counter;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(counter);
         }
     }
 }
