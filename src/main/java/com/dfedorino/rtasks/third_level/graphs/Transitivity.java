@@ -1,7 +1,16 @@
 package com.dfedorino.rtasks.third_level.graphs;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Queue;
+import java.util.Set;
 
 public class Transitivity {
     /**
@@ -26,26 +35,14 @@ public class Transitivity {
      */
     public boolean isTransitive(int vertexes, int[][] pairs) {
         AdjacencyList adjacencyList = new AdjacencyList(vertexes, pairs);
-
-        // initialize boolean array to mark traversed vertexes
-        boolean[] was = new boolean[vertexes];
-
-        // traverse the vertexes
-        for (int vertex = 0; vertex < vertexes; vertex++) {
-            if (!was[vertex]) {
-                was[vertex] = true;
-                List<Integer> adjacentToCurrent = adjacencyList.getAdjacentTo(vertex);
-                int edges = adjacentToCurrent.size();
-
-                // check if any adjacent vertex has less edges than current
-                for (Integer adjacentVertex : adjacentToCurrent) {
-                    if (!was[adjacentVertex - 1]) {
-                        was[adjacentVertex - 1] = true;
-                        int adjacentVertexEdges = adjacencyList.getAdjacentTo(adjacentVertex - 1).size();
-                        if (adjacentVertexEdges != edges) {
-                            return false;
-                        }
-                    }
+        Map<Integer, List<Integer>> map = adjacencyList.getComponentsOfGraph();
+        for (Integer id : map.keySet()) {
+            List<Integer> component = map.get(id);
+            int edges = component.size() - 1;
+            for (Integer vertex : component) {
+                boolean hasLessEdges = adjacencyList.getAdjacentTo(vertex - 1).size() != edges;
+                if (hasLessEdges) {
+                    return false;
                 }
             }
         }
@@ -53,46 +50,52 @@ public class Transitivity {
     }
 
     private static class AdjacencyList {
-        private final List<List<Integer>> adjacencyList;
+        private final int vertexes;
+        private final List<List<Integer>> adjList;
 
         public AdjacencyList(int vertexes, int[][] pairs) {
-            adjacencyList = initializeAdjacencyList(vertexes);
-            fillAdjacencyList(pairs, adjacencyList);
-        }
-
-        private List<List<Integer>> initializeAdjacencyList(int vertexes) {
-            List<List<Integer>> adjacencyList = new ArrayList<>(vertexes);
+            this.vertexes = vertexes;
+            adjList = new ArrayList<>(vertexes);
             for (int i = 0; i < vertexes; i++) {
-                adjacencyList.add(i, new ArrayList<>());
+                adjList.add(i, new ArrayList<>());
             }
-            return adjacencyList;
-        }
-
-        private void fillAdjacencyList(int[][] pairs, List<List<Integer>> adjacencyList) {
             for (int[] pair : pairs) {
-                int firstVertex = pair[0];
-                int secondVertex = pair[1];
-                adjacencyList.get(firstVertex - 1).add(secondVertex);
-                adjacencyList.get(secondVertex - 1).add(firstVertex);
+                adjList.get(pair[0] - 1).add(pair[1]);
+                adjList.get(pair[1] - 1).add(pair[0]);
             }
         }
 
-        public List<Integer> getAdjacentTo(int vertex) {
-            return adjacencyList.get(vertex);
+        public List<Integer> getAdjacentTo(int vertexIndex) {
+            return adjList.get(vertexIndex);
         }
 
-        @Override
-        public String toString() {
-            StringBuilder string = new StringBuilder();
-            for (int i = 0; i < adjacencyList.size(); i++) {
-                string
-                        .append("[")
-                        .append(i + 1)
-                        .append("] -> ")
-                        .append(adjacencyList.get(i))
-                        .append(System.lineSeparator());
+        public Map<Integer, List<Integer>> getComponentsOfGraph() {
+            Map<Integer, List<Integer>> idToComponent = new HashMap<>();
+            Queue<Integer> notVisited = new ArrayDeque<>();
+            boolean[] was = new boolean[vertexes];
+            for (int vertexId = 1; vertexId < vertexes; vertexId++) {
+                notVisited.add(vertexId);
+                List<Integer> visited = new ArrayList<>();
+                while (!notVisited.isEmpty()) {
+                    for (Integer vertex : notVisited) {
+                        notVisited.poll();
+                        if (!was[vertex - 1]) {
+                            visited.add(vertex);
+                            was[vertex - 1] = true;
+                            List<Integer> adjacentVertexes = adjList.get(vertex - 1);
+                            for (Integer adjacentVertex : adjacentVertexes) {
+                                if (!was[adjacentVertex - 1]) {
+                                    notVisited.add(adjacentVertex);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (!visited.isEmpty()) {
+                    idToComponent.put(vertexId, visited);
+                }
             }
-            return string.toString();
+            return idToComponent;
         }
     }
 }
