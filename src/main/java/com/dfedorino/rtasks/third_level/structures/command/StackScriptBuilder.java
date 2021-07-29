@@ -1,32 +1,36 @@
 package com.dfedorino.rtasks.third_level.structures.command;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class StackScriptBuilder extends BaseScriptBuilder<Stack<Integer>> {
-    private final Map<String, Command<Stack<Integer>>> map;
-    private final Commands<Stack<Integer>> commands;
-
     public StackScriptBuilder() {
-        commands = new Commands<>();
-        map = new HashMap<>();
-        map.put("pop", commands.createCommandUsing(Stack::pop));
-        map.put("back", commands.createCommandUsing(Stack::peek));
-        map.put("size", commands.createCommandUsing(Stack::size));
-        map.put("clear", (stack) -> {
-            stack.clear();
-            return new CommandResult("ok");
-        });
-        map.put("exit", (stack) -> new CommandResult("bye"));
+
+        Function<String, Command<Stack<Integer>>> pushCommand = (commandStr) -> {
+            Integer parsedValue = Integer.parseInt(commandStr.split(" ")[1]);
+            BiFunction<Integer, Stack<Integer>, CommandResult> operation = (value, stack) -> {
+                stack.push(value);
+                return new CommandResult("ok");
+            };
+            return new CommandImpl<>(parsedValue, operation);
+        };
+
+        super.getStringToCommand().put("push", pushCommand);
+        super.getStringToCommand().put("pop", (commandStr) -> new CommandImpl<>(null, (value, stack) -> new CommandResult(stack.pop() + "")));
+        super.getStringToCommand().put("back", (commandStr) -> new CommandImpl<>(null, (value, stack) -> new CommandResult(stack.peek() + "")));
     }
 
     @Override
     public Command<Stack<Integer>> getCommand(String commandString) {
-        return map.getOrDefault(commandString, this.getPushCommand(commandString));
-    }
-
-    private Command<Stack<Integer>> getPushCommand(String commandString) {
-        return commands.createPushCommandUsing(commandString, Stack::push);
+        if (commandString.startsWith("push")) {
+            return super.getStringToCommand().get("push").apply(commandString);
+        } else {
+            Command<Stack<Integer>> existingCommand = super.getStringToCommand().get(commandString).apply(commandString);
+            if (existingCommand == null) {
+                throw new IllegalArgumentException("Command for " + commandString + " doesn't exist.");
+            }
+            return existingCommand;
+        }
     }
 }
