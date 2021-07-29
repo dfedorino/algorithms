@@ -1,34 +1,53 @@
 package com.dfedorino.rtasks.third_level.structures.command;
 
 import java.util.Deque;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class DequeScriptBuilder extends BaseScriptBuilder<Deque<Integer>> {
-    @Override
-    public Command<Deque<Integer>> getCommand(String commandString) {
-        Commands<Deque<Integer>> commands = new Commands<>();
-        if (commandString.startsWith("push_front")) {
-            return commands.createPushCommandUsing(commandString, Deque::addFirst);
-        } else if (commandString.startsWith("push_back")) {
-            return commands.createPushCommandUsing(commandString, Deque::addLast);
-        } else if (commandString.equals("pop_front")) {
-            return commands.createCommandUsing(Deque::pollFirst);
-        } else if (commandString.equals("pop_back")) {
-            return commands.createCommandUsing(Deque::pollLast);
-        } else if (commandString.equals("front")) {
-            return commands.createCommandUsing(Deque::peekFirst);
-        } else if (commandString.equals("back")) {
-            return commands.createCommandUsing(Deque::peekLast);
-        } else if (commandString.equals("size")) {
-            return commands.createCommandUsing(Deque::size);
-        } else if (commandString.equals("clear")) {
-            return (deque) -> {
-                deque.clear();
+    public DequeScriptBuilder() {
+        Function<String, Command<Deque<Integer>>> pushFrontCommand = (commandStr) -> {
+            Integer parsedValue = Integer.parseInt(commandStr.split(" ")[1]);
+            BiFunction<Integer, Deque<Integer>, CommandResult> operation = (value, deque) -> {
+                deque.addFirst(value);
                 return new CommandResult("ok");
             };
-        } else if (commandString.equals("exit")) {
-            return (deque) -> new CommandResult("bye");
+            return new CommandImpl<>(parsedValue, operation);
+        };
+
+        Function<String, Command<Deque<Integer>>> pushBackCommand = (commandStr) -> {
+            Integer parsedValue = Integer.parseInt(commandStr.split(" ")[1]);
+            BiFunction<Integer, Deque<Integer>, CommandResult> operation = (value, deque) -> {
+                deque.addLast(value);
+                return new CommandResult("ok");
+            };
+            return new CommandImpl<>(parsedValue, operation);
+        };
+
+        super.getStringToCommand().put("push_front", pushFrontCommand);
+        super.getStringToCommand().put("push_back", pushBackCommand);
+        super.getStringToCommand().put("pop_front", (commandStr) -> new CommandImpl<>(null, (value, deque) -> new CommandResult(deque.removeFirst() + "")));
+        super.getStringToCommand().put("pop_back", (commandStr) -> new CommandImpl<>(null, (value, deque) -> new CommandResult(deque.removeLast() + "")));
+        super.getStringToCommand().put("front", (commandStr) -> new CommandImpl<>(null, (value, deque) -> new CommandResult(deque.getFirst() + "")));
+        super.getStringToCommand().put("back", (commandStr) -> new CommandImpl<>(null, (value, deque) -> new CommandResult(deque.getLast() + "")));
+    }
+
+    @Override
+    public Command<Deque<Integer>> getCommand(String commandString) {
+        if (commandString.startsWith("push")) {
+            return commandString.contains("front") ?
+                    super.getStringToCommand().get("push_front").apply(commandString) :
+                    super.getStringToCommand().get("push_back").apply(commandString);
+        } else if (commandString.startsWith("pop")) {
+            return commandString.contains("front") ?
+                    super.getStringToCommand().get("pop_front").apply(commandString) :
+                    super.getStringToCommand().get("pop_back").apply(commandString);
         } else {
-            throw new UnsupportedOperationException();
+            Command<Deque<Integer>> existingCommand = super.getStringToCommand().get(commandString).apply(commandString);
+            if (existingCommand == null) {
+                throw new IllegalArgumentException("Command for " + commandString + " doesn't exist.");
+            }
+            return existingCommand;
         }
     }
 }
