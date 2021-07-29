@@ -6,7 +6,6 @@ import java.util.function.Function;
 
 public class StackScriptBuilder extends BaseScriptBuilder<Stack<Integer>> {
     public StackScriptBuilder() {
-
         Function<String, Command<Stack<Integer>>> pushCommand = (commandStr) -> {
             Integer parsedValue = Integer.parseInt(commandStr.split(" ")[1]);
             BiFunction<Integer, Stack<Integer>, CommandResult> operation = (value, stack) -> {
