@@ -8,7 +8,7 @@ import java.util.Queue;
 class BreadthFirstSearch implements Search {
 
     @Override
-    public List<Integer> traverse(List<List<Integer>> adjacencyList) {
+    public List<Integer> getTraversedVertexes(List<List<Integer>> adjacencyList) {
         Queue<Integer> toBeVisited = new ArrayDeque<>(adjacencyList.size());
         boolean[] was = new boolean[adjacencyList.size()];
         List<Integer> visited = new ArrayList<>(adjacencyList.size());

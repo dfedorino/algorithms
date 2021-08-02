@@ -11,7 +11,7 @@ public class BreadthFirstSearchTest {
     Search app = new BreadthFirstSearch();
 
     @Test
-    public void testTraverse_whenGivenAdjacencyList_thenAllAdjacentFirstThenTheirAdjacent() {
+    public void testGetTraversedVertexes_whenNonTransitiveUndirectedGraph_thenAllAdjacentFirstThenTheirAdjacent() {
         List<List<Integer>> adjacencyList = List.of(
                 List.of(2, 3, 4),
                 List.of(5, 6),
@@ -28,11 +28,11 @@ public class BreadthFirstSearchTest {
         // 2 -> 5, 6
         // 3 -> 7, 8, 9
         // 4 -> 10
-        assertThat(app.traverse(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
     }
 
     @Test
-    public void testTraverse_whenTransitiveUnorderedGraph_thenNoDuplicatesAreAddedToQueue() {
+    public void testGetTraversedVertexes_whenTransitiveUndirectedGraph_thenAllAdjacentFirstThenTheirAdjacent() {
         List<List<Integer>> adjacencyList = List.of(
                 List.of(2, 3, 4, 5),
                 List.of(1, 3, 4, 5),
@@ -44,11 +44,11 @@ public class BreadthFirstSearchTest {
         // 2 -> 1, 3, 4, 5
         // 3 -> 1, 2, 4, 5
         // 4 -> 1, 2, 3, 4
-        assertThat(app.traverse(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5));
+        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5));
     }
 
     @Test
-    public void testTraverse_whenSeveralComponents_thenAllVertexesTraversed() {
+    public void testGetTraversedVertexes_whenTransitiveUndirectedGraphWithSeveralComponents_thenAllAdjacentFirstThenTheirAdjacent() {
         List<List<Integer>> adjacencyList = List.of(
                 List.of(2, 3),
                 List.of(1, 3),
@@ -63,6 +63,6 @@ public class BreadthFirstSearchTest {
         // 4 -> 5
         // 5 -> 4
         // 6
-        assertThat(app.traverse(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
+        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
     }
 }
