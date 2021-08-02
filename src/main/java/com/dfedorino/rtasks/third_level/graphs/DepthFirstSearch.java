@@ -10,28 +10,25 @@ public class DepthFirstSearch implements Search{
         List<Integer> traversed = new ArrayList<>();
         for (int vertex = 1; vertex <= adjacencyList.size(); vertex++) {
             if (!was[vertex - 1]) {
-                traversed.addAll(getVertexes(vertex, was, adjacencyList));
+                addVertexesOf(vertex, was, adjacencyList, traversed);
             }
         }
         return traversed;
     }
 
-    private List<Integer> getVertexes(int vertex, boolean[] was, List<List<Integer>> adjacencyList) {
+    private void addVertexesOf(int vertex, boolean[] was, List<List<Integer>> adjacencyList, List<Integer> visited) {
         List<Integer> adjacentVertexes = adjacencyList.get(vertex - 1);
         if (adjacentVertexes.isEmpty()) {
             was[vertex - 1] = true;
-            return List.of(vertex);
+            visited.add(vertex);
         } else {
             was[vertex - 1] = true;
-            List<Integer> currentAndAdjacent = new ArrayList<>();
-            currentAndAdjacent.add(vertex);
+            visited.add(vertex);
             for (int adjacentVertex : adjacentVertexes) {
                 if (!was[adjacentVertex - 1]) {
-                    List<Integer> adjacentToAdjacent = getVertexes(adjacentVertex, was, adjacencyList);
-                    currentAndAdjacent.addAll(adjacentToAdjacent);
+                    addVertexesOf(adjacentVertex, was, adjacencyList, visited);
                 }
             }
-            return currentAndAdjacent;
         }
     }
 }
