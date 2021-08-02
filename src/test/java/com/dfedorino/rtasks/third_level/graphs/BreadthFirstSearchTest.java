@@ -8,7 +8,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BreadthFirstSearchTest {
-    Search app = new BreadthFirstSearch();
+    private final Search app = new BreadthFirstSearch();
 
     @Test
     public void testGetTraversedVertexes_whenNonTransitiveUndirectedGraph_thenAllAdjacentFirstThenTheirAdjacent() {
@@ -60,6 +60,25 @@ public class BreadthFirstSearchTest {
         // 1 -> 2, 3
         // 2 -> 1, 3
         // 3 -> 1, 2
+        // 4 -> 5
+        // 5 -> 4
+        // 6
+        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
+    }
+
+    @Test
+    public void testGetTraversedVertexes_whenDirectedGraphWithSeveralComponents_thenAllAdjacentFirstThenTheirAdjacent() {
+        List<List<Integer>> adjacencyList = List.of(
+                List.of(2),
+                List.of(3),
+                List.of(1),
+                List.of(5),
+                Collections.emptyList(),
+                Collections.emptyList()
+        );
+        // 1 -> 2
+        // 2 -> 3
+        // 3 -> 1
         // 4 -> 5
         // 5 -> 4
         // 6
