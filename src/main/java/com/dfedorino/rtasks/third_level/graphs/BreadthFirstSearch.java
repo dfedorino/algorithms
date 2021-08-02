@@ -12,16 +12,20 @@ class BreadthFirstSearch implements Search {
         Queue<Integer> toBeVisited = new ArrayDeque<>(adjacencyList.size());
         boolean[] was = new boolean[adjacencyList.size()];
         List<Integer> visited = new ArrayList<>(adjacencyList.size());
-        toBeVisited.offer(1);
-        while(!toBeVisited.isEmpty()) {
-            int currentVertex = toBeVisited.poll();
-            if (!was[currentVertex - 1]) {
-                adjacencyList.get(currentVertex - 1).stream()
-                        .filter(vertex -> !was[vertex - 1])
-                        .filter(vertex -> !toBeVisited.contains(vertex))
-                        .forEach(toBeVisited::offer);
-                was[currentVertex - 1] = true;
-                visited.add(currentVertex);
+        for (int vertex = 1; vertex <= adjacencyList.size(); vertex++) {
+            if (!was[vertex - 1]) {
+                toBeVisited.offer(vertex);
+            }
+            while(!toBeVisited.isEmpty()) {
+                int currentVertex = toBeVisited.poll();
+                if (!was[currentVertex - 1]) {
+                    adjacencyList.get(currentVertex - 1).stream()
+                            .filter(adjacentVertex -> !was[adjacentVertex - 1])
+                            .filter(adjacentVertex -> !toBeVisited.contains(adjacentVertex))
+                            .forEach(toBeVisited::offer);
+                    was[currentVertex - 1] = true;
+                    visited.add(currentVertex);
+                }
             }
         }
         return visited;
