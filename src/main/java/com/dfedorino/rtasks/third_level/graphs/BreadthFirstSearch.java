@@ -18,6 +18,7 @@ class BreadthFirstSearch implements Search {
             if (!was[currentVertex - 1]) {
                 adjacencyList.get(currentVertex - 1).stream()
                         .filter(vertex -> !was[vertex - 1])
+                        .filter(vertex -> !toBeVisited.contains(vertex))
                         .forEach(toBeVisited::offer);
                 was[currentVertex - 1] = true;
                 visited.add(currentVertex);
