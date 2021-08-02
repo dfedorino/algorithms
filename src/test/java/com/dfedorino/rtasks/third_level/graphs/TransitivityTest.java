@@ -50,4 +50,16 @@ public class TransitivityTest {
         };
         assertThat(app.isTransitive(vertexes, pairs)).isFalse();
     }
+
+    @Test
+    public void testIsTransitiveGraph_whenGraphLikeRectangleThenFalse() {
+        int vertexes = 4;
+        int[][] pairs = {
+                {1, 2},
+                {2, 3},
+                {3, 4},
+                {4, 1}
+        };
+        assertThat(app.isTransitive(vertexes, pairs)).isFalse();
+    }
 }
