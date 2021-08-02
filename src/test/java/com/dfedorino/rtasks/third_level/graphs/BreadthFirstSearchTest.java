@@ -46,4 +46,23 @@ public class BreadthFirstSearchTest {
         // 4 -> 1, 2, 3, 4
         assertThat(app.traverse(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5));
     }
+
+    @Test
+    public void testTraverse_whenSeveralComponents_thenAllVertexesTraversed() {
+        List<List<Integer>> adjacencyList = List.of(
+                List.of(2, 3),
+                List.of(1, 3),
+                List.of(1, 2),
+                List.of(5),
+                List.of(4),
+                Collections.emptyList()
+        );
+        // 1 -> 2, 3
+        // 2 -> 1, 3
+        // 3 -> 1, 2
+        // 4 -> 5
+        // 5 -> 4
+        // 6
+        assertThat(app.traverse(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
+    }
 }
