@@ -7,7 +7,13 @@ public class DepthFirstSearch implements Search{
     @Override
     public List<Integer> getTraversedVertexes(List<List<Integer>> adjacencyList) {
         boolean[] was = new boolean[adjacencyList.size()];
-        return getTraversedVertexes(1, was, adjacencyList);
+        List<Integer> traversed = new ArrayList<>();
+        for (int vertex = 1; vertex <= adjacencyList.size(); vertex++) {
+            if (!was[vertex - 1]) {
+                traversed.addAll(getTraversedVertexes(vertex, was, adjacencyList));
+            }
+        }
+        return traversed;
     }
 
     private List<Integer> getTraversedVertexes(int vertex, boolean[] was, List<List<Integer>> adjacencyList) {
