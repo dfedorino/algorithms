@@ -65,4 +65,46 @@ public class DepthFirstSearchTest {
         // 6
         assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
     }
+
+    @Test
+    public void testGetTraversedVertexes_whenDirectedGraphWithSeveralComponents_thenDepthFirstSearch() {
+        List<List<Integer>> adjacencyList = List.of(
+                List.of(2, 2),
+                Collections.emptyList(),
+                Collections.emptyList(),
+                List.of(5),
+                Collections.emptyList(),
+                Collections.emptyList()
+        );
+        // 1 -> 2, 3
+        // 2 ->
+        // 3 ->
+        // 4 -> 5
+        // 5 ->
+        // 6
+        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
+    }
+
+    @Test
+    public void testGetTraversedVertexes_whenUndirectedBinaryTree_thenDepthFirstSearch() {
+        List<List<Integer>> adjacencyList = List.of(
+                List.of(2, 9),
+                List.of(3, 6),
+                List.of(4, 5),
+                Collections.emptyList(),
+                Collections.emptyList(),
+                List.of(7, 8),
+                Collections.emptyList(),
+                Collections.emptyList(),
+                List.of(10, 13),
+                List.of(11, 12),
+                Collections.emptyList(),
+                Collections.emptyList(),
+                List.of(14, 15),
+                Collections.emptyList(),
+                Collections.emptyList()
+        );
+        assertThat(app.getTraversedVertexes(adjacencyList))
+                .isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+    }
 }
