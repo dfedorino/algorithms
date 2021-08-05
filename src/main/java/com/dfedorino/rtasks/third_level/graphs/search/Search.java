@@ -1,4 +1,4 @@
-package com.dfedorino.rtasks.third_level.graphs;
+package com.dfedorino.rtasks.third_level.graphs.search;
 
 import java.util.List;
 

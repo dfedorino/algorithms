@@ -1,4 +1,4 @@
-package com.dfedorino.rtasks.third_level.graphs;
+package com.dfedorino.rtasks.third_level.graphs.search;
 
 import org.testng.annotations.Test;
 
@@ -7,11 +7,11 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PreorderDfsTest {
-    private final Search preorderDfs = new PreorderDfs();
+public class PostorderDfsTest {
+    private final Search postorderDfs = new PostorderDfs();
 
     @Test
-    public void testGetTraversedVertexes_whenBinaryTree_thenPreorderTraversal() {
+    public void testGetTraversedVertexes_whenBinaryTree_thenPostorderTraversal() {
         List<List<Integer>> binaryTree = List.of(
                 Collections.emptyList(), // index starts from 1
                 List.of(2, 3),
@@ -22,11 +22,11 @@ public class PreorderDfsTest {
                 Collections.emptyList(),
                 Collections.emptyList()
         );
-        assertThat(preorderDfs.getTraversedVertexes(binaryTree)).isEqualTo(List.of(1, 2, 4, 5, 3, 6, 7));
+        assertThat(postorderDfs.getTraversedVertexes(binaryTree)).isEqualTo(List.of(4, 5, 2, 6, 7, 3, 1));
     }
 
     @Test
-    public void testGetTraversedVertexes_whenUndirectedConnectedGraph_thenPreorderTraversal() {
+    public void testGetTraversedVertexes_whenUndirectedConnectedGraph_thenPostorderTraversal() {
         List<List<Integer>> undirectedConnectedGraph = List.of(
                 Collections.emptyList(), // index starts from 1
                 List.of(2, 3, 4),
@@ -40,12 +40,12 @@ public class PreorderDfsTest {
                 Collections.emptyList(),
                 Collections.emptyList()
         );
-        assertThat(preorderDfs.getTraversedVertexes(undirectedConnectedGraph))
-                .isEqualTo(List.of(1, 2, 5, 6, 3, 7, 4, 8, 9, 10));
+        assertThat(postorderDfs.getTraversedVertexes(undirectedConnectedGraph))
+                .isEqualTo(List.of(5, 6, 2, 7, 3, 8, 9, 10, 4, 1));
     }
 
     @Test
-    public void testGetTraversedVertexes_whenUndirectedDisconnectedGraph_thenPreorderTraversal() {
+    public void testGetTraversedVertexes_whenUndirectedDisconnectedGraph_thenPostorderTraversal() {
         List<List<Integer>> undirectedConnectedGraph = List.of(
                 Collections.emptyList(), // index starts from 1
                 List.of(2, 3),
@@ -59,7 +59,7 @@ public class PreorderDfsTest {
                 Collections.emptyList(),
                 Collections.emptyList()
         );
-        assertThat(preorderDfs.getTraversedVertexes(undirectedConnectedGraph))
-                .isEqualTo(List.of(1, 2, 5, 6, 3, 7, 4, 8, 9, 10));
+        assertThat(postorderDfs.getTraversedVertexes(undirectedConnectedGraph))
+                .isEqualTo(List.of(5, 6, 2, 7, 3, 1, 8, 9, 10, 4));
     }
 }

@@ -1,4 +1,4 @@
-package com.dfedorino.rtasks.third_level.graphs;
+package com.dfedorino.rtasks.third_level.graphs.search;
 
 import org.testng.annotations.Test;
 
@@ -7,32 +7,32 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BreadthFirstSearchTest {
-    private final Search app = new BreadthFirstSearch();
+public class DepthFirstSearchTest {
+    private final Search app = new DepthFirstSearch();
 
     @Test
-    public void testGetTraversedVertexes_whenNonTransitiveUndirectedGraph_thenAllAdjacentFirstThenTheirAdjacent() {
+    public void testGetTraversedVertexes_whenNonTransitiveUndirectedGraph_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
-                List.of(2, 3, 4),
-                List.of(5, 6),
-                List.of(7, 8, 9),
+                List.of(2, 5, 9),
+                List.of(3, 4),
+                Collections.emptyList(),
+                Collections.emptyList(),
+                List.of(6, 7, 8),
+                Collections.emptyList(),
+                Collections.emptyList(),
+                Collections.emptyList(),
                 List.of(10),
-                Collections.emptyList(),
-                Collections.emptyList(),
-                Collections.emptyList(),
-                Collections.emptyList(),
-                Collections.emptyList(),
                 Collections.emptyList()
         );
-        // 1 -> 2, 3, 4
-        // 2 -> 5, 6
-        // 3 -> 7, 8, 9
-        // 4 -> 10
+        // 1 -> 2, 5, 9
+        // 2 -> 3, 4
+        // 5 -> 6, 7, 8
+        // 9 -> 10
         assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
     }
 
     @Test
-    public void testGetTraversedVertexes_whenTransitiveUndirectedGraph_thenAllAdjacentFirstThenTheirAdjacent() {
+    public void testGetTraversedVertexes_whenTransitiveUndirectedGraph_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
                 List.of(2, 3, 4, 5),
                 List.of(1, 3, 4, 5),
@@ -48,7 +48,7 @@ public class BreadthFirstSearchTest {
     }
 
     @Test
-    public void testGetTraversedVertexes_whenTransitiveUndirectedGraphWithSeveralComponents_thenAllAdjacentFirstThenTheirAdjacent() {
+    public void testGetTraversedVertexes_whenTransitiveUndirectedGraphWithSeveralComponents_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
                 List.of(2, 3),
                 List.of(1, 3),
@@ -67,50 +67,43 @@ public class BreadthFirstSearchTest {
     }
 
     @Test
-    public void testGetTraversedVertexes_whenDirectedGraphWithSeveralComponents_thenAllAdjacentFirstThenTheirAdjacent() {
+    public void testGetTraversedVertexes_whenDirectedGraphWithSeveralComponents_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
-                List.of(2),
-                List.of(3),
-                List.of(1),
+                List.of(2, 2),
+                Collections.emptyList(),
+                Collections.emptyList(),
                 List.of(5),
                 Collections.emptyList(),
                 Collections.emptyList()
         );
-        // 1 -> 2
-        // 2 -> 3
-        // 3 -> 1
+        // 1 -> 2, 3
+        // 2 ->
+        // 3 ->
         // 4 -> 5
-        // 5 -> 4
+        // 5 ->
         // 6
         assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
     }
 
     @Test
-    public void testGetTraversedVertexes_whenUndirectedBinaryTree_thenAllAdjacentFirstThenTheirAdjacent() {
+    public void testGetTraversedVertexes_whenUndirectedBinaryTree_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
-                List.of(2, 3),
+                List.of(2, 9),
+                List.of(3, 6),
                 List.of(4, 5),
-                List.of(6, 7),
-                List.of(8, 9),
-                List.of(10, 11),
-                List.of(12, 13),
+                Collections.emptyList(),
+                Collections.emptyList(),
+                List.of(7, 8),
+                Collections.emptyList(),
+                Collections.emptyList(),
+                List.of(10, 13),
+                List.of(11, 12),
+                Collections.emptyList(),
+                Collections.emptyList(),
                 List.of(14, 15),
-                Collections.emptyList(),
-                Collections.emptyList(),
-                Collections.emptyList(),
-                Collections.emptyList(),
-                Collections.emptyList(),
-                Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList()
         );
-        // 1 -> 2, 3
-        // 2 -> 4, 5
-        // 3 -> 6, 7
-        // 4 -> 8, 9
-        // 5 -> 10, 11
-        // 6 -> 12, 13
-        // 7 -> 14, 15
         assertThat(app.getTraversedVertexes(adjacencyList))
                 .isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
     }
