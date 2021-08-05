@@ -3,7 +3,7 @@ package com.dfedorino.rtasks.third_level.graphs.search;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DepthFirstSearch implements Search{
+public class RecursiveDepthFirstSearch implements Search{
     @Override
     public List<Integer> getTraversedVertexes(List<List<Integer>> adjacencyList) {
         boolean[] was = new boolean[adjacencyList.size()];

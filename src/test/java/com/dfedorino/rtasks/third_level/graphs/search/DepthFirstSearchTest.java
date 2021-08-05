@@ -7,12 +7,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RecursiveDepthFirstSearchTest {
-    private final Search app = new RecursiveDepthFirstSearch();
+public class DepthFirstSearchTest {
+    private final Search app = new DepthFirstSearch();
 
     @Test
     public void testGetTraversedVertexes_whenNonTransitiveUndirectedGraph_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
+                Collections.emptyList(),
                 List.of(2, 5, 9),
                 List.of(3, 4),
                 Collections.emptyList(),
@@ -34,6 +35,7 @@ public class RecursiveDepthFirstSearchTest {
     @Test
     public void testGetTraversedVertexes_whenTransitiveUndirectedGraph_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
+                Collections.emptyList(),
                 List.of(2, 3, 4, 5),
                 List.of(1, 3, 4, 5),
                 List.of(1, 2, 4, 5),
@@ -50,6 +52,7 @@ public class RecursiveDepthFirstSearchTest {
     @Test
     public void testGetTraversedVertexes_whenTransitiveUndirectedGraphWithSeveralComponents_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
+                Collections.emptyList(),
                 List.of(2, 3),
                 List.of(1, 3),
                 List.of(1, 2),
@@ -69,6 +72,7 @@ public class RecursiveDepthFirstSearchTest {
     @Test
     public void testGetTraversedVertexes_whenDirectedGraphWithSeveralComponents_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
+                Collections.emptyList(),
                 List.of(2, 2),
                 Collections.emptyList(),
                 Collections.emptyList(),
@@ -88,6 +92,7 @@ public class RecursiveDepthFirstSearchTest {
     @Test
     public void testGetTraversedVertexes_whenUndirectedBinaryTree_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
+                Collections.emptyList(),
                 List.of(2, 9),
                 List.of(3, 6),
                 List.of(4, 5),
