@@ -5,25 +5,21 @@ import java.util.List;
 
 public class PostorderDfs implements Search {
     @Override
-    public List<Integer> getTraversedVertexes(List<List<Integer>> adjacencyList) {
-        boolean[] was = new boolean[adjacencyList.size()];
-        List<Integer> visited = new ArrayList<>();
-        for (int vertex = 1; vertex < was.length; vertex++) {
-            if(!was[vertex]) {
-                traverseVertex(vertex, was, adjacencyList, visited);
-            }
-        }
+    public List<Integer> getTraversedVertexes(List<List<Integer>> binaryTree) {
+        List<Integer> visited = new ArrayList<>(binaryTree.size());
+        int root = 1;
+        traverse(root, binaryTree, visited);
         return visited;
     }
 
-    private void traverseVertex(int vertex, boolean[] was, List<List<Integer>> adjacencyList, List<Integer> visited) {
-        was[vertex] = true;
-        for (int adjacentVertex : adjacencyList.get(vertex)) {
-            if (!was[adjacentVertex]) {
-                traverseVertex(adjacentVertex, was, adjacencyList, visited);
-            }
+    private void traverse(int root, List<List<Integer>> binaryTree, List<Integer> visited) {
+        List<Integer> children = binaryTree.get(root);
+        if (!children.isEmpty()) {
+            int left = children.get(0);
+            int right = children.get(1);
+            traverse(left, binaryTree, visited);
+            traverse(right, binaryTree, visited);
         }
-        // process vertex AFTER (post) all its adjacent vertexes
-        visited.add(vertex);
+        visited.add(root);
     }
 }
