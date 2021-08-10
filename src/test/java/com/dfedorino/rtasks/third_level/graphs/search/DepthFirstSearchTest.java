@@ -1,5 +1,6 @@
 package com.dfedorino.rtasks.third_level.graphs.search;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.Collections;
@@ -8,10 +9,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DepthFirstSearchTest {
-    private final Search app = new DepthFirstSearch();
-
-    @Test
-    public void testGetTraversedVertexes_whenNonTransitiveUndirectedGraph_thenDepthFirstSearch() {
+    @Test(dataProvider = "implementations")
+    public void testGetTraversedVertexes_whenNonTransitiveUndirectedGraph_thenDepthFirstSearch(Search app) {
         List<List<Integer>> adjacencyList = List.of(
                 Collections.emptyList(),
                 List.of(2, 5, 9),
@@ -32,8 +31,8 @@ public class DepthFirstSearchTest {
         assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
     }
 
-    @Test
-    public void testGetTraversedVertexes_whenTransitiveUndirectedGraph_thenDepthFirstSearch() {
+    @Test(dataProvider = "implementations")
+    public void testGetTraversedVertexes_whenTransitiveUndirectedGraph_thenDepthFirstSearch(Search app) {
         List<List<Integer>> adjacencyList = List.of(
                 Collections.emptyList(),
                 List.of(2, 3, 4, 5),
@@ -49,8 +48,8 @@ public class DepthFirstSearchTest {
         assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5));
     }
 
-    @Test
-    public void testGetTraversedVertexes_whenTransitiveUndirectedGraphWithSeveralComponents_thenDepthFirstSearch() {
+    @Test(dataProvider = "implementations")
+    public void testGetTraversedVertexes_whenTransitiveUndirectedGraphWithSeveralComponents_thenDepthFirstSearch(Search app) {
         List<List<Integer>> adjacencyList = List.of(
                 Collections.emptyList(),
                 List.of(2, 3),
@@ -69,8 +68,8 @@ public class DepthFirstSearchTest {
         assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
     }
 
-    @Test
-    public void testGetTraversedVertexes_whenDirectedGraphWithSeveralComponents_thenDepthFirstSearch() {
+    @Test(dataProvider = "implementations")
+    public void testGetTraversedVertexes_whenDirectedGraphWithSeveralComponents_thenDepthFirstSearch(Search app) {
         List<List<Integer>> adjacencyList = List.of(
                 Collections.emptyList(),
                 List.of(2, 2),
@@ -89,8 +88,8 @@ public class DepthFirstSearchTest {
         assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
     }
 
-    @Test
-    public void testGetTraversedVertexes_whenUndirectedBinaryTree_thenDepthFirstSearch() {
+    @Test(dataProvider = "implementations")
+    public void testGetTraversedVertexes_whenUndirectedBinaryTree_thenDepthFirstSearch(Search app) {
         List<List<Integer>> adjacencyList = List.of(
                 Collections.emptyList(),
                 List.of(2, 9),
@@ -111,5 +110,13 @@ public class DepthFirstSearchTest {
         );
         assertThat(app.getTraversedVertexes(adjacencyList))
                 .isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+    }
+
+    @DataProvider(name = "implementations")
+    public Object[][] implementations() {
+        return new Object[][] {
+                {new DepthFirstSearch()},
+                {new BaeldungDfs()}
+        };
     }
 }
