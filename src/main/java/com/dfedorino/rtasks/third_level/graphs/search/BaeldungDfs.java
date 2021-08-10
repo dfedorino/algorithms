@@ -19,8 +19,10 @@ public class BaeldungDfs implements Search {
         stack.push(start);
         while (!stack.isEmpty()) {
             int current = stack.pop();
-            isVisited[current] = true;
-            visited.add(current); // instead of 'visit(current);'
+            if (!isVisited[current]) {
+                visited.add(current); // instead of 'visit(current);'
+                isVisited[current] = true;
+            }
             for (int dest : adjVertices.get(current)) {
                 if (!isVisited[dest])
                     stack.push(dest);
