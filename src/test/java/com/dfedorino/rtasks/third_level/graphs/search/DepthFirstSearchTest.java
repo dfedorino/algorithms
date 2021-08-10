@@ -28,7 +28,7 @@ public class DepthFirstSearchTest {
         // 2 -> 3, 4
         // 5 -> 6, 7, 8
         // 9 -> 10
-        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        assertThat(app.getTraversedVertexes(adjacencyList)).containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
 
     @Test(dataProvider = "implementations")
@@ -45,7 +45,7 @@ public class DepthFirstSearchTest {
         // 2 -> 1, 3, 4, 5
         // 3 -> 1, 2, 4, 5
         // 4 -> 1, 2, 3, 4
-        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5));
+        assertThat(app.getTraversedVertexes(adjacencyList)).containsExactlyInAnyOrder(1, 2, 3, 4, 5);
     }
 
     @Test(dataProvider = "implementations")
@@ -65,14 +65,14 @@ public class DepthFirstSearchTest {
         // 4 -> 5
         // 5 -> 4
         // 6
-        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
+        assertThat(app.getTraversedVertexes(adjacencyList)).containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6);
     }
 
     @Test(dataProvider = "implementations")
     public void testGetTraversedVertexes_whenDirectedGraphWithSeveralComponents_thenDepthFirstSearch(Search app) {
         List<List<Integer>> adjacencyList = List.of(
                 Collections.emptyList(),
-                List.of(2, 2),
+                List.of(2, 3),
                 Collections.emptyList(),
                 Collections.emptyList(),
                 List.of(5),
@@ -85,7 +85,7 @@ public class DepthFirstSearchTest {
         // 4 -> 5
         // 5 ->
         // 6
-        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
+        assertThat(app.getTraversedVertexes(adjacencyList)).containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6);
     }
 
     @Test(dataProvider = "implementations")
@@ -109,7 +109,7 @@ public class DepthFirstSearchTest {
                 Collections.emptyList()
         );
         assertThat(app.getTraversedVertexes(adjacencyList))
-                .isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+                .containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
     }
 
     @DataProvider(name = "implementations")
