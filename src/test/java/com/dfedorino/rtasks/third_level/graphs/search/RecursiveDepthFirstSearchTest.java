@@ -13,6 +13,7 @@ public class RecursiveDepthFirstSearchTest {
     @Test
     public void testGetTraversedVertexes_whenNonTransitiveUndirectedGraph_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
+                Collections.emptyList(),
                 List.of(2, 5, 9),
                 List.of(3, 4),
                 Collections.emptyList(),
@@ -28,12 +29,13 @@ public class RecursiveDepthFirstSearchTest {
         // 2 -> 3, 4
         // 5 -> 6, 7, 8
         // 9 -> 10
-        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        assertThat(app.getTraversedVertexes(adjacencyList)).containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
 
     @Test
     public void testGetTraversedVertexes_whenTransitiveUndirectedGraph_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
+                Collections.emptyList(),
                 List.of(2, 3, 4, 5),
                 List.of(1, 3, 4, 5),
                 List.of(1, 2, 4, 5),
@@ -44,12 +46,13 @@ public class RecursiveDepthFirstSearchTest {
         // 2 -> 1, 3, 4, 5
         // 3 -> 1, 2, 4, 5
         // 4 -> 1, 2, 3, 4
-        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5));
+        assertThat(app.getTraversedVertexes(adjacencyList)).containsExactlyInAnyOrder(1, 2, 3, 4, 5);
     }
 
     @Test
     public void testGetTraversedVertexes_whenTransitiveUndirectedGraphWithSeveralComponents_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
+                Collections.emptyList(),
                 List.of(2, 3),
                 List.of(1, 3),
                 List.of(1, 2),
@@ -63,12 +66,13 @@ public class RecursiveDepthFirstSearchTest {
         // 4 -> 5
         // 5 -> 4
         // 6
-        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
+        assertThat(app.getTraversedVertexes(adjacencyList)).containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6);
     }
 
     @Test
     public void testGetTraversedVertexes_whenDirectedGraphWithSeveralComponents_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
+                Collections.emptyList(),
                 List.of(2, 2),
                 Collections.emptyList(),
                 Collections.emptyList(),
@@ -82,12 +86,13 @@ public class RecursiveDepthFirstSearchTest {
         // 4 -> 5
         // 5 ->
         // 6
-        assertThat(app.getTraversedVertexes(adjacencyList)).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
+        assertThat(app.getTraversedVertexes(adjacencyList)).containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6);
     }
 
     @Test
     public void testGetTraversedVertexes_whenUndirectedBinaryTree_thenDepthFirstSearch() {
         List<List<Integer>> adjacencyList = List.of(
+                Collections.emptyList(),
                 List.of(2, 9),
                 List.of(3, 6),
                 List.of(4, 5),
@@ -105,6 +110,6 @@ public class RecursiveDepthFirstSearchTest {
                 Collections.emptyList()
         );
         assertThat(app.getTraversedVertexes(adjacencyList))
-                .isEqualTo(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+                .containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
     }
 }
