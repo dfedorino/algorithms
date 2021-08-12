@@ -1,7 +1,6 @@
 package com.dfedorino.rtasks.third_level.graphs.search;
 
 import com.dfedorino.rtasks.third_level.graphs.Pair;
-import lombok.Value;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;
@@ -61,20 +60,5 @@ public class LabyrinthPainting {
             }
         }
         return surroundedLabyrinth;
-    }
-
-    @Value
-    private static class Segment {
-        private String mark;
-        private Pair<Integer, Integer> coordinates;
-
-        public boolean isWall() {
-            return mark.equals("#");
-        }
-
-        @Override
-        public String toString() {
-            return "('" + mark + "', [" + coordinates.getA() + ", " + coordinates.getB() + "])";
-        }
     }
 }
