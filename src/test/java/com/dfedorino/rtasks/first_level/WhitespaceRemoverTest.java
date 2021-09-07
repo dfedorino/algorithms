@@ -2,7 +2,7 @@ package com.dfedorino.rtasks.first_level;
 
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 public class WhitespaceRemoverTest {
     private final WhitespaceRemover app = new WhitespaceRemover();

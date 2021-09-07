@@ -1,8 +1,8 @@
 package com.dfedorino.rtasks.third_level;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.testng.annotations.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class GreedyPaidLadderTest {
     private final GreedyPaidLadder app = new GreedyPaidLadder();

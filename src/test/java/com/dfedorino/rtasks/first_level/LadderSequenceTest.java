@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 public class LadderSequenceTest {
     private final LadderSequence app = new LadderSequence();

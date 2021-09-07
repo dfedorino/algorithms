@@ -1,9 +1,5 @@
 package com.dfedorino.rtasks.third_level;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Queue;
-
 public interface DrunkardGame {
     /**
      * В игре в пьяницу карточная колода раздается поровну двум игрокам. Далее они вскрывают по одной верхней карте,

@@ -2,7 +2,7 @@ package com.dfedorino.rtasks.first_level;
 
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 public class ShoeFactoryTest {
     private final ShoeFactory app = new ShoeFactory();

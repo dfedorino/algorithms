@@ -1,4 +1,4 @@
-package com.dfedorino.rtasks.third_level.graphs.search;
+package com.dfedorino.rtasks.third_level.graphs.search.bfs;
 
 import org.testng.annotations.Test;
 

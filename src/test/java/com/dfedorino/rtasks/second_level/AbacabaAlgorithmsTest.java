@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.concurrent.Callable;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.*;
 
 public class AbacabaAlgorithmsTest {
     private final Algorithms algorithmChecker = new Algorithms(10);
