@@ -1,5 +1,6 @@
-package com.dfedorino.rtasks.third_level.graphs.search;
+package com.dfedorino.rtasks.third_level.graphs.search.dfs;
 
+import com.dfedorino.rtasks.third_level.graphs.search.Search;
 import org.testng.annotations.Test;
 
 import java.util.Collections;
@@ -7,11 +8,11 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PostorderDfsTest {
-    private final Search postorderDfs = new PostorderDfs();
+public class PreorderDfsTest {
+    private final Search preorderDfs = new PreorderDfs();
 
     @Test
-    public void testGetTraversedVertexes_whenBinaryTree_thenPostorderTraversal() {
+    public void testGetTraversedVertexes_whenBinaryTree_thenPreorderTraversal() {
         List<List<Integer>> binaryTree = List.of(
                 Collections.emptyList(), // index starts from 1
                 List.of(2, 3),
@@ -22,6 +23,6 @@ public class PostorderDfsTest {
                 Collections.emptyList(),
                 Collections.emptyList()
         );
-        assertThat(postorderDfs.getTraversedVertexes(binaryTree)).isEqualTo(List.of(4, 5, 2, 6, 7, 3, 1));
+        assertThat(preorderDfs.getTraversedVertexes(binaryTree)).isEqualTo(List.of(1, 2, 4, 5, 3, 6, 7));
     }
 }
