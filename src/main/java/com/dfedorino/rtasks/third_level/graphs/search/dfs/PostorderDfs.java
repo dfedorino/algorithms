@@ -1,9 +1,11 @@
-package com.dfedorino.rtasks.third_level.graphs.search;
+package com.dfedorino.rtasks.third_level.graphs.search.dfs;
+
+import com.dfedorino.rtasks.third_level.graphs.search.Search;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InorderDfs implements Search {
+public class PostorderDfs implements Search {
     @Override
     public List<Integer> getTraversedVertexes(List<List<Integer>> binaryTree) {
         List<Integer> visited = new ArrayList<>(binaryTree.size());
@@ -18,10 +20,8 @@ public class InorderDfs implements Search {
             int left = children.get(0);
             int right = children.get(1);
             traverse(left, binaryTree, visited);
-            visited.add(root);
             traverse(right, binaryTree, visited);
-        } else {
-            visited.add(root);
         }
+        visited.add(root);
     }
 }

@@ -2,7 +2,7 @@ package com.dfedorino.rtasks.first_level;
 
 import org.testng.annotations.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class WatchTest {
     private final Watch watch = new Watch();

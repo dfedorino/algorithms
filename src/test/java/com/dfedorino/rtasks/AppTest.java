@@ -1,8 +1,8 @@
 package com.dfedorino.rtasks;
 
-import static org.testng.Assert.assertTrue;
-
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertTrue;
 
 public class AppTest {
     @Test

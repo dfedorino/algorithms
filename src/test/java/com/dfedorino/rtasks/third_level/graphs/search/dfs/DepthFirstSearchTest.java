@@ -1,5 +1,6 @@
-package com.dfedorino.rtasks.third_level.graphs.search;
+package com.dfedorino.rtasks.third_level.graphs.search.dfs;
 
+import com.dfedorino.rtasks.third_level.graphs.search.Search;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

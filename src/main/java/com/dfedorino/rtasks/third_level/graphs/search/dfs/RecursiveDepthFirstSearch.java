@@ -1,4 +1,6 @@
-package com.dfedorino.rtasks.third_level.graphs.search;
+package com.dfedorino.rtasks.third_level.graphs.search.dfs;
+
+import com.dfedorino.rtasks.third_level.graphs.search.Search;
 
 import java.util.List;
 import java.util.stream.Collectors;
