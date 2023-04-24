@@ -96,7 +96,7 @@ public class MachineDistributorTest {
                 {"All elements are more than RAM", 16, new int[] {24, 22, 21, 23}, 0},
         };
     }
-
+    
     @DataProvider(name = "data-provider-getFullyLoadedMachines")
     public Object[][] dataProviderGetFullyLoadedMachines() {
         int max = Integer.MAX_VALUE - 1;
