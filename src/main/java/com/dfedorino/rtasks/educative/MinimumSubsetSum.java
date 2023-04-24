@@ -52,4 +52,26 @@ public interface MinimumSubsetSum {
             return Math.min(resultIfInclude, resultIfSkip);
         }
     }
+
+    class TopDownMemo implements MinimumSubsetSum {
+
+        @Override
+        public int canPartition(int[] nums) {
+            int sum = Arrays.stream(nums).sum();
+            Integer[][] memo = new Integer[nums.length + 1][sum + 1];
+            return canPartition(nums, 0, sum, 0, memo);
+        }
+
+        private int canPartition(int[] nums, int i, int totalSum, int currSum, Integer[][] memo) {
+            if (memo[i][totalSum] == null) {
+                if (i == nums.length) {
+                    return Math.abs(totalSum - currSum);
+                }
+                int resultIfInclude = canPartition(nums, i + 1, totalSum - nums[i], currSum + nums[i], memo);
+                int resultIfSkip = canPartition(nums, i + 1, totalSum, currSum, memo);
+                memo[i][totalSum] = Math.min(resultIfInclude, resultIfSkip);
+            }
+            return memo[i][totalSum];
+        }
+    }
 }

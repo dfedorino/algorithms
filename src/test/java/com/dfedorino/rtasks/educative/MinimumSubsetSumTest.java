@@ -17,9 +17,15 @@ class MinimumSubsetSumTest {
         );
     }
 
-    @ParameterizedTest(name = "nums={0}, expected={1}")
+    @ParameterizedTest(name = "top-down, nums={0}, expected={1}")
     @MethodSource("examples")
     void shouldPartitionWithTopDownApproach(int[] nums, int expected) {
         assertThat(new MinimumSubsetSum.TopDown().canPartition(nums)).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "top-down + memo, nums={0}, expected={1}")
+    @MethodSource("examples")
+    void shouldPartitionWithTopDownMemoApproach(int[] nums, int expected) {
+        assertThat(new MinimumSubsetSum.TopDownMemo().canPartition(nums)).isEqualTo(expected);
     }
 }
