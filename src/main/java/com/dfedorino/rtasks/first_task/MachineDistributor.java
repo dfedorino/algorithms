@@ -62,7 +62,7 @@ public class MachineDistributor {
             int sum = rightElement + leftElement;
             if (leftElement == ramPerMachine || rightElement == ramPerMachine) {
                 if (leftElement == rightElement & leftElement == ramPerMachine) {
-                    return processes.length;
+                    return rightIndex - leftIndex + 1;
                 }
                 if (leftElement == ramPerMachine) {
                     fullyLoadedMachines++;
@@ -121,7 +121,7 @@ public class MachineDistributor {
                     fullyLoadedMachines++;
                     remainderQuantity.put(remainder, --remaindersLeft);
                 } else {
-                    remainderQuantity.computeIfPresent(processRam, (key, value) -> value++);
+                    remainderQuantity.computeIfPresent(processRam, (key, value) -> ++value);
                     remainderQuantity.putIfAbsent(processRam, 1);
                 }
             }
