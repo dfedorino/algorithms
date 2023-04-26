@@ -119,27 +119,52 @@ public interface MinimumSubsetSum {
         @Override
         public int canPartition(int[] nums) {
             int sum = Arrays.stream(nums).sum();
-            Integer[][] memo = new Integer[nums.length + 1][sum + 1];
-            // nums = {1, 2, 3, 9}
+            /**
+             * in this problem we need to find a subset sum as close as possible to S/2,
+             * because in this case the min difference will be 0 (idea from educative)
+             */
+            int half = sum / 2;
+            boolean[][] memo = new boolean[nums.length][half + 1];
 
-            //      0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15
-            // 0    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-            // 1    0   0   0   0   0   0   3   0   0   0   0   0   9   11   13   0   {1} - {2, 3, 9} || {2} - {1, 3, 9} || {3} - {1, 2, 9} || {9} - {1, 2, 3}
-            // 2    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-            // 3    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   {1, 2, 3} - {9} || {1, 2, 9} - {3} || {1, 3, 9} - {2} || {2, 3, 9} - {1}
-            // 4    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   15  {1, 2, 3, 9} {0}
+            /**
+             * for the '0' sum we can always exclude all the numbers
+             */
+            for (int i = 0; i < nums.length; i++) {
+                memo[i][0] = true;
+            }
 
+            /**
+             * if the 1st number is equal to any possible sum from 1 to S/2, then true, else false
+             */
+            for (int s = 1; s <= half; s++) {
+                memo[0][s] = nums[0] == s;
+            }
 
+            /**
+             * for all the following numbers we check result if include and result if skip
+             */
+            for (int i = 1; i < nums.length; i++) {
+                for (int s = 1; s <= half; s++) {
+                    boolean resultIfSkip = memo[i - 1][s];
+                    boolean resultIfInclude = nums[i] <= s && memo[i - 1][s - nums[i]];
+                    memo[i][s] = resultIfSkip || resultIfInclude;
+                }
+            }
 
-            // Educative explanation:
-            // S is total, so THE MAIN IDEA is to find the subset sum as close to S/2 as possible
-            // in this case memo = new Integer[nums.length][S/2 + 1]
-            // for every possible sum 's' in 0 <= s <= S/2:
-            // 1. Exclude current number. WTF does this mean:
-            // "In this case, we will see if we can get the sum ‘s’ from the subset excluding this number => memo[i - 1][s]"
-            // 2. Include this number if its value is not more than 's'. Again, WTF:
-            // "In this case, we will see if we can find a subset to get the remaining sum => dp[index-1][s-num[index]]"
-            return 0;
+            /**
+             * the above solution is the same as in the 'Subset Sum' problem except for the following:
+             * if we cannot find subset sum equal to S/2, we need to find the closest sum
+             */
+            int maxSubsetSumClosestToHalf = 0;
+            for (int i = sum / 2; i >= 0; i--) {
+                if (memo[nums.length - 1][i]) {
+                    maxSubsetSumClosestToHalf = i;
+                    break;
+                }
+            }
+
+            int diff = sum - maxSubsetSumClosestToHalf;
+            return Math.abs(diff - maxSubsetSumClosestToHalf);
         }
     }
 }

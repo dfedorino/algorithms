@@ -40,4 +40,10 @@ class MinimumSubsetSumTest {
     void shouldPartitionWithEducativeTopDownMemoApproach(int[] nums, int expected) {
         assertThat(new MinimumSubsetSum.EducativeTopDownMemo().canPartition(nums)).isEqualTo(expected);
     }
+
+    @ParameterizedTest(name = "educative + mine bottom-up, nums={0}, expected={1}")
+    @MethodSource("examples")
+    void shouldPartitionWithBottomUpApproach(int[] nums, int expected) {
+        assertThat(new MinimumSubsetSum.BottomUp().canPartition(nums)).isEqualTo(expected);
+    }
 }
