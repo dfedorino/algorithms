@@ -1,4 +1,4 @@
-package com.dfedorino.rtasks.educative;
+package com.dfedorino.rtasks.educative.dp;
 
 import java.util.Arrays;
 
