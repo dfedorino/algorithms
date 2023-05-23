@@ -3,6 +3,40 @@ package com.dfedorino.rtasks.educative.topologicalsort;
 import java.util.*;
 
 public class TopologicalSort {
+    /**
+     * "Topological Sort" of a directed graph (a graph with unidirectional edges) is a linear ordering of its vertices
+     * such that for every directed edge (U, V) from vertex U to vertex V, U comes before V in the ordering.
+     * <p>
+     *
+     * Given a directed graph, find the topological ordering of its vertices.
+     * <p>
+     *
+     * Example 1:
+     * Input: Vertices=4, Edges=[3, 2], [3, 0], [2, 0], [2, 1]
+     * Output: Following are the two valid topological sorts for the given graph:
+     * 1) 3, 2, 0, 1
+     * 2) 3, 2, 1, 0
+     * <p>
+     *
+     * Example 2:
+     * Input: Vertices=5, Edges=[4, 2], [4, 3], [2, 0], [2, 1], [3, 1]
+     * Output: Following are all valid topological sorts for the given graph:
+     * 1) 4, 2, 3, 0, 1
+     * 2) 4, 3, 2, 0, 1
+     * 3) 4, 3, 2, 1, 0
+     * 4) 4, 2, 3, 1, 0
+     * 5) 4, 2, 0, 3, 1
+     * <p>
+     *
+     * Example 3:
+     * Input: Vertices=5, Edges=[4, 2], [4, 3], [2, 0], [2, 1], [3, 1]
+     * Output: Following are all valid topological sorts for the given graph:
+     * 1) 4, 2, 3, 0, 1
+     * 2) 4, 3, 2, 0, 1
+     * 3) 4, 3, 2, 1, 0
+     * 4) 4, 2, 3, 1, 0
+     * 5) 4, 2, 0, 3, 1
+     **/
     public List<Integer> sort(int vertices, int[][] edges) {
         int[] incomingEdgesCount = new int[vertices];
         Map<Integer, List<Integer>> graph = new HashMap<>();
